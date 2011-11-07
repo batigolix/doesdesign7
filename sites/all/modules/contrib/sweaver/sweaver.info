@@ -1,0 +1,22 @@
+name = Sweaver
+description = "Visual interface for tweaking or building Drupal themes."
+core = 7.x
+dependencies[] = ctools
+package = "User interface"
+files[] = sweaver.module
+files[] = sweaver.install
+files[] = sweaver.registry.inc
+files[] = sweaver_plugin.inc
+files[] = sweaver_plugin.theme.inc
+files[] = sweaver.admin.inc
+files[] = sweaver.inc
+files[] = tests/sweaver.admin.test
+files[] = tests/sweaver.editor.test
+files[] = tests/sweaver.themesettings.test
+configure = admin/config/user-interface/sweaver
+; Information added by drupal.org packaging script on 2011-06-13
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "sweaver"
+datestamp = "1307925480"
+

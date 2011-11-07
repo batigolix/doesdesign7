@@ -1,0 +1,55 @@
+#page-wrapper {
+  margin: 1em auto;
+  width: 98%;
+}
+
+#content,
+#sidebar-first,
+#sidebar-second {
+  float: none;
+}
+
+#content .section {
+  padding: 0 1em;
+}
+
+#header {
+    margin-left: 1%;
+    padding-left: 1em;
+    width: auto;
+}
+
+body.sidebar-first #content,
+body.two-sidebars #content,
+body.sidebar-second #content,
+body.no-sidebars #content {
+  left: 0%;
+  width: auto;
+}
+
+body.two-sidebars #sidebar-first {
+  left: 0%; /* LTR */
+}
+
+#sidebar-first {
+  left: 0%; /* LTR */
+  width: auto;
+}
+
+#sidebar-second {
+  float: none; /* LTR */
+  width: auto;
+}
+
+.section {
+  margin: 0 0.5em;
+}
+
+#content .section {
+  margin: 0 1em;
+}
+
+body.not-front .field-type-image {
+  margin: 0 1em 1em 0;
+  float: left;
+}

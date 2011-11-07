@@ -1,0 +1,38 @@
+
+#content .section {
+  padding: 0 0.5em;
+}
+
+#content .section {
+  margin: 0 1em;
+}
+
+body.sidebar-first #content {
+  left: 1%; /* LTR */
+  width: 71%;
+}
+
+body.sidebar-second #content {
+  left: 1%;
+  width: 71%;
+}
+
+body.two-sidebars #content {
+  left: 1%;
+  width: 71%;
+}
+
+body.no-sidebars #content {
+  clear: left;
+  left: 1%;
+  width: 71%;
+}
+
+body.two-sidebars #sidebar-first {
+  left: -58%; /* LTR */
+}
+
+body.not-front .field-type-image {
+  margin: 0 1em;
+  float: none;
+}

@@ -1,0 +1,78 @@
+
+/**
+ * @file
+ * Layout method
+ *
+ * Similiar approach as the Stark core theme
+ */
+
+#page-wrapper {
+  margin: 3em auto;
+  min-width: 320px;
+  max-width: 1280px;
+  width: 92%;
+}
+
+#content,
+#sidebar-first,
+#sidebar-second {
+  display: inline;
+  float: left;
+  position: relative;
+}
+
+#content {
+  width: 100%;
+}
+
+#content .section {
+  padding: 0 1em;
+}
+
+body.sidebar-first #content {
+  left: 14%; /* LTR */
+  width: 58%;
+}
+
+body.sidebar-second #content {
+  left: 14%;
+  width: 58%;
+}
+
+body.two-sidebars #content {
+  left: 14%;
+  width: 58%;
+}
+
+body.no-sidebars #content {
+  clear: left;
+  left: 14%;
+  width: 58%;
+}
+
+body.two-sidebars #sidebar-first {
+  left: -58%; /* LTR */
+}
+
+#sidebar-first {
+  left: -58%; /* LTR */
+  width: 14%;
+}
+
+#sidebar-second {
+  float: right; /* LTR */
+  width: 28%;
+}
+
+.section {
+  margin: 0 1em;
+}
+
+#content .section {
+  margin: 0 1.5em;
+}
+
+#main {
+  clear: both;
+  margin-top: 1em;
+}

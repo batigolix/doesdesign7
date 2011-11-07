@@ -1,0 +1,7 @@
+name = Doesdesign 7
+description = This theme demonstrates Drupal's default HTML markup and CSS styles. To learn how to build your own theme and override Drupal's default code, see the <a href="http://drupal.org/theme-guide">Theming Guide</a>.
+package = Themes
+version = 0.1
+core = 7.x
+stylesheets[all][] = layout.css
+stylesheets[all][] = doesdesign7.css

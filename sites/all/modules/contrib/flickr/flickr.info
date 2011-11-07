@@ -1,0 +1,12 @@
+name = Flickr
+description = Flickr and Drupal integration.
+package = Flickr
+core = 7.x
+
+files[] = flickr.module
+; Information added by drupal.org packaging script on 2011-04-06
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "flickr"
+datestamp = "1302091625"
+
