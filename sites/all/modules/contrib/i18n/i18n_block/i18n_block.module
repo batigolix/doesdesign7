@@ -25,7 +25,7 @@ function i18n_block_menu() {
     'context' => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
     'weight' => 10,
   );
-  $items['admin/structure/block/manage/%/%/translate/%language'] = array(
+  $items['admin/structure/block/manage/%/%/translate/%i18n_language'] = array(
     'title' => 'Translate',
     'access callback' => 'i18n_block_translate_tab_access',
     'access arguments' => array(4, 5),
@@ -104,7 +104,7 @@ function i18n_block_block_list_alter(&$blocks) {
  */
 function i18n_block_block_view_alter(&$data, $block) {
   if (!empty($block->i18n_mode)) {
-    if ($block->title && $block->title != '<none>') {
+    if (!empty($block->title) && $block->title != '<none>') {
       $block->title = i18n_string(array('blocks', $block->module, $block->delta, 'title'), $block->title);
     }
     if ($block->module == 'block' && isset($data['content'])) {

@@ -193,11 +193,14 @@ function print_preprocess_print(&$variables) {
 
   $format = $variables['type'];
   $type = (isset($variables['node']->type)) ? $variables['node']->type : '';
+  $nid = (isset($variables['node']->nid)) ? $variables['node']->nid : '';
 
 //  $variables['theme_hook_suggestions'][] = "print";
   $variables['theme_hook_suggestions'][] = "print__node__{$type}";
+  $variables['theme_hook_suggestions'][] = "print__node__{$type}__{$nid}";
   $variables['theme_hook_suggestions'][] = "print__{$format}";
   $variables['theme_hook_suggestions'][] = "print__{$format}__node__{$type}";
+  $variables['theme_hook_suggestions'][] = "print__{$format}__node__{$type}__{$nid}";
 }
 
 /**
@@ -327,22 +330,21 @@ function print_block_view($delta = '') {
 }
 
 /**
- * Implements hook_link_alter().
+ * Implements hook_node_view_alter().
  */
-function print_link_alter(array &$links, $node) {
-  foreach ($links as $module => $link) {
-    if (strpos($module, 'book_printer') !== FALSE) {
-      $print_html_book_link = variable_get('print_html_book_link', PRINT_HTML_BOOK_LINK_DEFAULT);
+function print_node_view_alter(&$build) {
+  if (isset($build['links']['book']['#links']['book_printer'])) {
+    $print_html_book_link = variable_get('print_html_book_link', PRINT_HTML_BOOK_LINK_DEFAULT);
 
-      if ($print_html_book_link) {
-        $print_html_link_pos = variable_get('print_html_link_pos', array(PRINT_HTML_LINK_POS_DEFAULT => PRINT_HTML_LINK_POS_DEFAULT));
+    if ($print_html_book_link) {
+      $print_html_link_pos = variable_get('print_html_link_pos', array(PRINT_HTML_LINK_POS_DEFAULT => PRINT_HTML_LINK_POS_DEFAULT));
 
-        if (!empty($print_html_link_pos['link'])) {
+      if (!empty($print_html_link_pos['link'])) {
         $format = theme('print_format_link');
 
         switch ($print_html_book_link) {
           case 1:
-            $path = $link['href'];
+            $path = $build['links']['book']['#links']['book_printer']['href'];
             break;
           case 2:
             $print_html_link_use_alias = variable_get('print_html_link_use_alias', PRINT_HTML_LINK_USE_ALIAS_DEFAULT);
@@ -350,16 +352,15 @@ function print_link_alter(array &$links, $node) {
             break;
         }
 
-        $links[$module] = array(
+        $build['links']['book']['#links']['book_printer'] = array(
           'href' => PRINT_PATH . '/' . $path,
           'title' => $format['text'],
           'attributes' => $format['attributes'],
           'html' => $format['html'],
         );
-        }
-        else {
-          unset($links[$module]);
-        }
+      }
+      else {
+        unset($build['links']['book']['#links']['book_printer']);
       }
     }
   }
@@ -450,8 +451,17 @@ function print_node_view($node, $view_mode) {
  * Implements hook_node_load().
  */
 function print_node_load($nodes, $types) {
+  $ids = array();
   foreach ($nodes as $node) {
-    _print_set_node_fields($node);
+    $ids[] = $node->nid;
+  }
+
+  $result = db_query('SELECT nid, link, comments, url_list FROM {print_node_conf} WHERE nid IN (:nids)', array(':nids' => $ids))->fetchAllAssoc('nid');
+
+  foreach ($nodes as $node) {
+    $node->print_display = isset($result[$node->nid]) ? intval($result[$node->nid]->link) : variable_get('print_display_' . $node->type, PRINT_TYPE_SHOW_LINK_DEFAULT);
+    $node->print_display_comment = isset($result[$node->nid]) ? intval($result[$node->nid]->comments) : variable_get('print_display_comment_' . $node->type, PRINT_TYPE_COMMENT_LINK_DEFAULT);
+    $node->print_display_urllist = isset($result[$node->nid]) ? intval($result[$node->nid]->url_list) : variable_get('print_display_urllist_' . $node->type, PRINT_TYPE_URLLIST_DEFAULT);
   }
 }
 
@@ -460,9 +470,15 @@ function print_node_load($nodes, $types) {
  */
 function print_node_insert($node) {
   if (user_access('administer print') || user_access('node-specific print configuration')) {
-    if ($node->print_display === NULL) $node->print_display = variable_get('print_display_' . $node->type, PRINT_TYPE_SHOW_LINK_DEFAULT);
-    if ($node->print_display_comment === NULL) $node->print_display_comment = variable_get('print_display_comment_' . $node->type, PRINT_TYPE_COMMENT_LINK_DEFAULT);
-    if ($node->print_display_urllist === NULL) $node->print_display_urllist = variable_get('print_display_urllist_' . $node->type, PRINT_TYPE_URLLIST_DEFAULT);
+    if (!isset($node->print_display) || $node->print_display === NULL) {
+      $node->print_display = variable_get('print_display_' . $node->type, PRINT_TYPE_SHOW_LINK_DEFAULT);
+    }
+    if (!isset($node->print_display_comment) || $node->print_display_comment === NULL) {
+      $node->print_display_comment = variable_get('print_display_comment_' . $node->type, PRINT_TYPE_COMMENT_LINK_DEFAULT);
+    }
+    if (!isset($node->print_display_urllist) || $node->print_display_urllist === NULL) {
+      $node->print_display_urllist = variable_get('print_display_urllist_' . $node->type, PRINT_TYPE_URLLIST_DEFAULT);
+    }
 
     _print_node_conf_modify($node->nid, $node->print_display, $node->print_display_comment, $node->print_display_urllist);
   }
@@ -552,25 +568,6 @@ function print_entity_info_alter(&$info) {
       'custom settings' => FALSE,
     ),
   );
-}
-
-/**
- * Auxiliary function to assign the per-node settings to the node object fields
- *
- * @param $node
- *   node to be modified
- */
-function _print_set_node_fields(&$node) {
-  if (isset($node->nid)) {
-    $res = db_query("SELECT link, comments, url_list FROM {print_node_conf} WHERE nid = :nid", array(':nid' => $node->nid))
-              ->fetch();
-  }
-  else {
-    $res = FALSE;
-  }
-  $node->print_display = $res ? intval($res->link) : variable_get('print_display_' . $node->type, PRINT_TYPE_SHOW_LINK_DEFAULT);
-  $node->print_display_comment = $res ? intval($res->comments) : variable_get('print_display_comment_' . $node->type, PRINT_TYPE_COMMENT_LINK_DEFAULT);
-  $node->print_display_urllist = $res ? intval($res->url_list) : variable_get('print_display_urllist_' . $node->type, PRINT_TYPE_URLLIST_DEFAULT);
 }
 
 /**
@@ -932,4 +929,12 @@ function print_query_string_encode($query, $exclude = array(), $parent = '') {
   }
 
   return $params;
+}
+
+/**
+ * Implements hook_contextual_links_view_alter().
+ */
+function print_contextual_links_view_alter(&$element, $items) {
+  // Hide contextual links, always
+  $element['#attributes']['class'][] = 'element-hidden';
 }

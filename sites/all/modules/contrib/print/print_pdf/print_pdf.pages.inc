@@ -27,22 +27,27 @@ function print_pdf_controller() {
   $path = implode('/', $args);
   $cid = isset($_GET['comment']) ? (int)$_GET['comment'] : NULL;
 
-  if ($alias = drupal_lookup_path('source', $path)) {
-    // Alias
-    $path_arr = explode('/', $alias);
-    $node = node_load($path_arr[1]);
-  }
-  elseif (ctype_digit($args[0])) {
-    // normal nid
-    $node = node_load($args[0]);
-  }
+  if (!empty($path)) {
+    if ($alias = drupal_lookup_path('source', $path)) {
+      // Alias
+      $path_arr = explode('/', $alias);
+      $node = node_load($path_arr[1]);
+    }
+    elseif (ctype_digit($args[0])) {
+      // normal nid
+      $node = node_load($args[0]);
+    }
 
-  $pdf_filename = variable_get('print_pdf_filename', PRINT_PDF_FILENAME_DEFAULT);
-  if (!empty($pdf_filename) && !empty($node)) {
-    $pdf_filename = token_replace($pdf_filename, array('node' => $node)) . '.pdf';
+    $pdf_filename = variable_get('print_pdf_filename', PRINT_PDF_FILENAME_DEFAULT);
+    if (!empty($pdf_filename) && !empty($node)) {
+      $pdf_filename = token_replace($pdf_filename, array('node' => $node)) . '.pdf';
+    }
+    else {
+      $pdf_filename = str_replace('/', '_', $path) . '.pdf';
+    }
   }
   else {
-    $pdf_filename = str_replace('/', '_', $path) . '.pdf';
+    $pdf_filename = 'page.pdf';
   }
   if (function_exists('transliteration_clean_filename')) {
     $pdf_filename = transliteration_clean_filename($pdf_filename, language_default('language'));
@@ -54,14 +59,14 @@ function print_pdf_controller() {
     exit;
   }
 
-  $nodepath = (isset($node->path)) ? drupal_get_normal_path($node->path) : 'node/' . $path;
+  $nodepath = (isset($node->path) && is_string($node->path)) ? drupal_get_normal_path($node->path) : 'node/' . $path;
   db_merge('print_pdf_page_counter')
     ->key(array('path' => $nodepath))
     ->fields(array(
         'totalcount' => 1,
         'timestamp' => REQUEST_TIME,
     ))
-    ->expression('totalcount', 'totalcount + :inc', array(':inc' => 1))
+    ->expression('totalcount', 'totalcount + 1')
     ->execute();
 }
 
@@ -129,6 +134,7 @@ function _print_pdf_file_access_images($html) {
   $print_pdf_images_via_file = variable_get('print_pdf_images_via_file', PRINT_PDF_IMAGES_VIA_FILE_DEFAULT);
 
   // TODO: This needs to be rewritten from scratch for Drupal 7
+  $lang = '';
 /*
   switch (variable_get('language_negotiation', LANGUAGE_NEGOTIATION_NONE)) {
     case LANGUAGE_NEGOTIATION_PATH_DEFAULT:
@@ -139,19 +145,17 @@ function _print_pdf_file_access_images($html) {
       $lang = '';
       break;
   }
+*/
   // Always convert private to local paths
-  $file_downloads = variable_get('file_default_scheme', 'public');
-  if ($file_downloads == 'private') {
-    $pattern = "!(<img\s[^>]*?src\s*?=\s*?['\"]?)${base_url}/(?:(?:index.php)?\?q=)?(?:${lang}/)?system/files/([^>]*?>)!is";
-    $replacement = '$1file://' . realpath(file_directory_path()) . '/$2';
-    $html = preg_replace($pattern, $replacement, $html);
-  }
-  elseif ($print_pdf_images_via_file) {
+  $pattern = "!(<img\s[^>]*?src\s*?=\s*?['\"]?)${base_url}/(?:(?:index.php)?\?q=)?(?:${lang}/)?system/files/([^>]*?>)!is";
+  $replacement = '$1file://' . realpath(variable_get('file_private_path', '')) . '/$2';
+  $html = preg_replace($pattern, $replacement, $html);
+  if ($print_pdf_images_via_file) {
     $pattern = "!(<img\s[^>]*?src\s*?=\s*?['\"]?)${base_url}/(?:(?:index.php)?\?q=)?(?:${lang}/)?([^>]*?>)!is";
     $replacement = '$1file://' . dirname($_SERVER['SCRIPT_FILENAME']) . '/$2';
     $html = preg_replace($pattern, $replacement, $html);
   }
-*/
+
   return $html;
 }
 
@@ -297,7 +301,9 @@ function _print_pdf_tcpdf($print, $html, $filename = NULL) {
   $pdf = new PrintTCPDF($orientation , 'mm', $print_pdf_paper_size, TRUE);
 
   // set document information
-  $pdf->SetAuthor(strip_tags($print['node']->name));
+  if (property_exists($print['node'], 'name')) {
+    $pdf->SetAuthor(strip_tags($print['node']->name));
+  }
   $pdf->SetCreator(variable_get('site_name', 'Drupal'));
   $pdf->SetTitle(html_entity_decode($print['title'], ENT_QUOTES, 'UTF-8'));
   $pdf->setPDFVersion('1.6');

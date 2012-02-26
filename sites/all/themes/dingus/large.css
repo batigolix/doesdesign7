@@ -6,13 +6,6 @@
  * Similiar approach as the Stark core theme
  */
 
-#page-wrapper {
-  margin: 3em auto;
-  min-width: 320px;
-  max-width: 1280px;
-  width: 92%;
-}
-
 #content,
 #sidebar-first,
 #sidebar-second {
@@ -65,7 +58,7 @@ body.two-sidebars #sidebar-first {
 }
 
 .section {
-  margin: 0 1em;
+  margin: 0 0.5em;
 }
 
 #content .section {
@@ -74,5 +67,47 @@ body.two-sidebars #sidebar-first {
 
 #main {
   clear: both;
-  margin-top: 1em;
+  padding-top: 1em;
 }
+
+
+/* @todo: moving this over from dingus.css, refactor */
+
+/**
+* Layout
+*/
+#page-wrapper {
+  margin: 2em auto;
+  min-width: 320px;
+  max-width: 1400px;
+  width: 92%;
+}
+
+#header,
+#navigation {
+  margin: 0.25em 0 0 17.5%;
+}
+
+#footer {
+  border-top: #ddd 1px solid;
+  margin: 3em 0 0 0;
+  padding: 1em 0 3em 0;
+}
+
+#sidebar-first .section {
+  margin: 3.5em 1em 0 0;
+}
+
+#sidebar-second .section {
+  margin: 3.5em 0 0 1em;
+}
+
+#content {
+  margin-top: 0;
+}
+
+#comments {
+  margin-left: 20%;
+}
+
+

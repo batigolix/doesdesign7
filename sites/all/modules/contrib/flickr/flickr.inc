@@ -28,9 +28,14 @@ function flickr_photo_sizes() {
       'description' => t('240 pixels on longest side'),
     ),
     '-' => array(
-      'label' => 'Medium',
+      'label' => 'Medium 500',
       'description' => t('500 pixels on longest side'),
     ),
+    'z' => array(
+      'label' => 'Medium 640',
+      'description' => t('640 pixels on longest side'),
+    ),
+
     'b' => array(
       'label' => 'Large',
       'description' => t('1024 pixels on longest side'),

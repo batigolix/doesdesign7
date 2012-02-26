@@ -210,8 +210,17 @@ function print_mail_help($path, $arg) {
  * Implements hook_node_load().
  */
 function print_mail_node_load($nodes, $types) {
+  $ids = array();
   foreach ($nodes as $node) {
-    _print_mail_set_node_fields($node);
+    $ids[] = $node->nid;
+  }
+
+  $result = db_query('SELECT nid, link, comments, url_list FROM {print_mail_node_conf} WHERE nid IN (:nids)', array(':nids' => $ids))->fetchAllAssoc('nid');
+
+  foreach ($nodes as $node) {
+    $node->print_mail_display = isset($result[$node->nid]) ? intval($result[$node->nid]->link) : variable_get('print_mail_display_' . $node->type, PRINT_TYPE_SHOW_LINK_DEFAULT);
+    $node->print_mail_display_comment = isset($result[$node->nid]) ? intval($result[$node->nid]->comments) : variable_get('print_mail_display_comment_' . $node->type, PRINT_TYPE_COMMENT_LINK_DEFAULT);
+    $node->print_mail_display_urllist = isset($result[$node->nid]) ? intval($result[$node->nid]->url_list) : variable_get('print_mail_display_urllist_' . $node->type, PRINT_TYPE_URLLIST_DEFAULT);
   }
 }
 
@@ -220,9 +229,15 @@ function print_mail_node_load($nodes, $types) {
  */
 function print_mail_node_insert($node) {
   if (user_access('administer print') || user_access('node-specific print configuration')) {
-    if ($node->print_mail_display === NULL) $node->print_mail_display = variable_get('print_mail_display_' . $node->type, PRINT_TYPE_SHOW_LINK_DEFAULT);
-    if ($node->print_mail_display_comment === NULL) $node->print_mail_display_comment = variable_get('print_mail_display_comment_' . $node->type, PRINT_TYPE_COMMENT_LINK_DEFAULT);
-    if ($node->print_mail_display_urllist === NULL) $node->print_mail_display_urllist = variable_get('print_mail_display_urllist_' . $node->type, PRINT_TYPE_URLLIST_DEFAULT);
+    if (!isset($node->print_mail_display) || $node->print_mail_display === NULL) {
+      $node->print_mail_display = variable_get('print_mail_display_' . $node->type, PRINT_TYPE_SHOW_LINK_DEFAULT);
+    }
+    if (!isset($node->print_mail_display_comment) || $node->print_mail_display_comment === NULL) {
+      $node->print_mail_display_comment = variable_get('print_mail_display_comment_' . $node->type, PRINT_TYPE_COMMENT_LINK_DEFAULT);
+    }
+    if (!isset($node->print_mail_display_urllist) || $node->print_mail_display_urllist === NULL) {
+      $node->print_mail_display_urllist = variable_get('print_mail_display_urllist_' . $node->type, PRINT_TYPE_URLLIST_DEFAULT);
+    }
 
     _print_mail_node_conf_modify($node->nid, $node->print_mail_display, $node->print_mail_display_comment, $node->print_mail_display_urllist);
   }
@@ -338,25 +353,6 @@ function _print_mail_access($permission) {
   }
 
   return (user_access($permission) && $page_access);
-}
-
-/**
- * Auxiliary function to assign the per-node settings to the node object fields
- *
- * @param $node
- *   node to be modified
- */
-function _print_mail_set_node_fields(&$node) {
-  if (isset($node->nid)) {
-    $res = db_query("SELECT link, comments, url_list FROM {print_mail_node_conf} WHERE nid = :nid", array(':nid' => $node->nid))
-              ->fetch();
-  }
-  else {
-    $res = FALSE;
-  }
-  $node->print_mail_display = $res ? intval($res->link) : variable_get('print_mail_display_' . $node->type, PRINT_TYPE_SHOW_LINK_DEFAULT);
-  $node->print_mail_display_comment = $res ? intval($res->comments) : variable_get('print_mail_display_comment_' . $node->type, PRINT_TYPE_COMMENT_LINK_DEFAULT);
-  $node->print_mail_display_urllist = $res ? intval($res->url_list) : variable_get('print_mail_display_urllist_' . $node->type, PRINT_TYPE_URLLIST_DEFAULT);
 }
 
 /**
@@ -554,4 +550,111 @@ function print_mail_link_allowed($args) {
     return _print_page_match($print_mail_sys_link_visibility, $_GET['q'], $print_mail_sys_link_pages);
   }
   return FALSE;
+}
+
+/**
+* Implementation of hook_nollom_form_list().
+*/
+function print_mail_mollom_form_list() {
+  $forms['print_mail_form'] = array(
+    'title' => t('Send page form'),
+    'entity' => 'print_mail',
+  );
+  return $forms;
+}
+
+/**
+* Implementation of hook_mollom_form_info().
+*/
+function print_mail_mollom_form_info($form_id) {
+  switch ($form_id) {
+    case 'print_mail_form':
+      $form_info = array(
+        'elements' => array(
+          'fld_from_addr' => t('Sender e-mail'),
+          'fld_from_name' => t('Sender name'),
+          'txt_to_addrs' => t('Recipients'),
+          'fld_subject' => t('Subject'),
+          'fld_title' => t('Page to be sent'),
+          'txt_message' => t('Your message'),
+        ),
+        'mapping' => array(
+          'post_title' => 'fld_title',
+          'author_name' => 'fld_from_name',
+          'author_mail' => 'fld_from_addr',
+        ),
+      );
+      break;
+  }
+  return $form_info;
+}
+
+/**
+ * Implements hook_views_api().
+ */
+function print_mail_views_api() {
+  return array(
+    'api' => 2.0,
+    'path' => drupal_get_path('module', 'print_mail'),
+  );
+}
+
+/**
+ * Implements hook_views_data_alter().
+ *
+ * Provide a new option the views sorts for the number of times
+ *  a node has been emailed.
+ */
+function print_mail_views_data_alter(&$data) {
+  $data['node']['print_mail_sentcount'] = array(
+    'title' => t('Number of times emailed'),
+    'help' => t("The total number of times the node has been sent through print module's send by email feature."),
+    'sort' => array(
+      'handler' => 'views_handler_sort_print_mail_sentcount',
+    ),
+  );
+}
+
+/**
+ * Implements hook_rules_action_info().
+ * @ingroup rules
+ */
+function print_mail_rules_action_info() {
+  return array(
+    'print_mail_action_submit' => array(
+      'label' => t('Send node as HTML formated email'),
+      'group' => t('Node'),
+      'named parameter' => TRUE,
+      'parameter' => array(
+        'from'      => array('type' => 'text', 'label' => t('From email adress')),
+        'from_name' => array('type' => 'text', 'label' => t('From name')),
+        'to'        => array('type' => 'text', 'label' => t('Send email to')),
+        'subject'   => array('type' => 'text', 'label' => t('Subject')),
+        'message'   => array('type' => 'text', 'label' => t('The message that should be displayed.')),
+        'node'      => array('type' => 'node', 'label' => t('Content')),
+      ),
+    ),
+  );
+}
+
+/**
+ * Action handler for the print_mail_action_submit
+ * @ingroup rules
+ */
+function print_mail_action_submit($node, $settings) {
+  require_once(DRUPAL_ROOT . '/' . drupal_get_path('module', 'print_mail') . '/print_mail.inc');
+
+  $form_state['values'] = array(
+    'path' => 'node/' . $node['node']->nid,
+    'cid' => NULL,
+    'title' => $node['node']->title,
+    'fld_from_addr' => $settings->settings['from'],
+    'fld_from_name' => $settings->settings['from_name'],
+    'txt_to_addrs' => $settings->settings['to'],
+    'fld_subject' => $settings->settings['subject'],
+    'txt_message' => $settings->settings['message'],
+    'chk_teaser' => FALSE,
+  );
+
+  print_mail_form_submit(NULL, $form_state);
 }

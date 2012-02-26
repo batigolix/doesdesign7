@@ -4,14 +4,14 @@ description = A clean, simple, and classic look.
 version = VERSION
 core = 7.x
 engine = phptemplate
-stylesheets[all][] = layout.css
 stylesheets[all][] = dingus.css
-stylesheets[only screen and (max-width : 1024px)][] = medium.css
-stylesheets[only screen and (max-width : 800px)][] = small.css
+stylesheets[only screen and (max-width : 400px)][] = small.css
+stylesheets[only screen and (min-width : 401px) and (max-width : 1152px)][] = medium.css
+stylesheets[only screen and (min-width : 1153px)][] = large.css
 
-; Information added by drupal.org packaging script on 2011-04-05
-version = "7.x-1.x-dev"
+; Information added by drupal.org packaging script on 2011-10-01
+version = "7.x-2.0-alpha1"
 core = "7.x"
 project = "dingus"
-datestamp = "1302005103"
+datestamp = "1317510701"
 

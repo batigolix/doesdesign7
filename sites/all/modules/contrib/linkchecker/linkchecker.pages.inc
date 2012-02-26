@@ -10,21 +10,21 @@
  */
 function linkchecker_admin_report_page() {
 
-  $ignore_response_codes = preg_split('/(\r\n?|\n)/', variable_get('linkchecker_ignore_response_codes', "200\n302\n304\n401\n403"));
+  $ignore_response_codes = preg_split('/(\r\n?|\n)/', variable_get('linkchecker_ignore_response_codes', "200\n206\n302\n304\n401\n403"));
 
   // Search for broken links in nodes and comments and blocks of all users.
-  // TODO: Try to make UNION'ed subselect resultset smaller.
+  // @todo Try to make UNION'ed subselect resultset smaller.
   $subquery4 = db_select('linkchecker_node', 'ln')
     ->distinct()
-    ->fields('ln' , array('lid'));
+    ->fields('ln', array('lid'));
 
   $subquery3 = db_select('linkchecker_comment', 'lc')
     ->distinct()
-    ->fields('lc' , array('lid'));
+    ->fields('lc', array('lid'));
 
   $subquery2 = db_select('linkchecker_block_custom', 'lb')
     ->distinct()
-    ->fields('lb' , array('lid'));
+    ->fields('lb', array('lid'));
 
   // UNION all linkchecker type tables.
   $subquery1 = db_select($subquery2->union($subquery3)->union($subquery4), 'q1')->fields('q1', array('lid'));
@@ -46,7 +46,7 @@ function linkchecker_admin_report_page() {
 function linkchecker_user_report_page($account) {
   drupal_set_title($account->name);
 
-  $ignore_response_codes = preg_split('/(\r\n?|\n)/', variable_get('linkchecker_ignore_response_codes', "200\n302\n304\n401\n403"));
+  $ignore_response_codes = preg_split('/(\r\n?|\n)/', variable_get('linkchecker_ignore_response_codes', "200\n206\n302\n304\n401\n403"));
 
   // Build query for broken links in nodes of the current user.
   $subquery2 = db_select('node', 'n');
@@ -94,11 +94,22 @@ function linkchecker_user_report_page($account) {
   return _linkchecker_report_page($query, $account);
 }
 
+/**
+ * Builds the HTML report page table with pager.
+ *
+ * @param SelectQueryInterface $query
+ *   The pager query for the report page. Can be per user report or global.
+ * @param object|null $account
+ *   The user account object.
+ *
+ * @return string
+ *   Themed report page.
+ */
 function _linkchecker_report_page($query, $account = NULL) {
 
-  $links_unchecked = db_query('SELECT COUNT(1) FROM {linkchecker_link} WHERE last_checked = :last_checked', array(':last_checked' => 0))->fetchField();
+  $links_unchecked = db_query('SELECT COUNT(1) FROM {linkchecker_link} WHERE last_checked = :last_checked AND status = :status', array(':last_checked' => 0, ':status' => 1))->fetchField();
   if ($links_unchecked > 0) {
-    $links_all = db_query('SELECT COUNT(1) FROM {linkchecker_link}')->fetchField();
+    $links_all = db_query('SELECT COUNT(1) FROM {linkchecker_link} WHERE status = :status', array(':status' => 1))->fetchField();
     drupal_set_message(format_plural($links_unchecked,
       'There is 1 unchecked link of about @links_all links in the database. Please be patient until all links have been checked via cron.',
       'There are @count unchecked links of about @links_all links in the database. Please be patient until all links have been checked via cron.',
@@ -157,23 +168,23 @@ function _linkchecker_report_page($query, $account = NULL) {
       $comments = db_query('SELECT cid FROM {linkchecker_comment} WHERE lid = :lid', array(':lid' => $link->lid));
     }
     foreach ($comments as $comment) {
-      $links[] = l(t('Edit comment @comment', array('@comment' => $comment->cid)), 'comment/edit/' . $comment->cid, array('query' => drupal_get_destination()));
+      $links[] = l(t('Edit comment @comment', array('@comment' => $comment->cid)), 'comment/' . $comment->cid . '/edit', array('query' => drupal_get_destination()));
     }
 
     // Show link to blocks having this broken link.
     if ($access_administer_blocks) {
       $blocks_custom = db_query('SELECT bid FROM {linkchecker_block_custom} WHERE lid = :lid', array(':lid' => $link->lid));
       foreach ($blocks_custom as $block_custom) {
-        $links[] = l(t('Edit block @block', array('@block' => $block_custom->bid)), 'admin/build/block/configure/block/' . $block_custom->bid, array('query' => drupal_get_destination()));
+        $links[] = l(t('Edit block @block', array('@block' => $block_custom->bid)), 'admin/structure/block/manage/block/' . $block_custom->bid . '/configure', array('query' => drupal_get_destination()));
       }
     }
 
     // Show link to redirect this broken internal link.
-    if (module_exists('path_redirect') && $access_administer_redirects && _linkchecker_is_internal_url($link)) {
-      $links[] = l(t('Create redirection'), 'admin/build/path-redirect/add', array('query' => array('src' => $link->internal)));
+    if (module_exists('redirect') && $access_administer_redirects && _linkchecker_is_internal_url($link)) {
+      $links[] = l(t('Create redirection'), 'admin/config/search/redirect/add', array('query' => array('source' => $link->internal, drupal_get_destination())));
     }
 
-    // Create table data for output. Use inline styles to prevent extra CSS file.
+    // Create table data for output.
     $rows[] = array('data' =>
       array(
         l(_filter_url_trim($link->url, 40), $link->url),
@@ -248,7 +259,7 @@ function linkchecker_link_edit_form($form, &$form_state, $link) {
 }
 
 function linkchecker_link_edit_form_submit($form, &$form_state) {
-  // Force asap link re-check.
+  // Force link re-check asap.
   if ($form_state['values']['recheck']) {
     db_update('linkchecker_link')
       ->condition('lid', $form_state['values']['lid'])

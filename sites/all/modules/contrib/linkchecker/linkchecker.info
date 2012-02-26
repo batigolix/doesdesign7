@@ -3,10 +3,11 @@ description = "Periodically checks for broken links in node types, blocks and fi
 configure = admin/config/content/linkchecker
 core = 7.x
 
+files[] = linkchecker.drush.inc
 files[] = linkchecker.test
-; Information added by drupal.org packaging script on 2011-07-05
-version = "7.x-1.x-dev"
+; Information added by drupal.org packaging script on 2012-02-18
+version = "7.x-1.0-beta1+2-dev"
 core = "7.x"
 project = "linkchecker"
-datestamp = "1309825512"
+datestamp = "1329524267"
 

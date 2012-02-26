@@ -1,38 +1,59 @@
 
-#content .section {
-  padding: 0 0.5em;
+/**
+ * @file
+ * 
+*/
+
+#page-wrapper {
+  width: 82%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#sidebar-first,
+#sidebar-second {
+  display: block;
+  float: left;
+  width: 100%;
+}
+
+.section {
+  margin: 0;
 }
 
 #content .section {
-  margin: 0 1em;
+  padding: 0;
 }
 
-body.sidebar-first #content {
-  left: 1%; /* LTR */
-  width: 71%;
+#main {
+  clear: both;
+  margin-top: 1em;
 }
 
-body.sidebar-second #content {
-  left: 1%;
-  width: 71%;
+#comments {
+  margin-left: 0;
 }
 
-body.two-sidebars #content {
-  left: 1%;
-  width: 71%;
+div.admin .right, div.admin .left {
+    width: 100%;
+}
+div.admin .left {
+    float: left;
+    margin-left: 0;
+    width: 100%;
 }
 
-body.no-sidebars #content {
-  clear: left;
-  left: 1%;
-  width: 71%;
+.content .field-type-image {
+  max-width: 50%;
 }
 
-body.two-sidebars #sidebar-first {
-  left: -58%; /* LTR */
+.content .field-type-image img {
+  max-width: 100%;
 }
 
-body.not-front .field-type-image {
-  margin: 0 1em;
-  float: none;
-}
+/* @todo 
+- float login form fields
+- user pics fixen
+- 
+*/
+

@@ -1,55 +1,71 @@
-#page-wrapper {
-  margin: 1em auto;
-  width: 98%;
+
+/**
+ * @file
+ * 
+*/
+
+body {
+  font-size: 1em;
+  line-height: 145%;
 }
 
-#content,
+h1 {
+  font-size: 1.5em;
+}
+
+h2 {
+  font-size: 1.325em;
+}
+
+h3 {
+  font-size: 1.15em;
+}
+
+#page-wrapper {
+  width: 96%;
+  margin: 1em auto;
+}
+
 #sidebar-first,
 #sidebar-second {
-  float: none;
-}
-
-#content .section {
-  padding: 0 1em;
-}
-
-#header {
-    margin-left: 1%;
-    padding-left: 1em;
-    width: auto;
-}
-
-body.sidebar-first #content,
-body.two-sidebars #content,
-body.sidebar-second #content,
-body.no-sidebars #content {
-  left: 0%;
-  width: auto;
-}
-
-body.two-sidebars #sidebar-first {
-  left: 0%; /* LTR */
-}
-
-#sidebar-first {
-  left: 0%; /* LTR */
-  width: auto;
-}
-
-#sidebar-second {
-  float: none; /* LTR */
-  width: auto;
+  display: block;
+  float: left;
+  width: 100%;
 }
 
 .section {
-  margin: 0 0.5em;
+  margin: 0;
 }
 
 #content .section {
-  margin: 0 1em;
+  padding: 0;
 }
 
-body.not-front .field-type-image {
-  margin: 0 1em 1em 0;
-  float: left;
+#main {
+  clear: both;
+  margin-top: 1em;
+}
+
+div.admin .right, div.admin .left {
+    width: 100%;
+}
+div.admin .left {
+    float: left;
+    margin-left: 0;
+    width: 100%;
+}
+
+.field-type-image img {
+  display: none;
+  margin: 0;
+  padding: 0;
+}
+
+#navigation {
+  border-bottom: none;
+}
+
+#navigation ul#main-menu li {
+  float: none;
+  border-bottom: #ddd 1px solid;
 }

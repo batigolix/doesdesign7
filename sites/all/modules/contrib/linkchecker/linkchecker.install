@@ -12,6 +12,7 @@ function linkchecker_uninstall() {
   variable_del('linkchecker_action_status_code_301');
   variable_del('linkchecker_action_status_code_404');
   variable_del('linkchecker_check_links_interval');
+  variable_del('linkchecker_check_links_types');
   variable_del('linkchecker_check_links_max');
   variable_del('linkchecker_check_useragent');
   variable_del('linkchecker_cleanup_links_last');
@@ -24,7 +25,6 @@ function linkchecker_uninstall() {
   variable_del('linkchecker_extract_from_object');
   variable_del('linkchecker_extract_from_video');
   variable_del('linkchecker_filter_blacklist');
-  variable_del('linkchecker_fqdn_only');
   variable_del('linkchecker_ignore_response_codes');
   variable_del('linkchecker_scan_blocks');
   variable_del('linkchecker_scan_comments');
@@ -55,6 +55,7 @@ function linkchecker_schema() {
       'bid' => array('block_custom' => 'bid'),
       'lid' => array('linkchecker_link' => 'lid'),
     ),
+    'indexes' => array('lid' => array('lid')),
   );
 
   $schema['linkchecker_comment'] = array(
@@ -76,6 +77,7 @@ function linkchecker_schema() {
       'cid' => array('comment' => 'cid'),
       'lid' => array('linkchecker_link' => 'lid'),
     ),
+    'indexes' => array('lid' => array('lid')),
   );
 
   $schema['linkchecker_node'] = array(
@@ -97,6 +99,7 @@ function linkchecker_schema() {
       'nid' => array('node' => 'nid'),
       'lid' => array('linkchecker_link' => 'lid'),
     ),
+    'indexes' => array('lid' => array('lid')),
   );
 
   $schema['linkchecker_link'] = array(
@@ -157,6 +160,13 @@ function linkchecker_schema() {
     ),
     'primary key' => array('lid'),
     'unique keys' => array('urlhash' => array('urlhash')),
+    'indexes' => array(
+      'method' => array('method'),
+      'code' => array('code'),
+      'fail_count' => array('fail_count'),
+      'last_checked' => array('last_checked'),
+      'status' => array('status'),
+    ),
   );
 
   return $schema;
@@ -282,30 +292,152 @@ function linkchecker_update_7002(&$sandbox) {
 }
 
 /**
- * Upgrade blacklisted internal filter names.
- *
- * - Line break converter, http://drupal.org/project/drupal
- *     name: filter_autop (D6: filter/1)
- * - Insert view filter, http://drupal.org/project/insert_view
- *     name: insert_view (D6: insert_view/0)
- */
-/*
-function linkchecker_update_7003() {
-  // See filter_update_7003();
-  // Add drupal message that settings cannot updated for 'unknown' contrib filters.
-
-  return t('Updated the blacklisted internal filter names from Drupal 6 to Drupal 7. The update has only updated the blacklisted filters linkchecker is aware of. Please verify the linkchecker extraction filter settings, if all filters with <em>references</em> to other content are still disabled.');
-}
+* #1321378: Improve performance of queries.
 */
+function linkchecker_update_7003() {
+  db_drop_index('linkchecker_block_custom', 'lid');
+  db_drop_index('linkchecker_comment', 'lid');
+  db_drop_index('linkchecker_node', 'lid');
+
+  db_add_index('linkchecker_block_custom', 'lid', array('lid'));
+  db_add_index('linkchecker_comment', 'lid', array('lid'));
+  db_add_index('linkchecker_node', 'lid', array('lid'));
+
+  return t('Added indexes to database tables.');
+}
+
+/**
+* Add status code 206 to the default list of ignored response codes.
+*/
+function linkchecker_update_7004() {
+  $ignore_response_codes = preg_split('/(\r\n?|\n)/', variable_get('linkchecker_ignore_response_codes', "200\n206\n302\n304\n401\n403"));
+  if (!in_array('206', $ignore_response_codes)) {
+    $ignore_response_codes[] = '206';
+    sort($ignore_response_codes);
+    variable_set('linkchecker_ignore_response_codes', implode("\n", $ignore_response_codes));
+    return t('Added the status code 206 to the list of ignored response codes.');
+  }
+  else {
+    return t('No action taken. The status code 206 was already on the list of ignored response codes.');
+  }
+}
+
+/**
+* Upgrade from linkchecker_fqdn_only to linkchecker_check_links_types variable.
+*/
+function linkchecker_update_7005() {
+
+  $linkchecker_fqdn_only = variable_get('linkchecker_fqdn_only', 1);
+  variable_set('linkchecker_check_links_types', $linkchecker_fqdn_only);
+  variable_del('linkchecker_fqdn_only');
+
+  return t('Upgraded "Check full qualified domain names only" to "What type of links should be checked" setting.');
+}
 
 /**
  * Remove obsolete settings variable.
  */
-/*
-function linkchecker_update_7004() {
+function linkchecker_update_7006() {
   // Remove obsolete variable.
   variable_del('linkchecker_extract_from_source');
 
   return t('Removed obsolete settings variable.');
 }
+
+/**
+ * Upgrade blacklisted internal filter names.
+ */
+function linkchecker_update_7007() {
+  // Available D7 filters (12/30/2011):
+  //
+  // - Line break converter, http://drupal.org/project/drupal
+  //     name: filter_autop (D6: filter/1)
+  // - Insert block, http://drupal.org/project/insert_block
+  //     name: insert_block (D6 insert_block/0)
+  //     tags: [block:name of module=delta of block]
+  // - Insert view filter, http://drupal.org/project/insert_view
+  //     name: insert_view (D6: insert_view/0)
+
+  // See core filter_update_7003();
+  // Get an array of the renamed filter deltas, organized by module.
+  $renamed_deltas = array(
+    'filter' => array(
+      '0' => 'filter_html',
+      '1' => 'filter_autop',
+      '2' => 'filter_url',
+      '3' => 'filter_htmlcorrector',
+      '4' => 'filter_html_escape',
+    ),
+    'php' => array(
+      '0' => 'php_code',
+    ),
+    'gotwo' => array(
+      '0' => 'gotwo',
+    ),
+    'insert_block' => array(
+      '0' => 'insert_block',
+    ),
+    'insert_view' => array(
+      '0' => 'insert_view',
+    ),
+    'smileys' => array(
+      '0' => 'smileys',
+    ),
+  );
+
+  // Manually load the linkchecker.module file or the constant may not defined.
+  drupal_load('module', 'linkchecker');
+
+  $linkchecker_filter_blacklist = variable_get('linkchecker_filter_blacklist', explode('|', LINKCHECKER_DEFAULT_FILTER_BLACKLIST));
+  $linkchecker_filter_blacklist = array_values($linkchecker_filter_blacklist);
+  $linkchecker_filter_blacklist = array_filter($linkchecker_filter_blacklist);
+
+  // Loop through each filter and make changes to the core filter name.
+  foreach ($renamed_deltas as $module => $deltas) {
+    foreach ($deltas as $old_delta => $new_name) {
+      if (in_array($module . '/' . $old_delta, $linkchecker_filter_blacklist)) {
+        $id = array_search($module . '/' . $old_delta, $linkchecker_filter_blacklist);
+        $linkchecker_filter_blacklist = array_replace($linkchecker_filter_blacklist, array($id => $new_name));
+      }
+    }
+  }
+
+  $linkchecker_filter_blacklist = drupal_map_assoc($linkchecker_filter_blacklist);
+  variable_set('linkchecker_filter_blacklist', $linkchecker_filter_blacklist);
+
+  // This is not a 100% solution, but we tried the best... tell the admin.
+  return t('Updated the blacklisted internal filter names from Drupal 6 to Drupal 7. The update has only updated the blacklisted filters linkchecker is aware of. Please review the "Filters disabled for link extraction" settings, if all filters with <em>references</em> to other content are still disabled.');
+}
+
+/**
+* #965720: Add indexes to improve performance of views queries.
 */
+function linkchecker_update_7008() {
+  db_drop_index('linkchecker_link', 'method');
+  db_drop_index('linkchecker_link', 'code');
+  db_drop_index('linkchecker_link', 'fail_count');
+  db_drop_index('linkchecker_link', 'last_checked');
+  db_drop_index('linkchecker_link', 'status');
+
+  db_add_index('linkchecker_link', 'method', array('method'));
+  db_add_index('linkchecker_link', 'code', array('code'));
+  db_add_index('linkchecker_link', 'fail_count', array('fail_count'));
+  db_add_index('linkchecker_link', 'last_checked', array('last_checked'));
+  db_add_index('linkchecker_link', 'status', array('status'));
+
+  return t('Added indexes to linkchecker_link database table.');
+}
+
+/**
+* PHP 5.3 backport for array_replace().
+*/
+if (!function_exists('array_replace')) {
+  function array_replace() {
+    $array = array();
+    $n = func_num_args();
+    while ($n-- > 0) {
+      $array += func_get_arg($n);
+    }
+    return $array;
+  }
+}

@@ -1,44 +1,31 @@
-/* sorry, brutal reset */
+/* The following is doing it wrong: */
 * {
   margin: 0;
   padding: 0;
 }
 
+
+
+
 body {
   background-color: #f6f6f6;
   color: #444;
-  font-family: "Franklin Gothic Book", "Calibri", Helvetica, Arial, sans-serif;
-  font-size: 1em;
-  line-height: 150%;
+  font-family: Garamond, “Hoefler Text”, Palatino, “Palatino Linotype”, serif;
+  font-size: 125%;
+  line-height: 165%;
 }
 
-/**
-* Layout
-*/
-
-#header {
-  margin: 0.25em 0 0 26%;
-  min-width: 25%;
-}
-
-#footer {
-  margin: 2em 0 0 0;
-  padding: 1em 0 3em 0;
-}
-
-#sidebar-first .section {
-  margin: 2.65em 1em 0 0;
-}
-
-#sidebar-second .section {
-  margin: 2.65em 0 0 1em;
-}
-
-#content {
-  margin-top: 0;
-}
-.front #content {
+#page-wrapper {
   margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+.front #content .section {
+  padding-top: 1.5em;
+}
+
+#content .section {
+  border-top: #ddd 1px solid;
 }
 
 /**
@@ -51,39 +38,36 @@ h4,
 h5,
 h6,
 #site-name,
-#site-slogan,
+div#site-slogan,
 .pager {
   color: #444;
   font-family: Palatino, "Hoefler Text", "Palatino Linotype", serif;
   font-weight: normal;
-  margin: 0.25em 0 0.25em 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 0.25em 0 0.25em 0;
 }
 
 h1,
 #site-name {
-  font-size: 1.5em;
-  line-height: 100%;
-  margin: 0.2em 0;
+  font-size: 2.125em;
+  padding: 1.43372em 0;
 }
 
 h1#page-title {
-  font-size: 3.5em;
-  margin: 0.25em 0 0.25em;
 }
 
 h2 {
-  font-size: 2em;
-  line-height: 120%;
+  font-size: 1.625em;
+  padding: 1.29795em 0;
 }
 
 h3 {
-  font-size: 1.5em;
+  font-size: 1.3125em;
+  padding: 1.27968em 0;
 }
 
-h4 {
-  font-size: 1.25em;
-}
-
+h4,
 h5,
 h6 {
   font-size: 100%;
@@ -93,14 +77,10 @@ p,
 ul,
 ol,
 table {
-  margin: 0.25em 0 1em;
+  margin-bottom: 1em;
 }
 
 li {
-  list-style: circle;
-}
-
-.menu li {
   list-style: none;
 }
 
@@ -110,13 +90,7 @@ li {
 a:link,
 li a.active,
 a:visited {
-  color: #0D95B7;
-}
-
-#header a,
-#navigation a,
-#main h2 a,
-.menu a {
+  color: #0d95b7;
   text-decoration: none;
 }
 
@@ -125,12 +99,8 @@ li a.active:hover {
   text-decoration: underline;
 }
 
-.content a:hover {
-  background-color: #fff;
-}
-
 /**
-* Header
+* Header stuff
 */
 #skip-link {
   text-indent: -9999px;
@@ -141,33 +111,38 @@ li a.active:hover {
   margin: 0 0 1em 17%;
 }
 
+
+a#logo {
+  float: left;
+  margin-right: 1em;
+}
+
 #site-name {
-  font-size: 2.5em;
-  font-weight: normal;
-  font-style: italic;
-  margin: 0;
+  float: left;
+  font-size: 100%;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin: 0 0.8em 0 0;
   padding: 0.125em 0 0 0;
-  letter-spacing: -0.05em;
 }
 
 #site-name a:link,
 #site-name a:visited {
+  color: #444;
   font-weight: normal;
 }
 
 #site-name a:hover {
-  color: #0D95B7;
+  color: #0d95b7;
   text-decoration: none;
 }
 
-a#logo {
-
-  margin: 1em 0;
-}
-
-#site-slogan {
+div#site-slogan {
+  float: left;
+  font-style: italic;
+  font-size: 80%;
   padding: 0;
-  margin: 0.5em 0;
+  margin: 0.09em 1em 0 0;
 }
 
 .region-header #block-search-form {
@@ -180,86 +155,74 @@ a#logo {
 * Navigation
 */
 #navigation {
-  font-size: 125%;
-  font-family: Garamond, "Hoefler Text", Palatino, "Palatino Linotype", serif;
-  margin: 0.5em 0 0.5em 25%;
+  margin: 0.25em 0;
+  padding-bottom: 0.5em;
 }
 
 #navigation ul#main-menu {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  border-radius: 6px;
-  -moz-border-radius: 6px;
-  -webkit-border-radius: 6px;
 }
 
 #navigation ul#main-menu li {
-  border-bottom: #ddd 2px solid;
   float: left;
   list-style: none;
-  margin: 0.25em 0;
-  padding: 0.125em 0.5em;
+  margin: 0 0.5em 0 -0.25em;
+  padding: 0 0.25em;
 }
 
 #navigation ul#main-menu li:hover {
-  background-color: #0D95B7;
+  background-color: #0d95b7;
 }
 
 #navigation ul#main-menu li a {
   display: block;
   padding: 0.25em 0;
-  text-decoration: none;
 }
 
-#navigation ul#main-menu li:hover a,
-#navigation ul#main-menu li a:hover {
+#navigation ul#main-menu li:hover a {
   color: #fff;
-  background-color: #0D95B7;
 }
 
-#navigation ul#main-menu li.active,
-#navigation ul#main-menu li.active a,
-#navigation ul#main-menu li.active:hover,
-#navigation ul#main-menu li.active a:hover {
-  background-color: #f6f6f6;
-  color: #000;
+#navigation ul#main-menu li a:hover {
+  text-decoration: none;
+  color: #fff;
 }
 
-#navigation ul#main-menu li.active,
-#navigation ul#main-menu li:hover,
-#navigation ul#main-menu li.active:hover {
-  border-bottom: #0D95B7 2px solid;
+#navigation ul#main-menu li.active {
+ background-color: #f6f6f6;
+ color: #444;
 }
 
-#navigation ul#main-menu li.active:hover,
-#navigation ul#main-menu li.active:hover a,
-#navigation ul#main-menu li.active a:hover {
-  background-color: #fff;
+#navigation ul#main-menu li.active a {
+  color: #444;
 }
+
 
 /**
-* Node styling
+* Nodes
 */
 div.meta,
 #comments .submitted {
 }
 
 div.meta {
-  margin: 0.5em 0 0 0;
+  margin:  0 0 1em;
 }
 
 .node .submitted,
 .field-type-taxonomy-term-reference {
   font-family: Palatino, "Hoefler Text", "Palatino Linotype", serif;
-  font-size: 75%;
+  font-size: 0.667em;
+  text-transform: uppercase;
   letter-spacing: 1px;
 }
 
 .front .node-sticky {
   background-color: #fff;
   padding: 1em;
-  margin: -1em;
+  margin: 0 -1em;
 }
 
 .front .node-sticky h2 {
@@ -267,7 +230,7 @@ div.meta {
 
 ul.tips {
   color: #666;
-  font-size: 0.75em;
+  font-size: 0.667em;
 }
 
 div.meta div.terms ul.links {
@@ -275,7 +238,11 @@ div.meta div.terms ul.links {
 }
 
 #block-system-main .node {
-  margin-bottom: 4em;
+  margin-bottom: 2.5em;
+}
+
+.node-unpublished {
+    background-color: transparent;
 }
 
 /**
@@ -302,10 +269,11 @@ div.meta div.terms ul.links {
 }
 
 .sidebar .block h2 {
+  color: #666;
   font-size: 100%;
   font-style: normal;
   letter-spacing: 1px;
-  padding: 0.65em 0.5em 0;
+  padding: 0.65em 0.5em 0.25em 0.5em;
   text-transform: uppercase;
 }
 
@@ -315,7 +283,7 @@ div.meta div.terms ul.links {
 
 .block ul {
   margin: 0;
-  padding: 0 0 1em 0;
+  padding: 0 0 0.5em 0;
 }
 
 #main-wrapper div.terms-inline ul.links li {
@@ -330,6 +298,11 @@ div.meta div.terms ul.links {
   border-radius: 4px;
   -moz-border-radius: 4px;
   -webkit-border-radius: 4px;
+}
+
+#block-user-login {
+  border-top: #0d95b7 2px solid;
+  margin-top: -2px
 }
 
 #block-system-powered-by {
@@ -366,7 +339,7 @@ div#first-time div.item-list ul li.first {
 div#first-time div.item-list ul li.first a {
   font-size: 150%;
   padding: 0.25em 0.75em;
-  background: #0D95B7;
+  background: #0d95b7;
   color: #fff;
   text-decoration: none;
   border-radius: 0.5em;
@@ -375,13 +348,14 @@ div#first-time div.item-list ul li.first a {
 }
 
 div#first-time div.item-list ul li.first a:hover {
+  text-decoration: underline;
 }
 
 /**
 * Menus
 */
 ul.menu li {
-  color: #0D95B7;
+  color: #0d95b7;
   margin: 0 0 0 1em;
 }
 
@@ -395,8 +369,8 @@ ul li.leaf {
   border-top: #ddd 1px solid;
   display: block;
   list-style: none;
-  padding: 0;
-  margin: 0;
+  padding: 0.25em 0 0 0;
+  margin: 0.5em 0;
 }
 
 #sidebar-first .block ul.menu li.first {
@@ -411,15 +385,14 @@ ul li.leaf {
 #sidebar-first .block ul.menu li a,
 #sidebar-second .block ul.menu li a {
   display: block;
-  padding: 0.5em;
+  padding: 0 0.5em;
 }
 
 #sidebar-first .block ul.menu li a:hover {
-  background-color: #fff;
+  text-decoration: underline;
 }
 
 #sidebar-first .block ul.menu li a.active {
-  background-color: transparent;
   color: #000;
 }
 
@@ -431,13 +404,20 @@ ul li.leaf {
 
 .node ul.links li,
 .comment ul.links li {
-  padding: 0.25em;
+  padding: 0.25em 0;
   margin: 0 1em 0 0;
+}
+
+.node ul.links a,
+.comment ul.links a {
+  color: #0d95b7;
+  text-transform: capitalize;
 }
 
 #navigation h2,
 #footer h2 {
-  display: none; 
+  display: none;
+  
 }
 
 /**
@@ -452,9 +432,9 @@ ul li.leaf {
 * Comments
 */
 #comments {
-  margin: 0 0 0 20%;
-  clear: both;
+  margin: 2em 0 0 0;
 }
+
 div.comment_wrapper {
   margin: 2em auto;
   padding: 1em;
@@ -466,17 +446,18 @@ div.comment_wrapper {
 
 div#comments h2.title,
 h2.comments {
-  font-size: 200%;
-  padding: 1em 0 0 0;
+  padding: 0.67em 0;
+  border-top: #ddd 1px solid;
+  border-bottom: #ddd 1px solid;
+  text-transform: uppercase;
 }
 
-div#comments h2.comments {
-  font-size: 2em;
+div#comments h2.title {
+  font-size: 85%;
 }
 
 div.comment {
-  border-top: #e7e7e7 1px solid;
-  padding: 1em 0 0 0;
+  padding: 2.5em 0 0 0;
 }
 
 span.new {
@@ -602,7 +583,7 @@ ul.primary li.active a {
 }
 
 ul.primary li:hover a {
-  background: #0D95B7 url(images/bg-shadow.png) repeat-x top left;
+  background: #0d95b7 url(images/bg-shadow.png) repeat-x top left;
   background-position: 0 -12px;
   color: #fff;
   text-decoration: none;
@@ -688,7 +669,8 @@ div.messages {
 }
 
 body.not-front .field-type-image {
-  margin: 0 1em 0.5em -12em;
+  float: right;
+  margin: 0 0 0.5em 1.5em;
 }
 
 .field-type-image img {
@@ -754,21 +736,15 @@ body.not-front .field-type-image {
 /*
  * default front page /node
  */
-.node .content h2 {
-  font-family: "Franklin Gothic", "Arial Narrow Bold", Arial, sans-serif;
-  font-size: 1.25em;
-  margin: 0.5em 0 1em 0;
-}
+.node-teaser h2 {
+} 
 
 form {
   margin: 1em 0;
 }
 
-input,
-form#contact-site-form .form-item {
-  line-height: 125%;
-  font-size: 125%;
-  max-width: 17em;
+.form-text {
+  line-height: 165%;
 }
 
 .form-actions {
@@ -776,7 +752,7 @@ form#contact-site-form .form-item {
 }
 
 .form-actions input {
-  font-size: 125%;
+  font-size: 115%;
   margin: 0.5em 1em 1em 0;
 }
 
@@ -792,27 +768,23 @@ form#contact-site-form .form-item {
   width: 26.75em;
 }
 
+.item-list .pager {
+  text-align: left;
+}
+
 .item-list .pager li {
-  background-color: #ddd;
   margin: 0 0.25em 0 0;
   padding: 0.25em 0.5em;
+  border-radius: 6px;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
 }
 
 .pager li:hover,
-.pager li:hover a {
-  background-color: #0D95B7;
-  color: #fff;
-}
-
+.pager li:hover a,
 .pager li.pager-current {
-  background-color: transparent;
-  color: #444;
-}
-
-.pager li.pager-current:hover,
-.pager li.pager-current:hover a {
-  background-color: transparent;
-  color: #444;
+  background-color: #0d95b7;
+  color: #fff;
 }
 
 .book-navigation {
@@ -823,22 +795,8 @@ form#contact-site-form .form-item {
   overflow: hidden;
 }
 
-#block-node-recent td {
-  padding-left: 0.5em;
-  padding-right: 0.5em;
-}
-
 .edit,
 .delete,
 .block .node-author {
   font-size: 85%;
-}
-
-.more-link {
-  margin: 0 0 0 0.5em;
-  text-align: left;
-}
-
-#user-login-form {
-  margin-left: 0.5em;
 }

@@ -23,6 +23,32 @@ require_once(DRUPAL_ROOT . '/' . drupal_get_path('module', 'print') . '/print.pa
 function print_mail_form($form, &$form_state) {
   global $user;
 
+  // Remove the printmail/ prefix
+  $path_arr = explode('/', $_GET['q']);
+  unset($path_arr[0]);
+  $path = implode('/', $path_arr);
+  if (empty($path)) {
+    // If no path was provided, let's try to generate a page for the referer
+    global $base_url;
+
+    $ref = $_SERVER['HTTP_REFERER'];
+    $path = preg_replace("!^$base_url/!", '', $ref);
+    if (($path === $ref) || empty($path)) {
+      $path = variable_get('site_frontpage', 'node');
+    }
+    drupal_goto(PRINTMAIL_PATH . '/' . $path);
+  }
+  else if (ctype_digit($path_arr[1])) {
+    if (drupal_lookup_path('source', $path)) {
+      // This is a numeric alias
+      $path = drupal_get_normal_path($path);
+    }
+    else {
+      // normal nid
+      $path = 'node/' . $path;
+    }
+  }
+
   $print_mail_hourly_threshold = variable_get('print_mail_hourly_threshold', PRINT_MAIL_HOURLY_THRESHOLD);
 
   if ((!user_access('administer print')) && (!flood_is_allowed('print_mail', $print_mail_hourly_threshold))) {
@@ -37,20 +63,6 @@ function print_mail_form($form, &$form_state) {
   $print_mail_teaser_choice = variable_get('print_mail_teaser_choice', PRINT_MAIL_TEASER_CHOICE_DEFAULT);
   $form = array();
 
-  // Remove the printmail/ prefix
-  $path_arr = explode('/', $_GET['q']);
-  unset($path_arr[0]);
-  $path = implode('/', $path_arr);
-  if (ctype_digit($path_arr[1])) {
-    if (drupal_lookup_path('source', $path)) {
-      // This is a numeric alias
-      $path = drupal_get_normal_path($path);
-    }
-    else {
-      // normal nid
-      $path = 'node/' . $path;
-    }
-  }
   $cid = isset($_GET['comment']) ? (int)$_GET['comment'] : NULL;
   $title = _print_get_title($path);
 
@@ -62,7 +74,7 @@ function print_mail_form($form, &$form_state) {
           'totalcount' => 1,
           'timestamp' => REQUEST_TIME,
       ))
-      ->expression('totalcount', 'totalcount + :inc', array(':inc' => 1))
+      ->expression('totalcount', 'totalcount + 1')
       ->execute();
   }
 
@@ -99,7 +111,7 @@ function print_mail_form($form, &$form_state) {
     $form['fld_title'] = array(
       '#type' => 'item',
       '#title' => t('Page to be sent'),
-      '#markup' => l($title, $path, array('attributes' => array('title' => t('View page')))),
+      '#markup' => l(t($title), $path, array('attributes' => array('title' => t('View page')))),
     );
   }
   $form['txt_message'] = array(
@@ -248,7 +260,7 @@ function print_mail_form_validate($form, &$form_state) {
 function print_mail_form_submit($form, &$form_state) {
   if (!array_key_exists('cancel', $form_state['values'])) {
     if (!empty($form_state['values']['fld_from_name'])) {
-      $from = '"' . $form_state['values']['fld_from_name'] . '" <' . $form_state['values']['fld_from_addr'] . '>';
+      $from = '"' . mime_header_encode($form_state['values']['fld_from_name']) . '" <' . $form_state['values']['fld_from_addr'] . '>';
     }
     else {
       $from = $form_state['values']['fld_from_addr'];

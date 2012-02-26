@@ -30,14 +30,14 @@ function print_controller_html() {
     drupal_send_headers();
     print $html;
 
-    $nodepath = (isset($node->path)) ? drupal_get_normal_path($node->path) : 'node/' . $path;
+    $nodepath = (isset($node->path) && is_string($node->path)) ? drupal_get_normal_path($node->path) : 'node/' . $path;
     db_merge('print_page_counter')
       ->key(array('path' => $nodepath))
       ->fields(array(
           'totalcount' => 1,
           'timestamp' => REQUEST_TIME,
       ))
-      ->expression('totalcount', 'totalcount + :inc', array(':inc' => 1))
+      ->expression('totalcount', 'totalcount + 1')
       ->execute();
   }
 }
@@ -71,19 +71,20 @@ function print_controller($path, $cid = NULL, $format = PRINT_HTML_FORMAT, $teas
 
     $ref = $_SERVER['HTTP_REFERER'];
     $path = preg_replace("!^$base_url/!", '', $ref);
-    if ($path === $ref) {
-      $path = '';
+    if (($path === $ref) || empty($path)) {
+      $path = variable_get('site_frontpage', 'node');
     }
   }
   if ($alias = drupal_lookup_path('source', $path)) {
     // Indirect call with print/alias
     // If there is a path alias with these arguments, generate a printer-friendly version for it
-    $ret = preg_match('!^node/(.*)!i', $alias, $matches);
-    if ($ret == 1) {
-      $path = $matches[1];
-    }
+    $path = $alias;
   }
   $parts = explode('/', $path);
+  if (($parts[0] == 'node') && (count($parts) > 1)) {
+    array_shift($parts);
+    $path = implode('/', $parts);
+  }
   if (ctype_digit($parts[0]) && (count($parts) == 1)) {
     $print = _print_generate_node($path, $cid, $format, $teaser, $message);
   }
@@ -173,6 +174,7 @@ function _print_var_generator($node, $message = NULL, $cid = NULL) {
     drupal_add_js('misc/drupal.js', array('weight' => JS_LIBRARY));
   }
   $print['scripts'] = drupal_get_js();
+  $print['footer_scripts'] = drupal_get_js('footer');
   $print['robots_meta'] = _print_robots_meta_generator();
   $print['url'] = url($path, array('absolute' => TRUE));
   $print['base_href'] = "<base href='" . $print['url'] . "' />\n";
@@ -230,7 +232,8 @@ function _print_var_generator($node, $message = NULL, $cid = NULL) {
       $footer = '';
       break;
     case 1: // theme's
-      $footer = variable_get('site_footer', FALSE) . "\n" . drupal_render(block_get_blocks_by_region('footer'));
+      $footer_blocks = block_get_blocks_by_region('footer');
+      $footer = variable_get('site_footer', FALSE) . "\n" . drupal_render($footer_blocks);
       break;
     case 2: // user-specifed
       $footer = $print_footer_user;

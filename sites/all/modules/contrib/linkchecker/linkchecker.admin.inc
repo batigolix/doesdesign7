@@ -12,14 +12,14 @@ function linkchecker_admin_settings_form($form_state) {
     '#title' => t('General settings'),
     '#collapsible' => FALSE,
   );
-  //FIXME: node_type_get_names() can return an empty array!?
+  // @todo node_type_get_names() can return an empty array!?
   $names = node_type_get_names();
   $form['settings']['linkchecker_scan_nodetypes'] = array(
     '#type' => 'checkboxes',
-    '#title' => t('Scan node types for links'),
+    '#title' => t('Scan content types for links'),
     '#default_value' => variable_get('linkchecker_scan_nodetypes', array()),
     '#options' => array_map('check_plain', $names),
-    '#description' => t('Enable link checking for the selected node type(s).'),
+    '#description' => t('Enable link checking for the selected content type(s).'),
   );
 
   $comment_dependencies = '<div class="admin-dependencies">';
@@ -30,7 +30,7 @@ function linkchecker_admin_settings_form($form_state) {
     '#default_value' => variable_get('linkchecker_scan_comments', 0),
     '#type' => 'checkbox',
     '#title' => t('Scan comments for links'),
-    '#description' => t('Enable this checkbox if links in comments of the above selected node type(s) should be checked.') . $comment_dependencies,
+    '#description' => t('Enable this checkbox if links in comments of the above selected content type(s) should be checked.') . $comment_dependencies,
     '#disabled' => module_exists('comment') ? FALSE : TRUE,
   );
 
@@ -45,11 +45,16 @@ function linkchecker_admin_settings_form($form_state) {
     '#description' => t('Enable this checkbox if links in blocks should be checked.') . $block_custom_dependencies,
     '#disabled' => module_exists('block') ? FALSE : TRUE,
   );
-  $form['settings']['linkchecker_fqdn_only'] = array(
-    '#default_value' => variable_get('linkchecker_fqdn_only', 1),
-    '#type' => 'checkbox',
-    '#title' => t('Check full qualified domain names only'),
-    '#description' => t('Enable this checkbox if only full qualified URLs (http://example.com/foo/bar) should be checked. If unchecked, all internal (/node/123) and external (http://example.com/foo/bar) URLs will be checked.')
+  $form['settings']['linkchecker_check_links_types'] = array(
+    '#type' => 'select',
+    '#title' => t('What type of links should be checked?'),
+    '#description' => t('A full qualified link (http://example.com/foo/bar) to a page is considered external, whereas an absolute (/foo/bar) or relative link (node/123) without a domain is considered internal.'),
+    '#default_value' => variable_get('linkchecker_check_links_types', 1),
+    '#options' => array(
+      '0' => t('Internal and external'),
+      '1' => t('External only (http://example.com/foo/bar)'),
+      '2' => t('Internal only (node/123)'),
+    ),
   );
 
   $form['tag'] = array(
@@ -66,8 +71,8 @@ function linkchecker_admin_settings_form($form_state) {
   $form['tag']['linkchecker_extract_from_audio'] = array(
     '#default_value' => variable_get('linkchecker_extract_from_audio', 0),
     '#type' => 'checkbox',
-    '#title' => t('Extract links in <code>&lt;audio&gt;</code> tags'),
-    '#description' => t('Enable this checkbox if links in audio tags should be extracted. The audio element is used to embed sound content.'),
+    '#title' => t('Extract links in <code>&lt;audio&gt;</code> tags including their <code>&lt;source&gt;</code> and <code>&lt;track&gt;</code> tags'),
+    '#description' => t('Enable this checkbox if links in audio tags should be extracted. The audio element is used to embed audio content.'),
   );
   $form['tag']['linkchecker_extract_from_embed'] = array(
     '#default_value' => variable_get('linkchecker_extract_from_embed', 0),
@@ -96,15 +101,20 @@ function linkchecker_admin_settings_form($form_state) {
   $form['tag']['linkchecker_extract_from_video'] = array(
     '#default_value' => variable_get('linkchecker_extract_from_video', 0),
     '#type' => 'checkbox',
-    '#title' => t('Extract links in <code>&lt;video&gt;</code> tags'),
-    '#description' => t('Enable this checkbox if links in video tags should be extracted. The video element is used in to embed video content.'),
+    '#title' => t('Extract links in <code>&lt;video&gt;</code> tags including their <code>&lt;source&gt;</code> and <code>&lt;track&gt;</code> tags'),
+    '#description' => t('Enable this checkbox if links in video tags should be extracted. The video element is used to embed video content.'),
   );
 
   // Get all filters available on the system.
   $filter_info = filter_get_filters();
   $filter_options = array();
   foreach ($filter_info as $name => $filter) {
-    $filter_options[$name] = $filter['title'];
+    if (in_array($name, explode('|', LINKCHECKER_DEFAULT_FILTER_BLACKLIST))) {
+      $filter_options[$name] = t('!title <span class="form-required">(Recommended)</span>', array('!title' => $filter['title']));
+    }
+    else {
+      $filter_options[$name] = $filter['title'];
+    }
   }
   $form['tag']['linkchecker_filter_blacklist'] = array(
     '#type' => 'checkboxes',
@@ -117,7 +127,7 @@ function linkchecker_admin_settings_form($form_state) {
   $form['check'] = array(
     '#type' => 'fieldset',
     '#title' => t('Check settings'),
-    //'#description' => t('For simultaneous link checks it is highly recommended to install the <a href="@curl">cURL</a> library. This may be <strong>necessary</strong> on larger sites with very many links, but may still improve (speed up), link checking performance on smaller sites.', array('@curl' => 'http://www.php.net/manual/en/book.curl.php')),
+    // '#description' => t('For simultaneous link checks it is highly recommended to install the <a href="@curl">cURL</a> library. This may be <strong>necessary</strong> on larger sites with very many links, but may still improve (speed up), link checking performance on smaller sites.', array('@curl' => 'http://www.php.net/manual/en/book.curl.php')),
     '#collapsible' => FALSE,
   );
   $form['check']['linkchecker_check_useragent'] = array(
@@ -153,7 +163,6 @@ function linkchecker_admin_settings_form($form_state) {
     '#type' => 'textarea',
     '#title' => t('Do not check the link status of links containing these URLs'),
     '#description' => t('By default this list contains the domain names reserved for use in documentation and not available for registration. See <a href="@rfc-2606">RFC 2606</a>, Section 3 for more information. URLs on this list are still extracted, but the link setting <em>Check link status</em> becomes automatically disabled to prevent false alarms. If you change this list you need to clear all link data and re-analyze your content. Otherwise this setting will only affect new links added after the configuration change.', array('@rfc-2606' => 'http://www.rfc-editor.org/rfc/rfc2606.txt')),
-    '#wysiwyg' => FALSE,
   );
 
   $form['error'] = array(
@@ -164,7 +173,7 @@ function linkchecker_admin_settings_form($form_state) {
   );
   $form['error']['linkchecker_action_status_code_301'] = array(
     '#title' => t('Update permanently moved links'),
-    '#description' => t('If enabled, outdated links in content providing a status <em>Moved Permanently</em> (status code 301) are automatically updated to the most recent URL. If used, it is recommended to use a value of <em>three</em> to make sure this is not only a temporarily change. This feature trust sites to provide a valid permanent redirect. A new node revision is automatically created on link updates if <em>create new revision</em> is enabled in the <a href="@node_types">node type</a> workflow settings. It is recommended to create new revisions for all link checker enabled node types. Link updates are nevertheless always logged in <a href="@dblog">recent log entries</a>.', array('@dblog' => url('admin/reports/dblog'), '@node_types' => url('admin/content/types'))),
+    '#description' => t('If enabled, outdated links in content providing a status <em>Moved Permanently</em> (status code 301) are automatically updated to the most recent URL. If used, it is recommended to use a value of <em>three</em> to make sure this is not only a temporarily change. This feature trust sites to provide a valid permanent redirect. A new content revision is automatically created on link updates if <em>create new revision</em> is enabled in the <a href="@content_types">content types</a> publishing options. It is recommended to create new revisions for all link checker enabled content types. Link updates are nevertheless always logged in <a href="@dblog">recent log entries</a>.', array('@dblog' => url('admin/reports/dblog'), '@content_types' => url('admin/structure/types'))),
     '#type' => 'select',
     '#default_value' => variable_get('linkchecker_action_status_code_301', 0),
     '#options' => array(
@@ -177,8 +186,8 @@ function linkchecker_admin_settings_form($form_state) {
     ),
   );
   $form['error']['linkchecker_action_status_code_404'] = array(
-    '#title' => t('Unpublish node on file not found error'),
-    '#description' => t('If enabled, a node with one or more broken links (status code 404) will be unpublished and moved to moderation queue for review after the number of specified fails. If used, it is recommended to use a value of <em>three</em> to make sure this is not only a temporarily error.'),
+    '#title' => t('Unpublish content on file not found error'),
+    '#description' => t('If enabled, content with one or more broken links (status code 404) will be unpublished and moved to moderation queue for review after the number of specified checks failed. If used, it is recommended to use a value of <em>three</em> to make sure this is not only a temporarily error.'),
     '#type' => 'select',
     '#default_value' => variable_get('linkchecker_action_status_code_404', 0),
     '#options' => array(
@@ -191,27 +200,26 @@ function linkchecker_admin_settings_form($form_state) {
     ),
   );
   $form['error']['linkchecker_ignore_response_codes'] = array(
-    '#default_value' => variable_get('linkchecker_ignore_response_codes', "200\n302\n304\n401\n403"),
+    '#default_value' => variable_get('linkchecker_ignore_response_codes', "200\n206\n302\n304\n401\n403"),
     '#type' => 'textarea',
     '#title' => t("Don't treat these response codes as errors"),
     '#description' => t('One HTTP status code per line, e.g. 403.'),
-    '#wysiwyg' => FALSE,
   );
 
   // Buttons are only required for testing and debugging reasons.
-  $description = '<p>' . t('These actions will either clear all link checker tables in the database and/or analyze all selected node types, blocks and cck fields (see settings above) for new/updated/removed links. Normally there is no need to press one of these buttons. Use this only for immediate cleanup tasks and to force a full re-build of the links to be checked in the linkchecker tables. Keep in mind that all custom link settings will be lost!') . '</p>';
+  $description = '<p>' . t('These actions will either clear all link checker tables in the database and/or analyze all selected content types, blocks and fields (see settings above) for new/updated/removed links. Normally there is no need to press one of these buttons. Use this only for immediate cleanup tasks and to force a full re-build of the links to be checked in the linkchecker tables. Keep in mind that all custom link settings will be lost if you clear link data!') . '</p>';
   $description .= '<p>' . t('<strong>Note</strong>: These functions ONLY collect the links, they do not evaluate the HTTP response codes, this will be done during normal cron runs.') . '</p>';
 
   $form['clear'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Clear link data'),
+    '#title' => t('Maintenance'),
     '#description' => $description,
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
   );
   $form['clear']['linkchecker_analyze'] = array(
     '#type' => 'submit',
-    '#value' => t('Analyze content for links'),
+    '#value' => t('Reanalyze content for links'),
     '#submit' => array('linkchecker_analyze_links_submit'),
   );
   $form['clear']['linkchecker_clear_analyze'] = array(
@@ -249,7 +257,8 @@ function linkchecker_admin_settings_form_submit($form, &$form_state) {
   // Save form settings.
   system_settings_form_submit($form, $form_state);
 
-  // Re-scan items, if node types or comment or block selection have been changed.
+  // Re-scan items, if node types or comment or custom block selection has been
+  // changed.
   $additional_nodetypes_selected = array_diff($form_state['values']['linkchecker_scan_nodetypes'], $form['settings']['linkchecker_scan_nodetypes']['#default_value']);
   if (!empty($additional_nodetypes_selected) || $form_state['values']['linkchecker_scan_comments'] > $form['settings']['linkchecker_scan_comments']['#default_value']) {
     $node_types = array_keys(array_filter($form_state['values']['linkchecker_scan_nodetypes']));
@@ -274,8 +283,7 @@ function linkchecker_admin_settings_form_submit($form, &$form_state) {
 }
 
 /**
- * Submit callback; Analyze all node types, comments, custom blocks and
- * cck fields.
+ * Submit callback; Analyze fields in all node types, comments, custom blocks.
  */
 function linkchecker_analyze_links_submit($form, &$form_state) {
   // Exclude unnecessary elements.
@@ -301,8 +309,7 @@ function linkchecker_analyze_links_submit($form, &$form_state) {
 }
 
 /**
- * Submit callback; Clear link data and analyze all node types, comments,
- * custom blocks and cck fields.
+ * Submit callback; Clear link data and analyze fields in all content types, comments, custom blocks.
  */
 function linkchecker_clear_analyze_links_submit($form, &$form_state) {
   // Exclude unnecessary elements.
