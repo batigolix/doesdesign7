@@ -1,0 +1,145 @@
+/* List styles. */
+ul, ol {
+  margin-left: 0;
+  padding-left: 2em; }
+
+/* Table styles. */
+table {
+  width: 99%; }
+
+tr.even td,
+tr.odd td {
+  padding: 10px 5px; }
+
+tr.odd {
+  background-color: white; }
+
+/* Code. */
+pre, code, tt {
+  font: 1em "andale mono", "lucida console", monospace;
+  line-height: 1.5; }
+
+pre {
+  background-color: #efefef;
+  display: block;
+  padding: 5px;
+  margin: 5px 0;
+  border: 1px solid #aaaaaa; }
+
+/* List styles. */
+ul {
+  list-style-type: disc; }
+  ul ul {
+    list-style-type: circle; }
+    ul ul ul {
+      list-style-type: square; }
+      ul ul ul ul {
+        list-style-type: circle; }
+
+ol {
+  list-style-type: decimal; }
+  ol ol {
+    list-style-type: lower-alpha; }
+    ol ol ol {
+      list-style-type: decimal; }
+
+/* Abbreviation. */
+abbr {
+  border-bottom: 1px dotted #666666;
+  cursor: help;
+  white-space: nowrap; }
+
+/* UI improvments. */
+#edit-title {
+  font-size: 24px;
+  width: 99%; }
+
+#system-themes-form img {
+  width: 100px; }
+
+.form-item .description {
+  font-style: italic;
+  line-height: 1.2em;
+  font-size: 0.8em;
+  margin-top: 5px;
+  color: #777777; }
+
+#edit-delete {
+  color: #cc0000; }
+
+/* Console, style from slate theme. */
+div.messages {
+  padding: 9px;
+  margin: 1em 0;
+  color: #003366;
+  background: #bbddff;
+  border: 1px solid #aaccee; }
+
+div.warning {
+  color: #884400;
+  background: #ffee66;
+  border-color: #eedd55; }
+
+div.error {
+  color: white;
+  background: #ee6633;
+  border-color: #dd5522; }
+
+div.status {
+  color: #336600;
+  background: #ccff88;
+  border-color: #bbee77; }
+
+/* custom style boris   */
+#site-name, #site-slogan, h1, h2, h3, h4, h5, h6 {
+  font-family: "Fredoka One", cursive;
+  font-weight: normal;
+  text-shadow: 0 1px 1px white, 0 -1px #cccccc; }
+
+#header {
+  border-top: 10px solid #b7d7d5;
+  border-bottom: 1px dotted #cccccc;
+  height: 140px;
+  margin-bottom: 40px; }
+
+#site-name {
+  text-transform: uppercase;
+  font-size: 2.2em;
+  font-weight: bold;
+  line-height: 1.3em;
+  padding: 0;
+  margin: 20px 0 0 0;
+  letter-spacing: 0.1em; }
+  #site-name a, #site-name a:hover, #site-name a:active, #site-name a:link, #site-name a:visited {
+    border-top: 5px solid #333333;
+    text-decoration: none;
+    padding: 4px 0; }
+
+#site-slogan {
+  font-size: 1.5em;
+  color: #b7d7d5; }
+
+#skip {
+  display: none; }
+
+body {
+  background: url(../images/bg-body.jpg); }
+
+.node-type-object .field-type-image .field-item {
+  display: inline; }
+  .node-type-object .field-type-image .field-item img {
+    border: 10px #eeeeee solid;
+    border-bottom: 40px #eeeeee solid;
+    margin: 0 14px 0 0;
+    padding: 2px;
+    -moz-box-shadow: 0px 1px 2px #111111;
+    -webkit-box-shadow: 0px 1px 2px #111111;
+    box-shadow: 0px 1px 2px #111111;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color')";
+    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color');
+    border-radius: 4px 10px 4px 10px;
+    -moz-border-radius: 4px 10px 4px 10px;
+    -webkit-border-top-left-radius: 4px;
+    -webkit-border-top-right-radius: 10px;
+    -webkit-border-bottom-left-radius: 4px;
+    -webkit-border-bottom-right-radius: 10px; }
