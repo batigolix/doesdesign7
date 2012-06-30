@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the doesdesign feature.
+ */
+
+include_once 'doesdesign.features.inc';
