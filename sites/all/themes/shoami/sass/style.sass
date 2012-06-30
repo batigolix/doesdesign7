@@ -98,7 +98,7 @@ div.status
 /* custom style boris   */
 
 #site-name, #site-slogan, h1, h2, h3, h4, h5, h6
-  font-family: 'Fredoka One', cursive
+  font-family: 'Fredoka One', Georgia, serif, cursive
   font-weight: normal
   text-shadow: 0 1px 1px #FFFFFF, 0 -1px #CCC
 
@@ -116,11 +116,12 @@ div.status
   padding: 0
   margin: 20px 0 0 0
   letter-spacing: 0.1em
-  a, a:hover, a:active, a:link, a:visited
-    border-top: 5px solid #333
-    text-decoration: none
-    padding: 4px 0
-
+  a
+    &:hover, &:active, &:link, &:visited
+      border-top: 5px solid #333
+      text-decoration: none
+      padding: 4px 0
+ 
 #site-slogan
   font-size: 1.5em
   color: #B7D7D5
@@ -131,6 +132,7 @@ div.status
 body
   background: url(../images/bg-body.jpg)
   
+.page-taxonomy .views-field-field-image,
 .node-type-object .field-type-image .field-item
   display: inline
   img
@@ -139,4 +141,81 @@ body
     margin: 0 14px 0 0
     padding: 2px  
     @include shadow(#111111)
-    @include rounded_corners(4px)
+    @include rounded_corners(4px, 4px)
+    
+.grid-4 
+  .col-1, .col-2, .col-3, .col-4
+    width: 160px
+    float: left
+    display: inline    
+
+// make decent css code for display text on top of image
+.view-taxonomy-term
+  .views-field
+    position: relative
+    .views-field-image
+      top: 0px
+    .views-field-title
+      top: 20px
+    h2
+      font-size: 1.4em
+      line-height: 1.4em
+    a
+      text-decoration: none
+      .views-field-body
+        top: 60px
+
+#content-top-1
+  .menu
+    margin: 0
+    padding: 0
+    li
+      margin: 0
+      padding: 0
+      float: left
+      list-style: none
+      a
+        color: #000
+      .leaf
+        color: #000
+
+/* pager css style from http://woork.blogspot.be/2008/03/perfect-pagination-style-using-css.html */
+
+// todo make again. this code doesnt work
+
+.pager 
+  li
+    border: 0 
+    margin: 0 0 0 2px
+    padding: 0 
+    font-size: 11px
+    list-style: none
+  a
+    border: solid 1px #9aafe5
+    margin:  0 0 0 2px
+    &:link, &:visited
+      color: #0e509e
+      display: block
+      float: left
+      padding: 3px 6px
+      text-decoration: none
+    &:hover
+      border: solid 1px #0e509e
+  .next, .previous 
+    a
+      font-weight: bold
+  .previous-off, .next-off
+    border: solid 1px #DEDEDE
+    color: #888888
+    display: block
+    float: left
+    font-weight: bold
+    margin-right: 2px
+    padding: 3px 4px
+  .active, .pager-current
+    background: #2e6ab1
+    color: #FFFFFF
+    font-weight: bold
+    display: block
+    float: left
+    padding: 4px 6px

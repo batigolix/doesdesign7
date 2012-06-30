@@ -32,9 +32,9 @@ features[] = favicon
 features[] = main_menu
 features[] = secondary_menu
 
-stylesheets[all][] = skeleton/base.css
-stylesheets[all][] = skeleton/layout.css
-stylesheets[all][] = skeleton/skeleton.css
+stylesheets[all][] = skeleton-12-column/stylesheets/base.css
+stylesheets[all][] = skeleton-12-column/stylesheets/layout.css
+stylesheets[all][] = skeleton-12-column/stylesheets/skeleton.css
 stylesheets[all][] = css/style.css
 stylesheets[print][] = css/print.css
 

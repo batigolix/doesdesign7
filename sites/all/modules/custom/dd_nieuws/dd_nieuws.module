@@ -1,7 +1,0 @@
-<?php
-/**
- * @file
- * Code for the dd_nieuws feature.
- */
-
-include_once 'dd_nieuws.features.inc';

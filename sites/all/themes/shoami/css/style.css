@@ -92,7 +92,7 @@ div.status {
 
 /* custom style boris   */
 #site-name, #site-slogan, h1, h2, h3, h4, h5, h6 {
-  font-family: "Fredoka One", cursive;
+  font-family: "Fredoka One", Georgia, serif, cursive;
   font-weight: normal;
   text-shadow: 0 1px 1px white, 0 -1px #cccccc; }
 
@@ -110,7 +110,7 @@ div.status {
   padding: 0;
   margin: 20px 0 0 0;
   letter-spacing: 0.1em; }
-  #site-name a, #site-name a:hover, #site-name a:active, #site-name a:link, #site-name a:visited {
+  #site-name a:hover, #site-name a:active, #site-name a:link, #site-name a:visited {
     border-top: 5px solid #333333;
     text-decoration: none;
     padding: 4px 0; }
@@ -125,8 +125,10 @@ div.status {
 body {
   background: url(../images/bg-body.jpg); }
 
+.page-taxonomy .views-field-field-image,
 .node-type-object .field-type-image .field-item {
   display: inline; }
+  .page-taxonomy .views-field-field-image img,
   .node-type-object .field-type-image .field-item img {
     border: 10px #eeeeee solid;
     border-bottom: 40px #eeeeee solid;
@@ -137,9 +139,77 @@ body {
     box-shadow: 0px 1px 2px #111111;
     -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color')";
     filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color');
-    border-radius: 4px 10px 4px 10px;
-    -moz-border-radius: 4px 10px 4px 10px;
+    border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
     -webkit-border-top-left-radius: 4px;
-    -webkit-border-top-right-radius: 10px;
+    -webkit-border-top-right-radius: 4px;
     -webkit-border-bottom-left-radius: 4px;
-    -webkit-border-bottom-right-radius: 10px; }
+    -webkit-border-bottom-right-radius: 4px; }
+
+.grid-4 .col-1, .grid-4 .col-2, .grid-4 .col-3, .grid-4 .col-4 {
+  width: 160px;
+  float: left;
+  display: inline; }
+
+.view-taxonomy-term .views-field {
+  position: relative; }
+  .view-taxonomy-term .views-field .views-field-image {
+    top: 0px; }
+  .view-taxonomy-term .views-field .views-field-title {
+    top: 20px; }
+  .view-taxonomy-term .views-field h2 {
+    font-size: 1.4em;
+    line-height: 1.4em; }
+  .view-taxonomy-term .views-field a {
+    text-decoration: none; }
+    .view-taxonomy-term .views-field a .views-field-body {
+      top: 60px; }
+
+#content-top-1 .menu {
+  margin: 0;
+  padding: 0; }
+  #content-top-1 .menu li {
+    margin: 0;
+    padding: 0;
+    float: left;
+    list-style: none; }
+    #content-top-1 .menu li a {
+      color: black; }
+    #content-top-1 .menu li .leaf {
+      color: black; }
+
+/* pager css style from http://woork.blogspot.be/2008/03/perfect-pagination-style-using-css.html */
+.pager li {
+  border: 0;
+  margin: 0 0 0 2px;
+  padding: 0;
+  font-size: 11px;
+  list-style: none; }
+.pager a {
+  border: solid 1px #9aafe5;
+  margin: 0 0 0 2px; }
+  .pager a:link, .pager a:visited {
+    color: #0e509e;
+    display: block;
+    float: left;
+    padding: 3px 6px;
+    text-decoration: none; }
+  .pager a:hover {
+    border: solid 1px #0e509e; }
+.pager .next a, .pager .previous a {
+  font-weight: bold; }
+.pager .previous-off, .pager .next-off {
+  border: solid 1px #dedede;
+  color: #888888;
+  display: block;
+  float: left;
+  font-weight: bold;
+  margin-right: 2px;
+  padding: 3px 4px; }
+.pager .active, .pager .pager-current {
+  background: #2e6ab1;
+  color: white;
+  font-weight: bold;
+  display: block;
+  float: left;
+  padding: 4px 6px; }

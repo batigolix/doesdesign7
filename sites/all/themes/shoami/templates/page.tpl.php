@@ -1,5 +1,5 @@
 <div id="page" class="container <?php print $classes; ?>"<?php print $attributes; ?>>
-   <div id="header" class="sixteen columns clearfix">
+   <div id="header" class="twelve columns clearfix">
     <?php if ($logo): ?>
       <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" id="logo">
         <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>"/>
@@ -7,7 +7,7 @@
     <?php endif; ?>
 
     <?php if ($site_name || $site_slogan): ?>
-      <div id="name-and-slogan" class="eight columns alpha">
+      <div id="name-and-slogan" class="six columns alpha">
 
         <?php if ($site_name): ?>
           <?php if ($title): ?>
@@ -42,16 +42,16 @@
 
   </div> <!-- /header -->
 
-  <div id="content_top"  class="sixteen columns clearfix">
+  <div id="content_top"  class="twelve columns clearfix">
 
     <?php if ($page['content_top1']): ?>
-      <div id="content-top-1" class="ten columns alpha">
+      <div id="content-top-1" class="eight columns alpha">
         <?php print render($page['content_top1']); ?>
       </div>
     <?php endif; ?>
 
     <?php if ($page['content_top2']): ?>
-      <div id="content_top2" class="six columns omega">
+      <div id="content_top2" class="four columns omega">
         <?php print render($page['content_top2']); ?>
       </div>
     <?php endif; ?>
@@ -62,7 +62,7 @@
 
   <!-- ______________________ MAIN _______________________ -->
 
-  <div id="main" class="clearfix sixteen columns">
+  <div id="main" class="clearfix twelve columns">
 
     <div id="content">
       <div id="content-inner" class="inner column center">
@@ -110,36 +110,35 @@
       </div>
     <?php endif; ?> <!-- /sidebar-first -->
 
-  </div> <!-- /main -->
   
   <!-- bunch of pseudeo regions for the homepage. prevent using panels n shite -->
   
-    <div id="content_bot_row_1"  class="sixteen columns clearfix">
+    <div id="content_bot_row_1"  class="twelve columns clearfix">
     <?php if ($page['content_bot_row_1_1']): ?>
-      <div id="content-bot_row_1_1" class="ten columns alpha">
+      <div id="content-bot_row_1_1" class="eight columns alpha">
         <?php print render($page['content_bot_row_1_1']); ?>
       </div>
     <?php endif; ?>
     <?php if ($page['content_bot_row_1_2']): ?>
-      <div id="content_bot_row_1_2" class="six columns omega">
+      <div id="content_bot_row_1_2" class="four columns omega">
         <?php print render($page['content_bot_row_1_2']); ?>
       </div>
     <?php endif; ?>
   </div>
 
-    <div id="content_bot_row_2"  class="sixteen columns clearfix">
+    <div id="content_bot_row_2"  class="twelve columns clearfix">
     <?php if ($page['content_bot_row_2_1']): ?>
-      <div id="content-bot_row_2_1" class="five columns alpha">
+      <div id="content-bot_row_2_1" class="four columns alpha">
         <?php print render($page['content_bot_row_2_1']); ?>
       </div>
     <?php endif; ?>
     <?php if ($page['content_bot_row_2_2']): ?>
-      <div id="content_bot_row_2_2" class="five columns">
+      <div id="content_bot_row_2_2" class="four columns">
         <?php print render($page['content_bot_row_2_2']); ?>
       </div>
     <?php endif; ?>
     <?php if ($page['content_bot_row_2_3']): ?>
-      <div id="content_bot_row_2_3" class="five columns omega">
+      <div id="content_bot_row_2_3" class="four columns omega">
         <?php print render($page['content_bot_row_2_3']); ?>
       </div>
     <?php endif; ?>
