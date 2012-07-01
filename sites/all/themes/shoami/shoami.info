@@ -1,5 +1,5 @@
 name = Shoami
-description = Shoami, ased on Basic starter theme for Drupal 7
+description = Shoami, based on Basic starter theme for Drupal 7
 screenshot = images/screenshot.gif
 core = "7.x"
 project = "basic"

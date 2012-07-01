@@ -92,8 +92,8 @@ div.status {
 
 /* custom style boris   */
 #site-name, #site-slogan, h1, h2, h3, h4, h5, h6 {
-  font-family: "Fredoka One", Georgia, serif, cursive;
-  font-weight: normal;
+  font-family: "Gentium Basic", Georgia, serif, cursive;
+  font-weight: 700;
   text-shadow: 0 1px 1px white, 0 -1px #cccccc; }
 
 #header {
