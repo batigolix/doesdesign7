@@ -129,9 +129,6 @@ div.status
 #skip
   display: none
   
-body
-  background: url(../images/bg-body.jpg)
-  
 .page-taxonomy .views-field-field-image,
 .node-type-object .field-type-image .field-item
   display: inline
@@ -164,20 +161,6 @@ body
       text-decoration: none
       .views-field-body
         top: 60px
-
-#content-top-1
-  .menu
-    margin: 0
-    padding: 0
-    li
-      margin: 0
-      padding: 0
-      float: left
-      list-style: none
-      a
-        color: #000
-      .leaf
-        color: #000
 
 /* pager css style from http://woork.blogspot.be/2008/03/perfect-pagination-style-using-css.html */
 
@@ -219,3 +202,33 @@ body
     display: block
     float: left
     padding: 4px 6px
+
+#block-system-main-menu 
+  font-family: 'Gentium Basic', Georgia, serif, cursive
+  font-weight: 700
+  @include opacity(70)
+  .menu
+    margin: 0
+    padding: 0
+    li
+      float: left
+      list-style: none
+      background: #000
+      @include shadow(#111111)
+      @include rounded_corners(4px, 4px)
+      padding: 6px 6px 9px 6px
+      margin: 0 6px 6px 0
+      &:hover
+        background: #fff
+      a
+        text-decoration: none
+        @include linkcolor(yellow)
+        padding: 6px
+        &:hover
+          color: #000
+
+body
+  background: url(../images/achtergr12.jpg)
+#main
+  background: url(../images/bg-body.jpg)
+  

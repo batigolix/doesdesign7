@@ -29,3 +29,14 @@
   box-shadow: 0px 1px 2px $color
   -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color')"
   filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color')
+  
+@mixin opacity($value)
+  opacity: #{"." + $value}
+  filter: alpha(opacity=$value)
+  -ms-filter: "alpha(opacity=$value)"
+  -khtml-opacity: #{"." + $value}
+  -moz-opacity: #{"." + $value}
+
+@mixin linkcolor($value: red)
+  &:hover, &:active, &:visited, &:link
+    color: $value
