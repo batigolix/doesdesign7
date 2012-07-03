@@ -35,7 +35,7 @@
 ?>
 
 
-<?php kpr($fields); ?>
+<?php // kpr($fields); ?>
 
 <div class="slide">
     <?php print $fields['field_image']->content; ?>
