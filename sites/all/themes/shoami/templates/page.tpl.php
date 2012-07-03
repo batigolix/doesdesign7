@@ -76,7 +76,7 @@
               <div id="highlight"><?php print render($page['highlight']) ?></div>
             <?php endif; ?>
 
-            <?php if ($title): ?>
+            <?php if ($title && !$is_front): ?>
               <h1 class="title"><?php print $title; ?></h1>
             <?php endif; ?>
 

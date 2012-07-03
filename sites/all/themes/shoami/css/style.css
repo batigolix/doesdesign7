@@ -236,8 +236,30 @@ div.status {
         #block-system-main-menu .menu li a:hover {
           color: black; }
 
+.view-toon-termen-soorten-objecten li {
+  font-size: 1.2em;
+  line-height: 1.3em; }
+
+.block .view .item-list li {
+  line-height: 1.3em;
+  margin-bottom: 10px; }
+.block .content h3 {
+  font-size: 1.2em; }
+
+.view-news .views-field-timestamp, .view-doesdesign-op-het-web .views-field-timestamp {
+  font-style: oblique; }
+
 body {
   background: url(../images/achtergr12.jpg); }
 
-#main {
-  background: url(../images/bg-body.jpg); }
+#page {
+  background: url(../images/bg-body.jpg);
+  -moz-box-shadow: 0px 1px 2px #aaaaaa;
+  -webkit-box-shadow: 0px 1px 2px #aaaaaa;
+  box-shadow: 0px 1px 2px #aaaaaa;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color')";
+  filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color');
+  margin-bottom: 60px; }
+
+h2.block-title {
+  font-size: 1.4em; }
