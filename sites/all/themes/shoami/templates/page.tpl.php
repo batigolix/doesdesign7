@@ -64,8 +64,7 @@
 
   <div id="main" class="clearfix twelve columns">
 
-    <div id="content">
-      <div id="content-inner" class="inner column center">
+    <div id="content" class="eight columns alpha">
 
         <?php if ($breadcrumb || $title|| $messages || $tabs || $action_links): ?>
           <div id="content-header">
@@ -102,18 +101,19 @@
         <?php print $feed_icons; ?>
 
       </div>
-    </div> <!-- /content-inner /content -->
 
     <?php if ($page['sidebar']): ?>
-      <div id="sidebar" class="column sidebar">
-          <?php print render($page['sidebar_first']); ?>
+      <div id="sidebar" class="column sidebar four columns omega">
+          <?php print render($page['sidebar']); ?>
       </div>
     <?php endif; ?> <!-- /sidebar-first -->
 
+</div> <!-- /main -->
   
   <!-- bunch of pseudeo regions for the homepage. prevent using panels n shite -->
   
-    <div id="content_bot_row_1"  class="twelve columns clearfix">
+
+    <div id="content_bot_row_1_2"  class="twelve columns clearfix">
     <?php if ($page['content_bot_row_1_1']): ?>
       <div id="content-bot_row_1_1" class="eight columns alpha">
         <?php print render($page['content_bot_row_1_1']); ?>
@@ -125,6 +125,7 @@
       </div>
     <?php endif; ?>
   </div>
+
 
     <div id="content_bot_row_2"  class="twelve columns clearfix">
     <?php if ($page['content_bot_row_2_1']): ?>
@@ -142,7 +143,7 @@
         <?php print render($page['content_bot_row_2_3']); ?>
       </div>
     <?php endif; ?>
-  </div>
+    </div>
   
 
   <!-- ______________________ FOOTER _______________________ -->

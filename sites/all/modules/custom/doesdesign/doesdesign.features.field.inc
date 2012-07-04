@@ -84,7 +84,7 @@ function doesdesign_field_default_fields() {
           'summary_rows' => 5,
         ),
         'type' => 'text_textarea_with_summary',
-        'weight' => '8',
+        'weight' => '2',
       ),
     ),
   );
@@ -199,7 +199,7 @@ function doesdesign_field_default_fields() {
           'size' => '60',
         ),
         'type' => 'text_textfield',
-        'weight' => '5',
+        'weight' => '7',
       ),
       'widget_type' => 'text_textfield',
     ),
@@ -312,7 +312,7 @@ function doesdesign_field_default_fields() {
         'module' => 'number',
         'settings' => array(),
         'type' => 'number',
-        'weight' => '4',
+        'weight' => '6',
       ),
       'widget_type' => 'number',
     ),
@@ -322,7 +322,7 @@ function doesdesign_field_default_fields() {
   $fields['node-object-field_image'] = array(
     'field_config' => array(
       'active' => '1',
-      'cardinality' => '1',
+      'cardinality' => '-1',
       'deleted' => '0',
       'entity_types' => array(),
       'field_name' => 'field_image',
@@ -471,7 +471,7 @@ function doesdesign_field_default_fields() {
           'progress_indicator' => 'bar',
         ),
         'type' => 'image_image',
-        'weight' => '7',
+        'weight' => '1',
       ),
       'widget_type' => 'imagefield_widget',
     ),
@@ -574,7 +574,7 @@ function doesdesign_field_default_fields() {
         'module' => 'number',
         'settings' => array(),
         'type' => 'number',
-        'weight' => '6',
+        'weight' => '8',
       ),
       'widget_type' => 'number',
     ),
@@ -611,13 +611,13 @@ function doesdesign_field_default_fields() {
       'bundle' => 'object',
       'default_value' => NULL,
       'deleted' => '0',
-      'description' => '',
+      'description' => 'Materialen waarmee het sieraad gemaakt is',
       'display' => array(
         'default' => array(
           'label' => 'above',
           'module' => 'taxonomy',
           'settings' => array(),
-          'type' => 'taxonomy_term_reference_link',
+          'type' => 'taxonomy_term_reference_plain',
           'weight' => '2',
         ),
         'search_index' => array(
@@ -644,16 +644,20 @@ function doesdesign_field_default_fields() {
       ),
       'entity_type' => 'node',
       'field_name' => 'taxonomy_vocabulary_6',
-      'label' => 'Materiaal',
-      'required' => '0',
+      'label' => 'Materialen',
+      'required' => 0,
       'settings' => array(
         'user_register_form' => FALSE,
       ),
       'widget' => array(
-        'module' => 'options',
-        'settings' => array(),
-        'type' => 'options_select',
-        'weight' => '1',
+        'active' => 1,
+        'module' => 'taxonomy',
+        'settings' => array(
+          'autocomplete_path' => 'taxonomy/autocomplete',
+          'size' => 60,
+        ),
+        'type' => 'taxonomy_autocomplete',
+        'weight' => '3',
       ),
     ),
   );
@@ -722,16 +726,17 @@ function doesdesign_field_default_fields() {
       ),
       'entity_type' => 'node',
       'field_name' => 'taxonomy_vocabulary_7',
-      'label' => 'Sieraden en objecten',
-      'required' => '0',
+      'label' => 'Categorie',
+      'required' => 0,
       'settings' => array(
         'user_register_form' => FALSE,
       ),
       'widget' => array(
+        'active' => 1,
         'module' => 'options',
         'settings' => array(),
-        'type' => 'options_select',
-        'weight' => '2',
+        'type' => 'options_buttons',
+        'weight' => '4',
       ),
     ),
   );
@@ -808,7 +813,7 @@ function doesdesign_field_default_fields() {
         'module' => 'options',
         'settings' => array(),
         'type' => 'options_select',
-        'weight' => '3',
+        'weight' => '5',
       ),
     ),
   );
@@ -1129,7 +1134,7 @@ function doesdesign_field_default_fields() {
   $fields['taxonomy_term-vocabulary_7-field_image'] = array(
     'field_config' => array(
       'active' => '1',
-      'cardinality' => '1',
+      'cardinality' => '-1',
       'deleted' => '0',
       'entity_types' => array(),
       'field_name' => 'field_image',
@@ -1224,14 +1229,15 @@ function doesdesign_field_default_fields() {
   t('Article number');
   t('Beschrijving');
   t('Body');
+  t('Categorie');
   t('De prijzen op deze website zijn indicatief en hangen af van o.a. de goudprijs en uw wensen. <a href="/prijzen">Lees verder</a>');
   t('File attachments');
   t('Gewicht');
   t('If you want to add a static page, like a contact page or an about page, use a page.');
   t('Jaar');
-  t('Materiaal');
+  t('Materialen');
+  t('Materialen waarmee het sieraad gemaakt is');
   t('Prijs');
-  t('Sieraden en objecten');
   t('Stories are articles in their simplest form: they have a title, a teaser and a body, but can be extended by other modules. The teaser is part of the body too. Stories may be used as a personal blog or for news articles.');
 
   return $fields;

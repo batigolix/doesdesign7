@@ -248,6 +248,16 @@ div.status {
 .block .content h3 {
   font-size: 1.2em; }
 
+#content-area .field-name-taxonomy-vocabulary-6, #content-area .field-name-field-gewicht, #content-area .field-name-field-prijs {
+  border-bottom: 1px dotted #777777; }
+#content-area .field-name-taxonomy-vocabulary-6, #content-area .field-name-field-gewicht, #content-area .field-name-field-prijs, #content-area .field-name-taxonomy-vocabulary-7 {
+  line-height: 1.3em;
+  padding: 0 0 10px 0;
+  margin: 10px 0 0 0; }
+#content-area .field-name-body {
+  font-size: 1.2em;
+  margin: 10px 0; }
+
 .view-news .views-field-timestamp, .view-doesdesign-op-het-web .views-field-timestamp {
   font-style: oblique; }
 

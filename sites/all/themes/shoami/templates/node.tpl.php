@@ -1,3 +1,16 @@
+<?php
+/*
+*    <?php if (!empty($content['links']['terms'])): ?>
+      <div class="terms"><?php print render($content['links']['terms']); ?></div>
+    <?php endif;?>
+  	
+    <?php if (!empty($content['links'])): ?>
+	    <div class="links"><?php print render($content['links']); ?></div>
+	  <?php endif; ?>
+
+*/
+
+?>
 <div id="node-<?php print $node->nid; ?>" class="<?php print $classes; ?>" >
     
     <?php if (!$page): ?>
@@ -18,16 +31,7 @@
         print render($content);
        ?>
   	</div>
-  	
-    <?php if (!empty($content['links']['terms'])): ?>
-      <div class="terms"><?php print render($content['links']['terms']); ?></div>
-    <?php endif;?>
-  	
-    <?php if (!empty($content['links'])): ?>
-	    <div class="links"><?php print render($content['links']); ?></div>
-	  <?php endif; ?>
         
-	</div> <!-- /node-inner -->
 </div> <!-- /node-->
 
 <?php print render($content['comments']); ?>
