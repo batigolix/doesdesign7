@@ -32,11 +32,14 @@ features[] = favicon
 features[] = main_menu
 features[] = secondary_menu
 
-stylesheets[all][] = skeleton-12-column/stylesheets/base.css
-stylesheets[all][] = skeleton-12-column/stylesheets/layout.css
-stylesheets[all][] = skeleton-12-column/stylesheets/skeleton.css
+stylesheets[all][] = css-smart-grid/css/bootstrap.css
+stylesheets[all][] = css-smart-grid/css/smart-grid.min.css
+// stylesheets[all][] = css-smart-grid/css/smart-grid-doc.css
+// stylesheets[all][] = css-smart-grid/css/pygments.css
 stylesheets[all][] = css/style.css
+stylesheets[all][] = css/tabs.css
 stylesheets[print][] = css/print.css
+scripts[] = css-smart-grid/js/modernizr.js
 
 ; Compass Support
 ; http://drupal.org/project/compass

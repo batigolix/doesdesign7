@@ -1,135 +1,60 @@
 <div id="page" class="container <?php print $classes; ?>"<?php print $attributes; ?>>
-   <div id="header" class="twelve columns clearfix">
-    <?php if ($logo): ?>
-      <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" id="logo">
-        <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>"/>
-      </a>
-    <?php endif; ?>
-
-    <?php if ($site_name || $site_slogan): ?>
-      <div id="name-and-slogan" class="six columns alpha">
-
-        <?php if ($site_name): ?>
-          <?php if ($title): ?>
-            <div id="site-name">
-              <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home"><?php print $site_name; ?></a>
-            </div>
-          <?php else: /* Use h1 when the content title is empty */ ?>
-            <h1 id="site-name">
-              <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home"><?php print $site_name; ?></a>
-            </h1>
-          <?php endif; ?>
+  <div id="header" class="row">
+     <div class="columns one" id="logo">
+        <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" id="logo"><img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>"/></a>
+     </div>
+       <div class="columns seven">
+        <div id="site-name"><a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home"><?php print $site_name; ?></a></div>
+        <div id="site-slogan"><?php print $site_slogan; ?></div>
+      </div>
+      <div class="columns two">
+        <?php if ($page['header1']): ?>
+            <?php print render($page['header1']); ?>
         <?php endif; ?>
-
-        <?php if ($site_slogan): ?>
-          <div id="site-slogan"><?php print $site_slogan; ?></div>
+      </div>
+      <div class="columns two">
+        <?php if ($page['header2']): ?>
+            <?php print render($page['header2']); ?>
         <?php endif; ?>
-
       </div>
-    <?php endif; ?>
-
-    <?php if ($page['header1']): ?>
-      <div id="header-region-1" class="three columns">
-        <?php print render($page['header1']); ?>
-      </div>
-    <?php endif; ?>
-
-    <?php if ($page['header2']): ?>
-      <div id="header-region-2" class="three columns omega">
-        <?php print render($page['header2']); ?>
-      </div>
-    <?php endif; ?>
-
-  </div> <!-- /header -->
-
-  <div id="content_top"  class="twelve columns clearfix">
-
+    </div><!-- end .header -->
+  <div id="content_top" class="row">
     <?php if ($page['content_top1']): ?>
-      <div id="content-top-1" class="eight columns alpha">
+      <nav id="content-top-1" class="eight columns">
         <?php print render($page['content_top1']); ?>
-      </div>
+      </nav>
     <?php endif; ?>
-
     <?php if ($page['content_top2']): ?>
-      <div id="content_top2" class="four columns omega">
+      <div id="content_top2" class="columns four">
         <?php print render($page['content_top2']); ?>
       </div>
     <?php endif; ?>
-
-  </div>
-
-
-
-  <!-- ______________________ MAIN _______________________ -->
-
-  <div id="main" class="clearfix twelve columns">
-
-    <div id="content" class="eight columns alpha">
-
+  </div><!-- end content top row -->
+  <div id="main" class="row">
+    <div id="content" class="eight columns">
         <?php if ($breadcrumb || $title|| $messages || $tabs || $action_links): ?>
           <div id="content-header">
-
             <?php // print $breadcrumb; ?>
-
-            <?php if ($page['highlight']): ?>
-              <div id="highlight"><?php print render($page['highlight']) ?></div>
-            <?php endif; ?>
-
-            <?php if ($title && !$is_front): ?>
-              <h1 class="title"><?php print $title; ?></h1>
-            <?php endif; ?>
-
+            <?php if ($page['highlight']): ?><div id="highlight"><?php print render($page['highlight']) ?></div><?php endif; ?>
+            <?php if ($title && !$is_front): ?><h1 class="title"><?php print $title; ?></h1><?php endif; ?>
             <?php print render($title_suffix); ?>
             <?php print $messages; ?>
             <?php print render($page['help']); ?>
-
-            <?php if ($tabs): ?>
-              <div class="tabs"><?php print render($tabs); ?></div>
-            <?php endif; ?>
-
-            <?php if ($action_links): ?>
-              <ul class="action-links"><?php print render($action_links); ?></ul>
-            <?php endif; ?>
-            
+            <?php if ($tabs): ?><div class="tabs"><?php print render($tabs); ?></div><?php endif; ?>
+            <?php if ($action_links): ?><ul class="action-links"><?php print render($action_links); ?></ul><?php endif; ?>
           </div> <!-- /#content-header -->
         <?php endif; ?>
-
         <div id="content-area">
           <?php print render($page['content']) ?>
-        </div>
-
+        </div><!-- end content-area -->
         <?php print $feed_icons; ?>
 
-      </div>
 
-    <?php if ($page['sidebar']): ?>
-      <div id="sidebar" class="column sidebar four columns omega">
-          <?php print render($page['sidebar']); ?>
-      </div>
-    <?php endif; ?> <!-- /sidebar-first -->
-
-</div> <!-- /main -->
-  
   <!-- bunch of pseudeo regions for the homepage. prevent using panels n shite -->
-  
 
-    <div id="content_bot_row_1_2"  class="twelve columns clearfix">
-    <?php if ($page['content_bot_row_1_1']): ?>
-      <div id="content-bot_row_1_1" class="eight columns alpha">
-        <?php print render($page['content_bot_row_1_1']); ?>
-      </div>
-    <?php endif; ?>
-    <?php if ($page['content_bot_row_1_2']): ?>
-      <div id="content_bot_row_1_2" class="four columns omega">
-        <?php print render($page['content_bot_row_1_2']); ?>
-      </div>
-    <?php endif; ?>
-  </div>
-
-
-    <div id="content_bot_row_2"  class="twelve columns clearfix">
+<div id="content_bot_row_2"  class="row">
     <?php if ($page['content_bot_row_2_1']): ?>
-      <div id="content-bot_row_2_1" class="four columns alpha">
+      <div id="content-bot_row_2_1" class="four columns">
         <?php print render($page['content_bot_row_2_1']); ?>
       </div>
     <?php endif; ?>
@@ -139,19 +64,24 @@
       </div>
     <?php endif; ?>
     <?php if ($page['content_bot_row_2_3']): ?>
-      <div id="content_bot_row_2_3" class="four columns omega">
+      <div id="content_bot_row_2_3" class="four columns">
         <?php print render($page['content_bot_row_2_3']); ?>
       </div>
     <?php endif; ?>
     </div>
-  
 
-  <!-- ______________________ FOOTER _______________________ -->
+</div><!-- end content -->
+    <?php if ($page['sidebar']): ?>
+      <div id="sidebar" class="four columns">
+        <?php print render($page['sidebar']); ?>
+      </div>
+    <?php endif; ?> <!-- /sidebar-first -->
+  </div> <!-- /main -->
+
+</div> <!-- /page -->
 
   <?php if ($page['footer']): ?>
     <div id="footer">
       <?php print render($page['footer']); ?>
     </div> <!-- /footer -->
   <?php endif; ?>
-
-</div> <!-- /page -->

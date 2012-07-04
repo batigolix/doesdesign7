@@ -93,8 +93,11 @@ div.status {
 /* custom style boris   */
 #site-name, #site-slogan, h1, h2, h3, h4, h5, h6 {
   font-family: "Gentium Basic", Georgia, serif, cursive;
-  font-weight: 700;
+  font-weight: bold;
   text-shadow: 0 1px 1px white, 0 -1px #cccccc; }
+
+a:hover, a:active, a:link, a:visited {
+  color: #333333; }
 
 #header {
   border-bottom: 1px dotted #cccccc;
@@ -104,11 +107,12 @@ div.status {
 #site-name {
   text-transform: uppercase;
   font-size: 2.2em;
-  font-weight: bold;
   line-height: 1.3em;
   padding: 0;
   margin: 20px 0 0 0;
   letter-spacing: 0.1em; }
+  #site-name a {
+    font-weight: bold; }
   #site-name a:hover, #site-name a:active, #site-name a:link, #site-name a:visited {
     border-top: 5px solid #333333;
     text-decoration: none;
@@ -235,16 +239,14 @@ div.status {
         #block-system-main-menu .menu li a:hover {
           color: black; }
 
-.view-toon-termen-soorten-objecten li {
+.view-toon-termen-soorten-objecten .views-row {
   font-size: 1.2em;
-  line-height: 1.3em; }
-
-.block .view .item-list li {
   line-height: 1.3em;
-  margin-bottom: 10px; }
+  padding: 10px 0; }
+
 .block div.views-row {
   border-bottom: 1px dotted #777777;
-  padding: 7px 0; }
+  padding: 8px 0; }
 .block .content h3 {
   font-size: 1.2em; }
 
@@ -262,7 +264,8 @@ div.status {
   font-style: oblique; }
 
 body {
-  background: url(../images/achtergr12.jpg); }
+  background: url(../images/achtergr12.jpg);
+  padding: 20px 0; }
 
 #page {
   background: url(../images/bg-body.jpg);
@@ -271,25 +274,22 @@ body {
   box-shadow: 0px 1px 2px #aaaaaa;
   -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color')";
   filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color');
-  margin-bottom: 60px;
-  padding: 20px;
-  border-top: 10px solid #b7d7d5; }
+  border-top: 10px solid #b7d7d5;
+  font-size: 0.9em;
+  line-height: 1.3em;
+  padding: 15px; }
 
 h2.block-title {
   font-size: 1.4em; }
 
 .view-sieraden .slide {
-  border-radius: 4px 4px 4px 4px;
-  -moz-border-radius: 4px 4px 4px 4px;
-  -webkit-border-top-left-radius: 4px;
-  -webkit-border-top-right-radius: 4px;
-  -webkit-border-bottom-left-radius: 4px;
-  -webkit-border-bottom-right-radius: 4px;
   position: relative;
   float: left; }
+  .view-sieraden .slide img {
+    border: 1px #333333 solid; }
   .view-sieraden .slide .text {
     position: absolute;
-    top: 150px;
+    top: 130px;
     left: 10px;
     color: white;
     padding: 10px; }
@@ -308,7 +308,17 @@ h2.block-title {
       background: black;
       background: rgba(0, 0, 0, 0.7);
       max-width: 480px;
-      height: 60px;
+      height: 70px;
       padding: 10px;
       margin-top: 5px;
       overflow: hidden; }
+
+#footer {
+  padding: 0 15px;
+  margin: 0 10px;
+  background: #333333;
+  color: #eeeeee; }
+  #footer p {
+    font-size: 0.8em; }
+  #footer a {
+    color: white; }
