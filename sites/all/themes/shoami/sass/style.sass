@@ -112,10 +112,13 @@ a
   margin-bottom: 40px
 
 #site-name
+  color: white
+  background: url(../images/achtergr12.jpg) no-repeat
+  -webkit-background-clip: text
+  -webkit-text-fill-color: transparent
   text-transform: uppercase
   font-size: 2.2em
-  a
-    font-weight: bold
+  font-weight: bold
   line-height: 1.3em
   padding: 0
   margin: 20px 0 0 0
@@ -137,23 +140,22 @@ a
 .node-type-object .field-type-image .field-item
   display: inline
   img
-    border: 10px #eee solid
-    border-bottom: 40px #eee solid
-    margin: 0 14px 0 0
+    border: 7px #eee solid
     padding: 2px  
-    @include shadow(#111111)
-    @include rounded_corners(4px, 4px)
+    @include shadow(#BBB)
+    @include rounded_corners(2px, 2px)
     
 .grid-4 
   .col-1, .col-2, .col-3, .col-4
-    width: 160px
+    width: 165px
     float: left
-    display: inline    
+    display: inline
+    margin: 0 10px 0 0   
 
 // make decent css code for display text on top of image
-.view-taxonomy-term
+.view-taxonomy-term-2
   .views-field
-    position: relative
+    margin-bottom: 7px
     .views-field-image
       top: 0px
     .views-field-title
@@ -241,6 +243,8 @@ a
   div.views-row
     border-bottom: 1px dotted #777777
     padding: 8px 0
+  div.views-row-last
+    border-bottom: none
   .content
     h3
       font-size: 1.2em      
@@ -261,12 +265,13 @@ a
     font-style: oblique
     
 body
-  background: url(../images/achtergrond15.jpg)
+  background: url(../images/achtergrond13.jpg)
   padding: 20px 0
 #page
   background: url(../images/bg-body.jpg)
   @include shadow(#AAAAAA)
   border-top: 10px solid #B7D7D5
+  border-bottom: 10px solid #B7D7D5
   font-size: 0.9em
   line-height: 1.3em
   padding: 15px
@@ -309,12 +314,7 @@ h2.block-title
         overflow: hidden
         
 #footer
-  padding: 0 15px
-  margin: 0 10px
-  background: #333
-  color: #EEE
+  border-top: 1px dotted #CCCCCC
+  margin: 40px 0 0 0
   p
     font-size: 0.8em
-  a
-    &:hover, &:active, &:link, &:visited
-    color: #FFF

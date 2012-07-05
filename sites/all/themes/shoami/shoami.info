@@ -14,11 +14,8 @@ regions[content_top1] = Content Top 1st Col
 regions[content_top2] = Content Top 2nd Col
 regions[content] = Content
 regions[sidebar] =  Sidebar
-regions[content_bot_row_1_1] = Content Bottom Row 1 1st Col
-regions[content_bot_row_1_2] = Content Bottom Row 1 2nd Col
 regions[content_bot_row_2_1] = Content Bottom Row 2 1st Col
 regions[content_bot_row_2_2] = Content Bottom Row 2 2nd Col
-regions[content_bot_row_2_3] = Content Bottom Row 2 3rd Col
 regions[footer] = Footer
 regions[page_bottom] = Page bottom
 

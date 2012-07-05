@@ -63,12 +63,7 @@
         <?php print render($page['content_bot_row_2_2']); ?>
       </div>
     <?php endif; ?>
-    <?php if ($page['content_bot_row_2_3']): ?>
-      <div id="content_bot_row_2_3" class="four columns">
-        <?php print render($page['content_bot_row_2_3']); ?>
-      </div>
-    <?php endif; ?>
-    </div>
+</div><!-- end content bot row 2 -->
 
 </div><!-- end content -->
     <?php if ($page['sidebar']): ?>
@@ -78,10 +73,13 @@
     <?php endif; ?> <!-- /sidebar-first -->
   </div> <!-- /main -->
 
-</div> <!-- /page -->
-
   <?php if ($page['footer']): ?>
-    <div id="footer">
+    <div id="footer" class="row">
+    <div class="columns twelve">
       <?php print render($page['footer']); ?>
     </div> <!-- /footer -->
+    </div> <!-- /footer -->
   <?php endif; ?>
+
+</div> <!-- /page -->
+

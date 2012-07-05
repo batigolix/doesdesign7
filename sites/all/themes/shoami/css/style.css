@@ -105,14 +105,17 @@ a:hover, a:active, a:link, a:visited {
   margin-bottom: 40px; }
 
 #site-name {
+  color: white;
+  background: url(../images/achtergr12.jpg) no-repeat;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   text-transform: uppercase;
   font-size: 2.2em;
+  font-weight: bold;
   line-height: 1.3em;
   padding: 0;
   margin: 20px 0 0 0;
   letter-spacing: 0.1em; }
-  #site-name a {
-    font-weight: bold; }
   #site-name a:hover, #site-name a:active, #site-name a:link, #site-name a:visited {
     border-top: 5px solid #333333;
     text-decoration: none;
@@ -130,39 +133,38 @@ a:hover, a:active, a:link, a:visited {
   display: inline; }
   .page-taxonomy .views-field-field-image img,
   .node-type-object .field-type-image .field-item img {
-    border: 10px #eeeeee solid;
-    border-bottom: 40px #eeeeee solid;
-    margin: 0 14px 0 0;
+    border: 7px #eeeeee solid;
     padding: 2px;
-    -moz-box-shadow: 0px 1px 2px #111111;
-    -webkit-box-shadow: 0px 1px 2px #111111;
-    box-shadow: 0px 1px 2px #111111;
+    -moz-box-shadow: 0px 1px 1px #bbbbbb;
+    -webkit-box-shadow: 0px 1px 1px #bbbbbb;
+    box-shadow: 0px 1px 1px #bbbbbb;
     -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color')";
     filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color');
-    border-radius: 4px 4px 4px 4px;
-    -moz-border-radius: 4px 4px 4px 4px;
-    -webkit-border-top-left-radius: 4px;
-    -webkit-border-top-right-radius: 4px;
-    -webkit-border-bottom-left-radius: 4px;
-    -webkit-border-bottom-right-radius: 4px; }
+    border-radius: 2px 2px 2px 2px;
+    -moz-border-radius: 2px 2px 2px 2px;
+    -webkit-border-top-left-radius: 2px;
+    -webkit-border-top-right-radius: 2px;
+    -webkit-border-bottom-left-radius: 2px;
+    -webkit-border-bottom-right-radius: 2px; }
 
 .grid-4 .col-1, .grid-4 .col-2, .grid-4 .col-3, .grid-4 .col-4 {
-  width: 160px;
+  width: 165px;
   float: left;
-  display: inline; }
+  display: inline;
+  margin: 0 10px 0 0; }
 
-.view-taxonomy-term .views-field {
-  position: relative; }
-  .view-taxonomy-term .views-field .views-field-image {
+.view-taxonomy-term-2 .views-field {
+  margin-bottom: 7px; }
+  .view-taxonomy-term-2 .views-field .views-field-image {
     top: 0px; }
-  .view-taxonomy-term .views-field .views-field-title {
+  .view-taxonomy-term-2 .views-field .views-field-title {
     top: 20px; }
-  .view-taxonomy-term .views-field h2 {
+  .view-taxonomy-term-2 .views-field h2 {
     font-size: 1.4em;
     line-height: 1.4em; }
-  .view-taxonomy-term .views-field a {
+  .view-taxonomy-term-2 .views-field a {
     text-decoration: none; }
-    .view-taxonomy-term .views-field a .views-field-body {
+    .view-taxonomy-term-2 .views-field a .views-field-body {
       top: 60px; }
 
 /* pager css style from http://woork.blogspot.be/2008/03/perfect-pagination-style-using-css.html */
@@ -216,9 +218,9 @@ a:hover, a:active, a:link, a:visited {
       float: left;
       list-style: none;
       background: black;
-      -moz-box-shadow: 0px 1px 2px #111111;
-      -webkit-box-shadow: 0px 1px 2px #111111;
-      box-shadow: 0px 1px 2px #111111;
+      -moz-box-shadow: 0px 1px 1px #111111;
+      -webkit-box-shadow: 0px 1px 1px #111111;
+      box-shadow: 0px 1px 1px #111111;
       -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color')";
       filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color');
       border-radius: 4px 4px 4px 4px;
@@ -247,6 +249,8 @@ a:hover, a:active, a:link, a:visited {
 .block div.views-row {
   border-bottom: 1px dotted #777777;
   padding: 8px 0; }
+.block div.views-row-last {
+  border-bottom: none; }
 .block .content h3 {
   font-size: 1.2em; }
 
@@ -264,17 +268,18 @@ a:hover, a:active, a:link, a:visited {
   font-style: oblique; }
 
 body {
-  background: url(../images/achtergrond15.jpg);
+  background: url(../images/achtergrond13.jpg);
   padding: 20px 0; }
 
 #page {
   background: url(../images/bg-body.jpg);
-  -moz-box-shadow: 0px 1px 2px #aaaaaa;
-  -webkit-box-shadow: 0px 1px 2px #aaaaaa;
-  box-shadow: 0px 1px 2px #aaaaaa;
+  -moz-box-shadow: 0px 1px 1px #aaaaaa;
+  -webkit-box-shadow: 0px 1px 1px #aaaaaa;
+  box-shadow: 0px 1px 1px #aaaaaa;
   -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color')";
   filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color');
   border-top: 10px solid #b7d7d5;
+  border-bottom: 10px solid #b7d7d5;
   font-size: 0.9em;
   line-height: 1.3em;
   padding: 15px; }
@@ -314,11 +319,7 @@ h2.block-title {
       overflow: hidden; }
 
 #footer {
-  padding: 0 15px;
-  margin: 0 10px;
-  background: #333333;
-  color: #eeeeee; }
+  border-top: 1px dotted #cccccc;
+  margin: 40px 0 0 0; }
   #footer p {
     font-size: 0.8em; }
-  #footer a {
-    color: white; }
