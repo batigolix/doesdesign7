@@ -94,10 +94,11 @@ div.status {
 #site-name, #site-slogan, h1, h2, h3, h4, h5, h6 {
   font-family: "Gentium Basic", Georgia, serif, cursive;
   font-weight: bold;
-  text-shadow: 0 1px 1px white, 0 -1px #cccccc; }
+  text-shadow: 0 1px 1px white, 0 -1px #cccccc;
+  color: #5c2207; }
 
 a:hover, a:active, a:link, a:visited {
-  color: #333333; }
+  color: #462b10; }
 
 #header {
   border-bottom: 1px dotted #cccccc;
@@ -105,25 +106,23 @@ a:hover, a:active, a:link, a:visited {
   margin-bottom: 40px; }
 
 #site-name {
-  color: white;
-  background: url(../images/achtergr12.jpg) no-repeat;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   text-transform: uppercase;
   font-size: 2.2em;
   font-weight: bold;
   line-height: 1.3em;
   padding: 0;
-  margin: 20px 0 0 0;
+  margin: 7px 0 0 0;
   letter-spacing: 0.1em; }
   #site-name a:hover, #site-name a:active, #site-name a:link, #site-name a:visited {
     border-top: 5px solid #333333;
     text-decoration: none;
-    padding: 4px 0; }
+    padding: 4px 0;
+    font-weight: 700;
+    color: #5c2207; }
 
 #site-slogan {
   font-size: 1.5em;
-  color: #b7d7d5; }
+  color: #dfad8c; }
 
 #skip {
   display: none; }
@@ -133,7 +132,7 @@ a:hover, a:active, a:link, a:visited {
   display: inline; }
   .page-taxonomy .views-field-field-image img,
   .node-type-object .field-type-image .field-item img {
-    border: 7px #eeeeee solid;
+    border: 2px #eeeeee solid;
     padding: 2px;
     -moz-box-shadow: 0px 1px 1px #bbbbbb;
     -webkit-box-shadow: 0px 1px 1px #bbbbbb;
@@ -148,10 +147,10 @@ a:hover, a:active, a:link, a:visited {
     -webkit-border-bottom-right-radius: 2px; }
 
 .grid-4 .col-1, .grid-4 .col-2, .grid-4 .col-3, .grid-4 .col-4 {
-  width: 165px;
+  width: 150px;
   float: left;
   display: inline;
-  margin: 0 10px 0 0; }
+  margin: 0 4px 0 0; }
 
 .view-taxonomy-term-2 .views-field {
   margin-bottom: 7px; }
@@ -161,47 +160,18 @@ a:hover, a:active, a:link, a:visited {
     top: 20px; }
   .view-taxonomy-term-2 .views-field h2 {
     font-size: 1.4em;
-    line-height: 1.4em; }
+    line-height: 1.2em; }
   .view-taxonomy-term-2 .views-field a {
     text-decoration: none; }
     .view-taxonomy-term-2 .views-field a .views-field-body {
       top: 60px; }
 
-/* pager css style from http://woork.blogspot.be/2008/03/perfect-pagination-style-using-css.html */
-.pager li {
-  border: 0;
-  margin: 0 0 0 2px;
-  padding: 0;
-  font-size: 11px;
-  list-style: none; }
-.pager a {
-  border: solid 1px #9aafe5;
-  margin: 0 0 0 2px; }
-  .pager a:link, .pager a:visited {
-    color: #0e509e;
-    display: block;
-    float: left;
-    padding: 3px 6px;
-    text-decoration: none; }
-  .pager a:hover {
-    border: solid 1px #0e509e; }
-.pager .next a, .pager .previous a {
-  font-weight: bold; }
-.pager .previous-off, .pager .next-off {
-  border: solid 1px #dedede;
-  color: #888888;
-  display: block;
-  float: left;
-  font-weight: bold;
-  margin-right: 2px;
-  padding: 3px 4px; }
-.pager .active, .pager .pager-current {
-  background: #2e6ab1;
-  color: white;
-  font-weight: bold;
-  display: block;
-  float: left;
-  padding: 4px 6px; }
+.item-list ul.pager {
+  background: black;
+  background: rgba(0, 0, 0, 0.1); }
+  .item-list ul.pager li {
+    margin: 0 0 1.3em 1.3em;
+    padding: 0; }
 
 #block-system-main-menu {
   font-family: "Gentium Basic", Georgia, serif, cursive;
@@ -235,9 +205,10 @@ a:hover, a:active, a:link, a:visited {
         background: white; }
       #block-system-main-menu .menu li a {
         text-decoration: none;
-        padding: 6px; }
+        padding: 6px;
+        font-weight: bold; }
         #block-system-main-menu .menu li a:hover, #block-system-main-menu .menu li a:active, #block-system-main-menu .menu li a:visited, #block-system-main-menu .menu li a:link {
-          color: yellow; }
+          color: #f2b06e; }
         #block-system-main-menu .menu li a:hover {
           color: black; }
 
@@ -278,8 +249,8 @@ body {
   box-shadow: 0px 1px 1px #aaaaaa;
   -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color')";
   filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color');
-  border-top: 10px solid #b7d7d5;
-  border-bottom: 10px solid #b7d7d5;
+  border-top: 10px solid #f2b06e;
+  border-bottom: 10px solid #f2b06e;
   font-size: 0.9em;
   line-height: 1.3em;
   padding: 15px; }
@@ -323,3 +294,8 @@ h2.block-title {
   margin: 40px 0 0 0; }
   #footer p {
     font-size: 0.8em; }
+
+#block-gtranslate-gtranslate h2 {
+  display: inline;
+  float: left;
+  margin: -10px 10px 0 0; }

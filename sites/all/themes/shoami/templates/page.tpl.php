@@ -3,16 +3,16 @@
      <div class="columns one" id="logo">
         <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" id="logo"><img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>"/></a>
      </div>
-       <div class="columns seven">
+       <div class="columns five">
         <div id="site-name"><a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home"><?php print $site_name; ?></a></div>
         <div id="site-slogan"><?php print $site_slogan; ?></div>
       </div>
-      <div class="columns two">
+      <div class="columns three">
         <?php if ($page['header1']): ?>
             <?php print render($page['header1']); ?>
         <?php endif; ?>
       </div>
-      <div class="columns two">
+      <div class="columns three">
         <?php if ($page['header2']): ?>
             <?php print render($page['header2']); ?>
         <?php endif; ?>

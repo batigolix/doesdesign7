@@ -1,3 +1,11 @@
+$old_rose: #dfad8c
+$dark_brown: #462b10
+$orange: #f2b06e
+$light_grey: #706e6a
+$dark_red: #5c2207
+$almost_white: #feffef
+$color: $orange
+
 // Import variables and mixins to be used.
 @import _variables.sass
 @import _mixins.sass
@@ -101,10 +109,11 @@ div.status
   font-family: 'Gentium Basic', Georgia, serif, cursive
   font-weight: bold
   text-shadow: 0 1px 1px #FFFFFF, 0 -1px #CCC
+  color: $dark_red
 
 a
   &:hover, &:active, &:link, &:visited
-    color: #333333
+    color: $dark_brown
 
 #header
   border-bottom: 1px dotted #CCCCCC
@@ -112,26 +121,24 @@ a
   margin-bottom: 40px
 
 #site-name
-  color: white
-  background: url(../images/achtergr12.jpg) no-repeat
-  -webkit-background-clip: text
-  -webkit-text-fill-color: transparent
   text-transform: uppercase
   font-size: 2.2em
   font-weight: bold
   line-height: 1.3em
   padding: 0
-  margin: 20px 0 0 0
+  margin: 7px 0 0 0
   letter-spacing: 0.1em
   a
     &:hover, &:active, &:link, &:visited
       border-top: 5px solid #333
       text-decoration: none
       padding: 4px 0
+      font-weight: 700
+      color: $dark_red
  
 #site-slogan
   font-size: 1.5em
-  color: #B7D7D5
+  color: $old_rose
 
 #skip
   display: none
@@ -140,17 +147,17 @@ a
 .node-type-object .field-type-image .field-item
   display: inline
   img
-    border: 7px #eee solid
+    border: 2px #eee solid
     padding: 2px  
     @include shadow(#BBB)
     @include rounded_corners(2px, 2px)
     
 .grid-4 
   .col-1, .col-2, .col-3, .col-4
-    width: 165px
+    width: 150px
     float: left
     display: inline
-    margin: 0 10px 0 0   
+    margin: 0 4px 0 0   
 
 // make decent css code for display text on top of image
 .view-taxonomy-term-2
@@ -162,52 +169,19 @@ a
       top: 20px
     h2
       font-size: 1.4em
-      line-height: 1.4em
+      line-height: 1.2em
     a
       text-decoration: none
       .views-field-body
         top: 60px
 
-/* pager css style from http://woork.blogspot.be/2008/03/perfect-pagination-style-using-css.html */
-
-// todo make again. this code doesnt work
-
-.pager 
-  li
-    border: 0 
-    margin: 0 0 0 2px
-    padding: 0 
-    font-size: 11px
-    list-style: none
-  a
-    border: solid 1px #9aafe5
-    margin:  0 0 0 2px
-    &:link, &:visited
-      color: #0e509e
-      display: block
-      float: left
-      padding: 3px 6px
-      text-decoration: none
-    &:hover
-      border: solid 1px #0e509e
-  .next, .previous 
-    a
-      font-weight: bold
-  .previous-off, .next-off
-    border: solid 1px #DEDEDE
-    color: #888888
-    display: block
-    float: left
-    font-weight: bold
-    margin-right: 2px
-    padding: 3px 4px
-  .active, .pager-current
-    background: #2e6ab1
-    color: #FFFFFF
-    font-weight: bold
-    display: block
-    float: left
-    padding: 4px 6px
+.item-list
+  ul.pager
+    background: rgb(0, 0, 0)
+    background: rgba(0, 0, 0, 0.1)
+    li
+      margin: 0 0 1.3em 1.3em
+      padding: 0
 
 #block-system-main-menu 
   font-family: 'Gentium Basic', Georgia, serif, cursive
@@ -228,8 +202,9 @@ a
         background: #fff
       a
         text-decoration: none
-        @include linkcolor(yellow)
+        @include linkcolor($orange)
         padding: 6px
+        font-weight: bold
         &:hover
           color: #000
 
@@ -270,8 +245,8 @@ body
 #page
   background: url(../images/bg-body.jpg)
   @include shadow(#AAAAAA)
-  border-top: 10px solid #B7D7D5
-  border-bottom: 10px solid #B7D7D5
+  border-top: 10px solid $orange
+  border-bottom: 10px solid $orange
   font-size: 0.9em
   line-height: 1.3em
   padding: 15px
@@ -318,3 +293,9 @@ h2.block-title
   margin: 40px 0 0 0
   p
     font-size: 0.8em
+    
+#block-gtranslate-gtranslate
+  h2
+    display: inline
+    float: left 
+    margin: -10px 10px 0 0   

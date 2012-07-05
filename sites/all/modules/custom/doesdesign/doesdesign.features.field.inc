@@ -366,7 +366,7 @@ function doesdesign_field_default_fields() {
             'colorbox_gallery' => 'post',
             'colorbox_gallery_custom' => '',
             'colorbox_image_style' => 'large',
-            'colorbox_node_style' => 'medium',
+            'colorbox_node_style' => 'square-thumb-medium',
           ),
           'type' => 'colorbox',
           'weight' => '0',
