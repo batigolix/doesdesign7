@@ -47,7 +47,7 @@
         <div id="content-area">
           <?php print render($page['content']) ?>
         </div><!-- end content-area -->
-        <?php print $feed_icons; ?>
+        <?php // print $feed_icons; ?>
 
 
   <!-- bunch of pseudeo regions for the homepage. prevent using panels n shite -->

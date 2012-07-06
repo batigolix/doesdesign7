@@ -94,16 +94,24 @@ div.status {
 #site-name, #site-slogan, h1, h2, h3, h4, h5, h6 {
   font-family: "Gentium Basic", Georgia, serif, cursive;
   font-weight: bold;
-  text-shadow: 0 1px 1px white, 0 -1px #cccccc;
+  font-weight: 700;
+  -moz-text-shadow: 0 1px 1px white;
+  -webkit-text-shadow: 0 1px 1px white;
+  -o-text-shadow: 0 1px 1px white;
+  text-shadow: 0 1px 1px white;
   color: #5c2207; }
+  #site-name a, #site-slogan a, h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+    font-weight: bold;
+    font-weight: 700;
+    text-decoration: underline; }
 
 a:hover, a:active, a:link, a:visited {
   color: #462b10; }
 
 #header {
-  border-bottom: 1px dotted #cccccc;
-  height: 140px;
-  margin-bottom: 40px; }
+  border-bottom: 1px dotted #999999;
+  height: 120px;
+  margin-bottom: 20px; }
 
 #site-name {
   text-transform: uppercase;
@@ -173,44 +181,51 @@ a:hover, a:active, a:link, a:visited {
     margin: 0 0 1.3em 1.3em;
     padding: 0; }
 
-#block-system-main-menu {
-  font-family: "Gentium Basic", Georgia, serif, cursive;
-  font-weight: 700;
-  opacity: .70;
-  filter: alpha(opacity=70);
-  -ms-filter: "alpha(opacity=$value)";
-  -khtml-opacity: .70;
-  -moz-opacity: .70; }
-  #block-system-main-menu .menu {
-    margin: 0;
-    padding: 0; }
-    #block-system-main-menu .menu li {
-      float: left;
-      list-style: none;
-      background: black;
-      -moz-box-shadow: 0px 1px 1px #111111;
-      -webkit-box-shadow: 0px 1px 1px #111111;
-      box-shadow: 0px 1px 1px #111111;
-      -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color')";
-      filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color');
-      border-radius: 4px 4px 4px 4px;
-      -moz-border-radius: 4px 4px 4px 4px;
-      -webkit-border-top-left-radius: 4px;
-      -webkit-border-top-right-radius: 4px;
-      -webkit-border-bottom-left-radius: 4px;
-      -webkit-border-bottom-right-radius: 4px;
-      padding: 6px 6px 9px 6px;
-      margin: 0 6px 6px 0; }
-      #block-system-main-menu .menu li:hover {
-        background: white; }
-      #block-system-main-menu .menu li a {
-        text-decoration: none;
-        padding: 6px;
-        font-weight: bold; }
-        #block-system-main-menu .menu li a:hover, #block-system-main-menu .menu li a:active, #block-system-main-menu .menu li a:visited, #block-system-main-menu .menu li a:link {
-          color: #f2b06e; }
-        #block-system-main-menu .menu li a:hover {
-          color: black; }
+#block-system-main-menu .menu {
+  margin: 0;
+  padding: 0; }
+  #block-system-main-menu .menu li {
+    font-weight: bold;
+    float: left;
+    font-size: 1.2em;
+    list-style: none;
+    background: black;
+    border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
+    -webkit-border-top-left-radius: 4px;
+    -webkit-border-top-right-radius: 4px;
+    -webkit-border-bottom-left-radius: 4px;
+    -webkit-border-bottom-right-radius: 4px;
+    padding: 2px 6px 6px 4px;
+    margin: 0 15px 6px 0;
+    background-color: #45484d;
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#45484d, endColorstr=#333333);
+    background-image: -moz-linear-gradient(center top, #45484d, #333333);
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#45484d), to(#333333));
+    background-image: -o-linear-gradient(#45484d, #333333);
+    text-transform: lowercase;
+    -moz-text-shadow: 0 1px 1px black;
+    -webkit-text-shadow: 0 1px 1px black;
+    -o-text-shadow: 0 1px 1px black;
+    text-shadow: 0 1px 1px black; }
+    #block-system-main-menu .menu li:hover {
+      color: #f2b06e;
+      background: white;
+      background-color: #eeeeee;
+      filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#eeeeee, endColorstr=#cccccc);
+      background-image: -moz-linear-gradient(center top, #eeeeee, #cccccc);
+      background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#eeeeee), to(#cccccc));
+      background-image: -o-linear-gradient(#eeeeee, #cccccc);
+      -moz-text-shadow: 0 1px 1px white;
+      -webkit-text-shadow: 0 1px 1px white;
+      -o-text-shadow: 0 1px 1px white;
+      text-shadow: 0 1px 1px white; }
+      #block-system-main-menu .menu li:hover a {
+        color: black; }
+    #block-system-main-menu .menu li a {
+      text-decoration: none;
+      color: #f2b06e;
+      padding: 6px; }
 
 .view-toon-termen-soorten-objecten .views-row {
   font-size: 1.2em;
@@ -218,7 +233,7 @@ a:hover, a:active, a:link, a:visited {
   padding: 10px 0; }
 
 .block div.views-row {
-  border-bottom: 1px dotted #777777;
+  border-bottom: 1px dotted #999999;
   padding: 8px 0; }
 .block div.views-row-last {
   border-bottom: none; }
@@ -226,7 +241,7 @@ a:hover, a:active, a:link, a:visited {
   font-size: 1.2em; }
 
 #content-area .field-name-taxonomy-vocabulary-6, #content-area .field-name-field-gewicht, #content-area .field-name-field-prijs {
-  border-bottom: 1px dotted #777777; }
+  border-bottom: 1px dotted #999999; }
 #content-area .field-name-taxonomy-vocabulary-6, #content-area .field-name-field-gewicht, #content-area .field-name-field-prijs, #content-area .field-name-taxonomy-vocabulary-7 {
   line-height: 1.3em;
   padding: 0 0 10px 0;
@@ -265,7 +280,7 @@ h2.block-title {
     border: 1px #333333 solid; }
   .view-sieraden .slide .text {
     position: absolute;
-    top: 130px;
+    top: 140px;
     left: 10px;
     color: white;
     padding: 10px; }
@@ -278,19 +293,19 @@ h2.block-title {
       max-width: 360px;
       padding: 10px; }
       .view-sieraden .slide .text .title a:hover, .view-sieraden .slide .text .title a:active, .view-sieraden .slide .text .title a:link, .view-sieraden .slide .text .title a:visited {
-        color: yellow;
+        color: #f2b06e;
         text-decoration: none; }
     .view-sieraden .slide .text p.body {
       background: black;
       background: rgba(0, 0, 0, 0.7);
       max-width: 480px;
-      height: 70px;
+      height: 68px;
       padding: 10px;
       margin-top: 5px;
       overflow: hidden; }
 
 #footer {
-  border-top: 1px dotted #cccccc;
+  border-top: 1px dotted #999999;
   margin: 40px 0 0 0; }
   #footer p {
     font-size: 0.8em; }

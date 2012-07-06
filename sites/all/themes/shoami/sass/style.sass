@@ -108,17 +108,23 @@ div.status
 #site-name, #site-slogan, h1, h2, h3, h4, h5, h6
   font-family: 'Gentium Basic', Georgia, serif, cursive
   font-weight: bold
-  text-shadow: 0 1px 1px #FFFFFF, 0 -1px #CCC
+  font-weight: 700
+  @include text-shadow(0,1px,#FFF,1px)
+  //: 0 1px 1px #FFFFFF, 0 -1px #CCC
   color: $dark_red
+  a
+    font-weight: bold
+    font-weight: 700
+    text-decoration: underline
 
 a
   &:hover, &:active, &:link, &:visited
     color: $dark_brown
 
 #header
-  border-bottom: 1px dotted #CCCCCC
-  height: 140px
-  margin-bottom: 40px
+  border-bottom: 1px dotted #999
+  height: 120px
+  margin-bottom: 20px
 
 #site-name
   text-transform: uppercase
@@ -184,29 +190,33 @@ a
       padding: 0
 
 #block-system-main-menu 
-  font-family: 'Gentium Basic', Georgia, serif, cursive
-  font-weight: 700
-  @include opacity(70)
+  // font-family: 'Gentium Basic', Georgia, serif, cursive
   .menu
     margin: 0
     padding: 0
     li
+      font-weight: bold
       float: left
+      font-size: 1.2em
       list-style: none
       background: #000
-      @include shadow(#111111)
       @include rounded_corners(4px, 4px)
-      padding: 6px 6px 9px 6px
-      margin: 0 6px 6px 0
+      padding: 2px 6px 6px 4px
+      margin: 0 15px 6px 0
+      @include gradient(#45484D, #333333) 
+      text-transform: lowercase
+      @include text-shadow(0,1px,#000,1px)
       &:hover
+        color: $orange
         background: #fff
+        @include gradient(#EEE, #CCC) 
+        @include text-shadow(0,1px,#FFF,1px)
+        a
+          color: #000
       a
         text-decoration: none
-        @include linkcolor($orange)
+        color: $orange
         padding: 6px
-        font-weight: bold
-        &:hover
-          color: #000
 
 .view-toon-termen-soorten-objecten
   .views-row
@@ -216,7 +226,7 @@ a
 
 .block
   div.views-row
-    border-bottom: 1px dotted #777777
+    border-bottom: 1px dotted #999
     padding: 8px 0
   div.views-row-last
     border-bottom: none
@@ -226,7 +236,7 @@ a
 
 #content-area 
   .field-name-taxonomy-vocabulary-6, .field-name-field-gewicht, .field-name-field-prijs
-    border-bottom: 1px dotted #777777
+    border-bottom: 1px dotted #999
   .field-name-taxonomy-vocabulary-6, .field-name-field-gewicht, .field-name-field-prijs, .field-name-taxonomy-vocabulary-7 
     line-height: 1.3em
     padding: 0 0 10px 0
@@ -263,7 +273,7 @@ h2.block-title
     float: left
     .text
       position: absolute
-      top: 130px
+      top: 140px
       left: 10px
       color: white 
       padding: 10px
@@ -277,19 +287,19 @@ h2.block-title
         padding: 10px
         a
           &:hover, &:active, &:link, &:visited
-            color: yellow
+            color: $orange
             text-decoration: none
       p.body
         background: rgb(0, 0, 0)
         background: rgba(0, 0, 0, 0.7)
         max-width: 480px
-        height: 70px
+        height: 68px
         padding: 10px
         margin-top: 5px      
         overflow: hidden
         
 #footer
-  border-top: 1px dotted #CCCCCC
+  border-top: 1px dotted #999
   margin: 40px 0 0 0
   p
     font-size: 0.8em

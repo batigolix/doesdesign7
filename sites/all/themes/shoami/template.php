@@ -13,9 +13,9 @@ if (theme_get_setting('clear_registry')) {
   drupal_theme_rebuild();
 }
 // Add Zen Tabs styles
-if (theme_get_setting('basic_tabs')) {
-  drupal_add_css( drupal_get_path('theme', 'basic') .'/css/tabs.css');
-}
+//if (theme_get_setting('basic_tabs')) {
+//  drupal_add_css( drupal_get_path('theme', 'basic') .'/css/tabs.css');
+//}
 
 function basic_preprocess_page(&$vars, $hook) {
   if (isset($vars['node_title'])) {
