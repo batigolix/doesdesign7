@@ -1,0 +1,180 @@
+<?php
+
+/**
+ * restrict length of introduction text area.
+ */
+
+function adhesive_tape_form_alter(&$form, &$form_state, $form_id) {
+  // todo clean up node form nicely
+  //  dsm($form);
+    unset($form['print']);
+
+  // set some stuff on all node editing forms
+  if (isset($form['#node_edit_form']) && $form['#node_edit_form']==TRUE) {
+    unset ($form['revision_information']); // and this one is the "Revision information" one
+    // unset ($form['options']['sticky']);
+  }
+  
+  switch ($form_id) {
+    case 'page_node_form':
+      // no promote
+      unset ($form['options']['promote']);
+    break;
+    case 'object_node_form':
+      kpr($form);
+      // move spotlight checkbox to publishing options
+      $form['options']['authorn'] = $form['author']['name'];
+      $form['options']['authord'] = $form['author']['date'];
+      $form['options']['authorn']['#weight'] = 98;
+      $form['options']['authord']['#weight'] = 99;
+      unset($form['author']);
+      unset($form['print']);
+      $form['#validate'][] = 'adhesive_tape_validate_node_form';
+      // $form['options']['field_in_the_spotlight'] = $form['field_in_the_spotlight'];
+      $form['meta_info'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Meta informatie'),
+        '#description' => t('Prijs, materiaal, categorie, etc'),
+        '#collapsible' => TRUE,
+        '#collapsed' => TRUE,
+        '#group' => 'additional_settings',
+      );
+      $form['meta_info']['field_prijs'] = $form['field_prijs'];
+      unset ($form['field_prijs']);
+      $form['meta_info']['field_gewicht'] = $form['field_gewicht'];
+      unset ($form['field_gewicht']);
+      $form['meta_info']['field_article_number'] = $form['field_article_number'];
+      unset ($form['field_article_number']);
+      $form['meta_info']['taxonomy_vocabulary_8'] = $form['taxonomy_vocabulary_8'];
+      unset ($form['taxonomy_vocabulary_8']);
+      $form['meta_info']['taxonomy_vocabulary_7'] = $form['taxonomy_vocabulary_7'];
+      unset ($form['taxonomy_vocabulary_7']);
+      $form['meta_info']['taxonomy_vocabulary_6'] = $form['taxonomy_vocabulary_6'];
+      unset ($form['taxonomy_vocabulary_6']);
+
+      // taxo terms: 8 = jaar, 7 = cat, 6 = materiaal
+
+      
+      // order fields within met info
+      $form['meta_info']['taxonomy_vocabulary_6']['#weight'] = -4;
+      $form['meta_info']['taxonomy_vocabulary_7']['#weight'] = -5;
+      $form['meta_info']['taxonomy_vocabulary_8']['#weight'] = 99;
+      $form['meta_info']['field_article_number']['#weight'] = 100;
+      
+      // order of verti tabs
+      $form['options']['#weight'] = 5; // this one is the vertical tab named "Publishing options"
+      $form['meta_info']['#weight'] = 0; // this one is the vertical tab named "Publishing options"
+      $form['path']['#weight'] = 10; // this one is the vertical tab named "Publishing options"
+
+    break;
+    case 'slideshow_item_node_form':
+      $form['#validate'][] = 'adhesive_tape_validate_node_form';
+      $form['title']['#description'] = 'Maximum number of characters: 25';
+    break;
+    case 'webform_client_form_37':
+  // todo get dynamic email adres
+  /*      kpr($form['submitted']);
+      $node = menu_get_object(); 
+      $email = $node->field_email['und']['0']['value'];
+      // $form['submitted']['recipient']['#value'] = $email;
+      $form['submitted']['recipient']['#value'] = $email;
+  */
+    break;
+  }
+  $form['#after_build'][] = 'adhesive_tape_after_build';
+}
+
+function adhesive_tape_after_build($form) {
+  // do stuff on all node editing forms
+  if (isset($form['#node_edit_form']) && $form['#node_edit_form'] == TRUE) {
+    // kpr($form);
+    // TODO remove print verti tab  
+    unset($form['print']);
+    $form['domain']['lang'] = $form['language'];
+    $form['domain']['lang']['#weight'] = -999;
+    $form['domain']['#title'] = 'Portal & language';
+    unset($form['language']);
+  }
+/*  switch ($form['type']['#value']) {
+    case 'article':
+//      $form['options']['spot'] = $form['field_in_the_spotlight'];
+//      unset($form['field_in_the_spotlight']);
+    break;
+  }
+*/
+  return $form;
+}
+
+/**
+ * restrict length of introduction text area.
+ */
+
+function adhesive_tape_validate_node_form($form, &$form_state) {
+  switch ($form['form_id']['#value']) {
+	  // todo set max chars
+    case 'article_node_form':
+      $intro_length = strlen($form_state['values']['field_summary']['und']['0']['value']);
+      if ($intro_length > 250000) {
+        form_set_error('', t('The field <strong>introduction</strong> may not contain more than 250 characters. It is currently @num characters long.', array('@num' => $intro_length)));
+      }
+    break;
+  }
+}  
+
+function adhesive_tape_wysiwyg_plugin($editor, $version) {
+   switch ($editor) {
+    case 'ckeditor':
+      return array(
+/*        'youtube' => array(
+          'buttons' => array('youtube' => t('Youtube')),
+          'load' => TRUE,
+          'internal' => TRUE,
+        ),
+*/ 
+        'MediaEmbed' => array(
+          'buttons' => array('MediaEmbed' => t('MediaEmbed')),
+          'load' => TRUE,
+          'internal' => TRUE,
+        ),
+      );
+  }
+}
+
+/*
+ * preprocess node. add ds field. addthis
+ */
+
+function adhesive_tape_preprocess_node(&$vars) {
+  // adds ds preprocess field. see http://www.lullabot.com/articles/display-suite-building-fancy-teasers-without-custom-templates
+  // custom add this buttons. http://www.addthis.com/forum/viewtopic.php?f=3&t=27736
+  $vars['addthis'] = '<!-- AddThis Button BEGIN --><div class="addthis_toolbox addthis_default_style "><a class="addthis_button_preferred_1"></a><a class="addthis_button_preferred_2"></a><a class="addthis_button_preferred_4"></a><a class="addthis_button_compact"></a><a class="addthis_counter addthis_bubble_style"></a></div><script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4e8734f56e58164b"></script><!-- AddThis Button END -->';
+}
+
+
+
+
+/**
+ * Implements hook_menu().
+ */
+
+function adhesive_tape_menu() {
+  $items['xxxxxfrontpage'] = array(
+    'title' => 'Frontpage WBI',
+    'description' => 'Frontpage',
+    'page callback' => 'adhesive_tape_frontpage',
+    'type' => MENU_CALLBACK,
+    'access callback' => 'is_string',
+    'access arguments' => array('string'),
+  );
+  return $items;
+}
+
+/**
+* Display empty frontpage wo title
+**/
+
+function adhesive_tape_frontpage() {
+  drupal_set_title('');
+  return '';
+}
+

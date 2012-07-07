@@ -109,6 +109,7 @@ div.status
   font-family: 'Gentium Basic', Georgia, serif, cursive
   font-weight: bold
   font-weight: 700
+  line-height: 1.3em
   @include text-shadow(0,1px,#FFF,1px)
   //: 0 1px 1px #FFFFFF, 0 -1px #CCC
   color: $dark_red
@@ -123,7 +124,7 @@ a
 
 #header
   border-bottom: 1px dotted #999
-  height: 120px
+  padding-bottom: 20px
   margin-bottom: 20px
 
 #site-name
@@ -164,6 +165,13 @@ a
     float: left
     display: inline
     margin: 0 4px 0 0   
+
+.page-taxonomy
+  .view-categoriebeschrijvingen
+    .views-field-description
+      p
+        font-size: 1.5em
+        font-style: oblique
 
 // make decent css code for display text on top of image
 .view-taxonomy-term-2
@@ -284,6 +292,7 @@ h2.block-title
         background: rgb(0, 0, 0)
         background: rgba(0, 0, 0, 0.7)
         max-width: 360px
+        height: 32px
         padding: 10px
         a
           &:hover, &:active, &:link, &:visited

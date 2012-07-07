@@ -95,6 +95,7 @@ div.status {
   font-family: "Gentium Basic", Georgia, serif, cursive;
   font-weight: bold;
   font-weight: 700;
+  line-height: 1.3em;
   -moz-text-shadow: 0 1px 1px white;
   -webkit-text-shadow: 0 1px 1px white;
   -o-text-shadow: 0 1px 1px white;
@@ -110,7 +111,7 @@ a:hover, a:active, a:link, a:visited {
 
 #header {
   border-bottom: 1px dotted #999999;
-  height: 120px;
+  padding-bottom: 20px;
   margin-bottom: 20px; }
 
 #site-name {
@@ -159,6 +160,10 @@ a:hover, a:active, a:link, a:visited {
   float: left;
   display: inline;
   margin: 0 4px 0 0; }
+
+.page-taxonomy .view-categoriebeschrijvingen .views-field-description p {
+  font-size: 1.5em;
+  font-style: oblique; }
 
 .view-taxonomy-term-2 .views-field {
   margin-bottom: 7px; }
@@ -291,6 +296,7 @@ h2.block-title {
       background: black;
       background: rgba(0, 0, 0, 0.7);
       max-width: 360px;
+      height: 32px;
       padding: 10px; }
       .view-sieraden .slide .text .title a:hover, .view-sieraden .slide .text .title a:active, .view-sieraden .slide .text .title a:link, .view-sieraden .slide .text .title a:visited {
         color: #f2b06e;

@@ -1,0 +1,4 @@
+name = Adhesive tape
+description = Holds custom code for a project
+package = custom
+core = 7.x
