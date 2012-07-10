@@ -38,10 +38,9 @@
 <?php // kpr($fields); ?>
 
 <div class="slide">
-    <?php print $fields['field_image']->content; ?>
-  <div class="text">
-   <div class="title"><?php print $fields['title']->content; ?></div>
-   <p class="body"><?php print $fields['body']->content; ?></p>  
- </div>
+  <?php print $fields['field_image']->content; ?>
+    <div class="text">
+      <div class="title"><?php print $fields['title']->content; ?></div>
+   </div>
 </div>
 

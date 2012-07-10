@@ -818,8 +818,8 @@ function doesdesign_views_default_views() {
     'page' => 'page',
   );
 
-  /* Display: Block */
-  $handler = $view->new_display('block', 'Block', 'block_1');
+  /* Display: Slideshow block */
+  $handler = $view->new_display('block', 'Slideshow block', 'block_1');
   $handler->display->display_options['defaults']['pager'] = FALSE;
   $handler->display->display_options['pager']['type'] = 'some';
   $handler->display->display_options['pager']['options']['items_per_page'] = '5';
@@ -923,6 +923,7 @@ function doesdesign_views_default_views() {
   $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
   $handler->display->display_options['fields']['body']['field'] = 'body';
   $handler->display->display_options['fields']['body']['label'] = '';
+  $handler->display->display_options['fields']['body']['exclude'] = TRUE;
   $handler->display->display_options['fields']['body']['alter']['alter_text'] = 0;
   $handler->display->display_options['fields']['body']['alter']['make_link'] = 0;
   $handler->display->display_options['fields']['body']['alter']['absolute'] = 0;
@@ -980,7 +981,7 @@ function doesdesign_views_default_views() {
     t(','),
     t('Page'),
     t('Feed'),
-    t('Block'),
+    t('Slideshow block'),
   );
   $export['sieraden'] = $view;
 

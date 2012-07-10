@@ -208,7 +208,6 @@ a:hover, a:active, a:link, a:visited {
     background-image: -moz-linear-gradient(center top, #45484d, #333333);
     background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#45484d), to(#333333));
     background-image: -o-linear-gradient(#45484d, #333333);
-    text-transform: lowercase;
     -moz-text-shadow: 0 1px 1px black;
     -webkit-text-shadow: 0 1px 1px black;
     -o-text-shadow: 0 1px 1px black;
@@ -285,18 +284,18 @@ h2.block-title {
     border: 1px #333333 solid; }
   .view-sieraden .slide .text {
     position: absolute;
-    top: 140px;
+    top: 236px;
     left: 10px;
     color: white;
     padding: 10px; }
     .view-sieraden .slide .text .title {
       font-family: "Gentium Basic", Georgia, serif, cursive;
       font-weight: 700;
-      font-size: 2em;
+      font-size: 1.7em;
       background: black;
       background: rgba(0, 0, 0, 0.7);
-      max-width: 360px;
-      height: 32px;
+      max-width: 600px;
+      overflow: hidden;
       padding: 10px; }
       .view-sieraden .slide .text .title a:hover, .view-sieraden .slide .text .title a:active, .view-sieraden .slide .text .title a:link, .view-sieraden .slide .text .title a:visited {
         color: #f2b06e;
