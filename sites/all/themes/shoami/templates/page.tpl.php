@@ -1,9 +1,9 @@
 <div id="page" class="container <?php print $classes; ?>"<?php print $attributes; ?>>
   <div id="header" class="row">
-     <div class="columns one" id="logo">
+     <div class="columns two" id="logo">
         <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" id="logo"><img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>"/></a>
      </div>
-       <div class="columns five">
+       <div class="columns four">
         <div id="site-name"><a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home"><?php print $site_name; ?></a></div>
         <div id="site-slogan"><?php print $site_slogan; ?></div>
       </div>
