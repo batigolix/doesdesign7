@@ -1,21 +1,29 @@
-$old_rose: #dfad8c
-$dark_brown: #462b10
-$orange: #f2b06e
-$light_grey: #706e6a
-$dark_red: #5c2207
-$almost_white: #feffef
-$color: $orange
+//$old_rose: #dfad8c
+//$dark_brown: #462b10
+//$dark_yellow: #f2b06e
+//$light_grey: #706e6a
+//$dark_red: #5c2207
+//$almost_white: #feffef
+//$color: $dark_yellow
+
+$light_brown: #B37649
+$dark_yellow: #AD771A
+$light_grey: #ADADB0
+$dark_grey: #635753
+$light_beige: #D3CDC8
+$color: $light_brown
+
 
 // Import variables and mixins to be used.
 @import _variables.sass
 @import _mixins.sass
 
-/* List styles.
+/* List styles. */
 ul, ol
   margin-left: 0
   padding-left: 2em
 
-/* Table styles.
+/* Table styles. */
 table
   width: 99%
 
@@ -27,7 +35,7 @@ tr.odd
 tr.odd
   background-color: white
 
-/* Code.
+/* Code. */
 pre, code, tt
   font: 1em "andale mono", "lucida console", monospace
   line-height: 1.5
@@ -39,7 +47,7 @@ pre
   margin: 5px 0
   border: 1px solid #aaaaaa
 
-/* List styles.
+/* List styles. */
 ul
   list-style-type: disc
   ul
@@ -56,13 +64,13 @@ ol
     ol
       list-style-type: decimal
 
-/* Abbreviation.
+/* Abbreviation. */
 abbr
   border-bottom: 1px dotted #666666
   cursor: help
   white-space: nowrap
 
-/* UI improvments.
+/* UI improvments. */
 #edit-title
   font-size: 24px
   width: 99%
@@ -80,7 +88,7 @@ abbr
 #edit-delete
   color: #cc0000
 
-/* Console, style from slate theme.
+/* Console, style from slate theme. */
 div.messages
   padding: 9px
   margin: 1em 0
@@ -112,7 +120,7 @@ div.status
   line-height: 1.3em
   @include text-shadow(0,1px,#FFF,1px)
   //: 0 1px 1px #FFFFFF, 0 -1px #CCC
-  color: $dark_red
+  color: $dark_yellow
   a
     font-weight: bold
     font-weight: 700
@@ -120,32 +128,28 @@ div.status
 
 a
   &:hover, &:active, &:link, &:visited
-    color: $dark_brown
-
-#header
-  border-bottom: 1px dotted #999
-  padding-bottom: 20px
-  margin-bottom: 20px
-
+    color: $dark_grey
+  
 #site-name
-  text-transform: uppercase
-  font-size: 2.2em
+  font-size: 3.2em
   font-weight: bold
   line-height: 1.3em
   padding: 0
   margin: 7px 0 0 0
-  letter-spacing: 0.1em
+  letter-spacing: 0.3em
   a
     &:hover, &:active, &:link, &:visited
-      border-top: 5px solid #333
+      font-style: italic
+      //border-top: 5px solid #333
       text-decoration: none
       padding: 4px 0
       font-weight: 700
-      color: $dark_red
+      color: $dark_yellow
+//  text-transform: uppercase
  
 #site-slogan
   font-size: 1.5em
-  color: $old_rose
+  color: $color
 
 #skip
   display: none
@@ -211,18 +215,18 @@ a
       @include rounded_corners(4px, 4px)
       padding: 2px 6px 6px 4px
       margin: 0 6px 6px 0
-      @include gradient(#45484D, #333333) 
+      @include gradient($light_grey, #FFF) 
       @include text-shadow(0,1px,#000,1px)
       &:hover
-        color: $orange
+        color: $dark_yellow
         background: #fff
-        @include gradient(#EEE, #CCC) 
+        @include gradient($dark_yellow, #FFF) 
         @include text-shadow(0,1px,#FFF,1px)
         a
           color: #000
       a
         text-decoration: none
-        color: $orange
+        color: $dark_yellow
         padding: 6px
 
 .view-toon-termen-soorten-objecten
@@ -259,13 +263,29 @@ a
 body
   background: url(../images/achtergrond.jpg)
   padding: 20px 0
+  
 #page
-  background: url(../images/bg-body.jpg)
-  @include shadow(#AAAAAA)
-  border-top: 10px solid $orange
-  border-bottom: 10px solid $orange
   font-size: 0.9em
   line-height: 1.3em
+  padding: 0
+
+#header
+  border-bottom: 1px dotted #999
+  padding-bottom: 20px
+  margin-bottom: 20px
+//  @include shadow(#AAAAAA)
+
+#content_top
+  border-top: 10px solid $dark_yellow
+  background: url(../images/bg-body.jpg)
+
+#main
+  background: url(../images/bg-body.jpg)
+
+#footer
+  background: url(../images/bg-body.jpg)
+
+.block, .node-page
   padding: 15px
   
 h2.block-title
@@ -275,7 +295,7 @@ h2.block-title
 .view-sieraden
   .slide
     img
-      border: 1px #333 solid
+      border: 3px $light_brown solid
     position: relative
     float: left
     .text
@@ -295,7 +315,7 @@ h2.block-title
         padding: 10px
         a
           &:hover, &:active, &:link, &:visited
-            color: $orange
+            color: $light_brown
             text-decoration: none
       p.body
         background: rgb(0, 0, 0)

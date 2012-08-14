@@ -100,38 +100,32 @@ div.status {
   -webkit-text-shadow: 0 1px 1px white;
   -o-text-shadow: 0 1px 1px white;
   text-shadow: 0 1px 1px white;
-  color: #5c2207; }
+  color: #ad771a; }
   #site-name a, #site-slogan a, h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
     font-weight: bold;
     font-weight: 700;
     text-decoration: underline; }
 
 a:hover, a:active, a:link, a:visited {
-  color: #462b10; }
-
-#header {
-  border-bottom: 1px dotted #999999;
-  padding-bottom: 20px;
-  margin-bottom: 20px; }
+  color: #635753; }
 
 #site-name {
-  text-transform: uppercase;
-  font-size: 2.2em;
+  font-size: 3.2em;
   font-weight: bold;
   line-height: 1.3em;
   padding: 0;
   margin: 7px 0 0 0;
-  letter-spacing: 0.1em; }
+  letter-spacing: 0.3em; }
   #site-name a:hover, #site-name a:active, #site-name a:link, #site-name a:visited {
-    border-top: 5px solid #333333;
+    font-style: italic;
     text-decoration: none;
     padding: 4px 0;
     font-weight: 700;
-    color: #5c2207; }
+    color: #ad771a; }
 
 #site-slogan {
   font-size: 1.5em;
-  color: #dfad8c; }
+  color: #b37649; }
 
 #skip {
   display: none; }
@@ -203,23 +197,23 @@ a:hover, a:active, a:link, a:visited {
     -webkit-border-bottom-right-radius: 4px;
     padding: 2px 6px 6px 4px;
     margin: 0 6px 6px 0;
-    background-color: #45484d;
-    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#45484d, endColorstr=#333333);
-    background-image: -moz-linear-gradient(center top, #45484d, #333333);
-    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#45484d), to(#333333));
-    background-image: -o-linear-gradient(#45484d, #333333);
+    background-color: #adadb0;
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#adadb0, endColorstr=white);
+    background-image: -moz-linear-gradient(center top, #adadb0, white);
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#adadb0), to(white));
+    background-image: -o-linear-gradient(#adadb0, white);
     -moz-text-shadow: 0 1px 1px black;
     -webkit-text-shadow: 0 1px 1px black;
     -o-text-shadow: 0 1px 1px black;
     text-shadow: 0 1px 1px black; }
     #block-system-main-menu .menu li:hover {
-      color: #f2b06e;
+      color: #ad771a;
       background: white;
-      background-color: #eeeeee;
-      filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#eeeeee, endColorstr=#cccccc);
-      background-image: -moz-linear-gradient(center top, #eeeeee, #cccccc);
-      background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#eeeeee), to(#cccccc));
-      background-image: -o-linear-gradient(#eeeeee, #cccccc);
+      background-color: #ad771a;
+      filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#ad771a, endColorstr=white);
+      background-image: -moz-linear-gradient(center top, #ad771a, white);
+      background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ad771a), to(white));
+      background-image: -o-linear-gradient(#ad771a, white);
       -moz-text-shadow: 0 1px 1px white;
       -webkit-text-shadow: 0 1px 1px white;
       -o-text-shadow: 0 1px 1px white;
@@ -228,7 +222,7 @@ a:hover, a:active, a:link, a:visited {
         color: black; }
     #block-system-main-menu .menu li a {
       text-decoration: none;
-      color: #f2b06e;
+      color: #ad771a;
       padding: 6px; }
 
 .view-toon-termen-soorten-objecten .views-row {
@@ -262,16 +256,26 @@ body {
   padding: 20px 0; }
 
 #page {
-  background: url(../images/bg-body.jpg);
-  -moz-box-shadow: 0px 1px 1px #aaaaaa;
-  -webkit-box-shadow: 0px 1px 1px #aaaaaa;
-  box-shadow: 0px 1px 1px #aaaaaa;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color')";
-  filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color');
-  border-top: 10px solid #f2b06e;
-  border-bottom: 10px solid #f2b06e;
   font-size: 0.9em;
   line-height: 1.3em;
+  padding: 0; }
+
+#header {
+  border-bottom: 1px dotted #999999;
+  padding-bottom: 20px;
+  margin-bottom: 20px; }
+
+#content_top {
+  border-top: 10px solid #ad771a;
+  background: url(../images/bg-body.jpg); }
+
+#main {
+  background: url(../images/bg-body.jpg); }
+
+#footer {
+  background: url(../images/bg-body.jpg); }
+
+.block, .node-page {
   padding: 15px; }
 
 h2.block-title {
@@ -281,7 +285,7 @@ h2.block-title {
   position: relative;
   float: left; }
   .view-sieraden .slide img {
-    border: 1px #333333 solid; }
+    border: 3px #b37649 solid; }
   .view-sieraden .slide .text {
     position: absolute;
     top: 236px;
@@ -298,7 +302,7 @@ h2.block-title {
       overflow: hidden;
       padding: 10px; }
       .view-sieraden .slide .text .title a:hover, .view-sieraden .slide .text .title a:active, .view-sieraden .slide .text .title a:link, .view-sieraden .slide .text .title a:visited {
-        color: #f2b06e;
+        color: #b37649;
         text-decoration: none; }
     .view-sieraden .slide .text p.body {
       background: black;
