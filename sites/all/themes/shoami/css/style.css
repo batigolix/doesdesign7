@@ -257,11 +257,11 @@ body {
 
 #header .three .block {
   background: white;
-  opacity: .5;
-  filter: alpha(opacity=5);
+  opacity: .6;
+  filter: alpha(opacity=6);
   -ms-filter: "alpha(opacity=$value)";
-  -khtml-opacity: .5;
-  -moz-opacity: .5; }
+  -khtml-opacity: .6;
+  -moz-opacity: .6; }
 
 #page {
   font-size: 0.9em;
@@ -272,6 +272,11 @@ body {
   border-left: 3px solid #635753;
   border-right: 3px solid #635753;
   background: url(../images/bg-body.jpg); }
+  #content_top .block, #content_top .node-page, #content_top #content-header, #main .block, #main .node-page, #main #content-header, #footer .block, #footer .node-page, #footer #content-header {
+    padding: 15px 15px 0 15px; }
+
+.container .columns {
+  margin-left: 14px; }
 
 #content_top {
   border-top: 3px solid #635753; }
@@ -280,9 +285,6 @@ body {
   border-bottom: 3px solid #635753; }
   #footer p {
     font-size: 0.8em; }
-
-.block, .node-page, #content-header {
-  padding: 15px 15px 0 15px; }
 
 h2.block-title {
   font-size: 1.4em; }
