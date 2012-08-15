@@ -12,7 +12,7 @@ $light_grey: #ADADB0
 $dark_grey: #635753
 $light_beige: #D3CDC8
 $color: $light_brown
-
+$light_yellow: #EBE5D0
 
 // Import variables and mixins to be used.
 @import _variables.sass
@@ -113,10 +113,8 @@ div.status
 
 /* custom style boris   */
 
-#site-name, #site-slogan, h1, h2, h3, h4, h5, h6
-  font-family: 'Gentium Basic', Georgia, serif, cursive
-  font-weight: bold
-  font-weight: 700
+h1, h2, h3, h4, h5, h6
+  @include font
   line-height: 1.3em
   @include text-shadow(0,1px,#FFF,1px)
   //: 0 1px 1px #FFFFFF, 0 -1px #CCC
@@ -131,25 +129,25 @@ a
     color: $dark_grey
   
 #site-name
-  font-size: 3.2em
-  font-weight: bold
-  line-height: 1.3em
   padding: 0
   margin: 7px 0 0 0
-  letter-spacing: 0.3em
+  @include text-shadow(0,4px,#000,4px)
   a
     &:hover, &:active, &:link, &:visited
-      font-style: italic
-      //border-top: 5px solid #333
       text-decoration: none
-      padding: 4px 0
-      font-weight: 700
-      color: $dark_yellow
-//  text-transform: uppercase
+      color: $light_yellow
+      @include font(100)
+      font-size: 3.6em
+      font-style: italic
+      line-height: 1.3em
+      letter-spacing: 0.15em
  
 #site-slogan
+  @include font(100)
   font-size: 1.5em
-  color: $color
+  color: #FFF
+  letter-spacing: 0.39em  
+  @include text-shadow(0,2px,#000,2px)
 
 #skip
   display: none
@@ -160,12 +158,12 @@ a
   img
     border: 2px #eee solid
     padding: 2px  
-    @include shadow(#BBB)
+    @include shadow(1px, 1px, 3px, #BBB)
     @include rounded_corners(2px, 2px)
     
 .grid-4 
   .col-1, .col-2, .col-3, .col-4
-    width: 150px
+    width: 143px
     float: left
     display: inline
     margin: 0 4px 0 0   
@@ -202,32 +200,28 @@ a
       padding: 0
 
 #block-system-main-menu 
-  // font-family: 'Gentium Basic', Georgia, serif, cursive
   .menu
     margin: 0
     padding: 0
     li
-      font-weight: bold
       float: left
       font-size: 1.2em
       list-style: none
-      background: #000
-      @include rounded_corners(4px, 4px)
-      padding: 2px 6px 6px 4px
+      background: $light_beige url(../images/menubalk.png)
+      -moz-border-radius: 100px / 50px
+      -webkit-border-radius: 100px / 50px
+      border-radius: 100px / 50px
+      padding: 6px 6px 10px 8px
       margin: 0 6px 6px 0
-      @include gradient($light_grey, #FFF) 
-      @include text-shadow(0,1px,#000,1px)
+      @include shadow(3px, 3px, 5px, #333)
       &:hover
-        color: $dark_yellow
-        background: #fff
-        @include gradient($dark_yellow, #FFF) 
-        @include text-shadow(0,1px,#FFF,1px)
-        a
-          color: #000
+        color: #333
       a
         text-decoration: none
-        color: $dark_yellow
+        color: #FFF
         padding: 6px
+        @include font() 
+        @include text-shadow(0,2px,#000,2px)
 
 .view-toon-termen-soorten-objecten
   .views-row
@@ -261,32 +255,37 @@ a
     font-style: oblique
     
 body
-  background: url(../images/achtergrond.jpg)
+  background: url(../images/achtergrond.jpg) no-repeat fixed center center 
+  background-size: 100% 100%
   padding: 20px 0
-  
+
+#header
+  .three
+    .block
+      background: #FFF
+      @include opacity(5)  
 #page
   font-size: 0.9em
   line-height: 1.3em
   padding: 0
 
-#header
-  border-bottom: 1px dotted #999
-  padding-bottom: 20px
-  margin-bottom: 20px
-//  @include shadow(#AAAAAA)
+// common aspects of content regions
+#content_top, #main, #footer
+  border-left: 3px solid $dark_grey
+  border-right: 3px solid $dark_grey
+  background: url(../images/bg-body.jpg)
 
+// individual aspects of content regions
 #content_top
-  border-top: 10px solid $dark_yellow
-  background: url(../images/bg-body.jpg)
-
-#main
-  background: url(../images/bg-body.jpg)
+  border-top: 3px solid $dark_grey
 
 #footer
-  background: url(../images/bg-body.jpg)
-
-.block, .node-page
-  padding: 15px
+  border-bottom: 3px solid $dark_grey
+  p
+    font-size: 0.8em
+    
+.block, .node-page, #content-header
+  padding: 15px 15px 0 15px
   
 h2.block-title
   font-size: 1.4em  
@@ -326,11 +325,9 @@ h2.block-title
         margin-top: 5px      
         overflow: hidden
         
-#footer
-  border-top: 1px dotted #999
-  margin: 40px 0 0 0
-  p
-    font-size: 0.8em
+@media all and (max-width: 800px)
+  #block-views-sieraden-block_1
+    display: none
     
 #block-gtranslate-gtranslate
   h2

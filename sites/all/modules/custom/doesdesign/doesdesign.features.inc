@@ -63,8 +63,8 @@ function doesdesign_image_default_styles() {
         'module' => 'image',
         'name' => 'image_scale_and_crop',
         'data' => array(
-          'width' => '140',
-          'height' => '140',
+          'width' => '130',
+          'height' => '130',
         ),
         'weight' => '1',
       ),

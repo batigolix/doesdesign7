@@ -23,10 +23,11 @@
   -webkit-border-bottom-left-radius: $bottom
   -webkit-border-bottom-right-radius: $left
   
-@mixin shadow($color: #333333)
-  -moz-box-shadow: 0px 1px 1px $color
-  -webkit-box-shadow: 0px 1px 1px $color
-  box-shadow: 0px 1px 1px $color
+@mixin shadow($hori_offset: 0, $verti_offset: 1px, $blur: 1px, $color: #333)
+  $value: $hori_offset $verti_offset $blur $color
+  -moz-box-shadow: $value
+  -webkit-box-shadow: $value
+  box-shadow: $value
   -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color')"
   filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color')
   
@@ -59,6 +60,11 @@
   background-image: -moz-linear-gradient(center top, $color1, $color2)
   background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from($color1), to($color2))  
   background-image: -o-linear-gradient($color1, $color2)    
+
+@mixin font($weight:700)
+  font-family: 'Gentium Basic', Georgia, serif, cursive
+  font-weight: bold
+  font-weight: $weight
 
 $horizontal_offset: 2px
 $vertical_offset: 2px
