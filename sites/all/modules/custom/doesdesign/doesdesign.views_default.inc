@@ -23,27 +23,33 @@ function doesdesign_views_default_views() {
   /* Display: Defaults */
   $handler = $view->new_display('default', 'Defaults', 'default');
   $handler->display->display_options['title'] = 'In de schijnwerpers';
+  $handler->display->display_options['use_more_text'] = 'meer';
   $handler->display->display_options['access']['type'] = 'none';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['query']['options']['query_comment'] = FALSE;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Opnieuw instellen';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sorteer volgens';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Aflopend';
   $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Items per pagina';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['row_plugin'] = 'node';
-  /* Header: Global: Text area */
+  /* Kop: Global: Tekstveld */
   $handler->display->display_options['header']['text']['id'] = 'area';
   $handler->display->display_options['header']['text']['table'] = 'views';
   $handler->display->display_options['header']['text']['field'] = 'area';
   $handler->display->display_options['header']['text']['empty'] = FALSE;
   $handler->display->display_options['header']['text']['content'] = 'Opmerkelijke sieraden en objecten. Klik op de titel voor meer informatie. Prijzen zijn excl. BTW';
   $handler->display->display_options['header']['text']['format'] = '1';
-  /* Sort criterion: Content: Post date */
+  /* Sorteercriterium: Inhoud: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
-  /* Filter criterion: Content: Type */
+  /* Filter criterion: Inhoud: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
@@ -52,21 +58,21 @@ function doesdesign_views_default_views() {
   );
   $handler->display->display_options['filters']['type']['group'] = '0';
   $handler->display->display_options['filters']['type']['expose']['operator'] = FALSE;
-  /* Filter criterion: Content: Promoted to front page */
+  /* Filter criterion: Inhoud: Aangeraden op de voorpagina */
   $handler->display->display_options['filters']['promote']['id'] = 'promote';
   $handler->display->display_options['filters']['promote']['table'] = 'node';
   $handler->display->display_options['filters']['promote']['field'] = 'promote';
   $handler->display->display_options['filters']['promote']['value'] = '1';
   $handler->display->display_options['filters']['promote']['group'] = '0';
   $handler->display->display_options['filters']['promote']['expose']['operator'] = FALSE;
-  /* Filter criterion: Content: Published */
+  /* Filter criterion: Inhoud: Gepubliceerd */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
   $handler->display->display_options['filters']['status']['value'] = '1';
   $handler->display->display_options['filters']['status']['group'] = '0';
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
-  /* Filter criterion: Content translation: Language */
+  /* Filter criterion: Handler defect of ontbreekt */
   $handler->display->display_options['filters']['language']['id'] = 'language';
   $handler->display->display_options['filters']['language']['table'] = 'node';
   $handler->display->display_options['filters']['language']['field'] = 'language';
@@ -79,7 +85,7 @@ function doesdesign_views_default_views() {
   /* Display: Blok */
   $handler = $view->new_display('block', 'Blok', 'block_1');
   $handler->display->display_options['defaults']['header'] = FALSE;
-  /* Header: Global: Text area */
+  /* Kop: Global: Tekstveld */
   $handler->display->display_options['header']['text']['id'] = 'area';
   $handler->display->display_options['header']['text']['table'] = 'views';
   $handler->display->display_options['header']['text']['field'] = 'area';
@@ -89,14 +95,14 @@ function doesdesign_views_default_views() {
   $translatables['aanbevolen'] = array(
     t('Defaults'),
     t('In de schijnwerpers'),
-    t('more'),
-    t('Apply'),
-    t('Reset'),
-    t('Sort by'),
+    t('meer'),
+    t('Toepassen'),
+    t('Opnieuw instellen'),
+    t('Sorteer volgens'),
     t('Asc'),
-    t('Desc'),
-    t('Items per page'),
-    t('- All -'),
+    t('Aflopend'),
+    t('Items per pagina'),
+    t('- Alle -'),
     t('Offset'),
     t('Opmerkelijke sieraden en objecten. Klik op de titel voor meer informatie. Prijzen zijn excl. BTW'),
     t('Blok'),
@@ -115,15 +121,21 @@ function doesdesign_views_default_views() {
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['use_more_text'] = 'meer';
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['query']['options']['query_comment'] = FALSE;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Opnieuw instellen';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sorteer volgens';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Aflopend';
   $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Items per pagina';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['row_plugin'] = 'fields';
-  /* Field: Taxonomy term: Name */
+  /* Veld: Taxonomie term: Naam */
   $handler->display->display_options['fields']['name']['id'] = 'name';
   $handler->display->display_options['fields']['name']['table'] = 'taxonomy_term_data';
   $handler->display->display_options['fields']['name']['field'] = 'name';
@@ -149,7 +161,7 @@ function doesdesign_views_default_views() {
   $handler->display->display_options['fields']['name']['hide_alter_empty'] = 1;
   $handler->display->display_options['fields']['name']['link_to_taxonomy'] = 1;
   $handler->display->display_options['fields']['name']['convert_spaces'] = 0;
-  /* Field: Taxonomy term: Term description */
+  /* Veld: Taxonomie term: Omschrijving van term */
   $handler->display->display_options['fields']['description']['id'] = 'description';
   $handler->display->display_options['fields']['description']['table'] = 'taxonomy_term_data';
   $handler->display->display_options['fields']['description']['field'] = 'description';
@@ -172,7 +184,7 @@ function doesdesign_views_default_views() {
   $handler->display->display_options['fields']['description']['hide_empty'] = 0;
   $handler->display->display_options['fields']['description']['empty_zero'] = 0;
   $handler->display->display_options['fields']['description']['hide_alter_empty'] = 1;
-  /* Field: Field: Afbeelding */
+  /* Veld: Veld: Afbeelding */
   $handler->display->display_options['fields']['field_image']['id'] = 'field_image';
   $handler->display->display_options['fields']['field_image']['table'] = 'field_data_field_image';
   $handler->display->display_options['fields']['field_image']['field'] = 'field_image';
@@ -206,7 +218,7 @@ function doesdesign_views_default_views() {
   $handler->display->display_options['fields']['field_image']['delta_reversed'] = 0;
   $handler->display->display_options['fields']['field_image']['delta_first_last'] = 0;
   $handler->display->display_options['fields']['field_image']['field_api_classes'] = 0;
-  /* Contextual filter: Taxonomy term: Term ID */
+  /* Contextual filter: Taxonomie term: Term ID */
   $handler->display->display_options['arguments']['tid']['id'] = 'tid';
   $handler->display->display_options['arguments']['tid']['table'] = 'taxonomy_term_data';
   $handler->display->display_options['arguments']['tid']['field'] = 'tid';
@@ -220,16 +232,16 @@ function doesdesign_views_default_views() {
   $handler->display->display_options['arguments']['tid']['not'] = 0;
   $translatables['categoriebeschrijvingen'] = array(
     t('Master'),
-    t('more'),
-    t('Apply'),
-    t('Reset'),
-    t('Sort by'),
+    t('meer'),
+    t('Toepassen'),
+    t('Opnieuw instellen'),
+    t('Sorteer volgens'),
     t('Asc'),
-    t('Desc'),
-    t('Items per page'),
-    t('- All -'),
+    t('Aflopend'),
+    t('Items per pagina'),
+    t('- Alle -'),
     t('Offset'),
-    t('All'),
+    t('Alle'),
   );
   $export['categoriebeschrijvingen'] = $view;
 
@@ -253,11 +265,16 @@ function doesdesign_views_default_views() {
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['query']['options']['query_comment'] = FALSE;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Opnieuw instellen';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sorteer volgens';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Aflopend';
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '25';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Items per pagina';
   $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all'] = 0;
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
   $handler->display->display_options['style_plugin'] = 'list';
   $handler->display->display_options['row_plugin'] = 'fields';
   $handler->display->display_options['row_options']['inline'] = array(
@@ -266,7 +283,7 @@ function doesdesign_views_default_views() {
   );
   $handler->display->display_options['row_options']['hide_empty'] = 0;
   $handler->display->display_options['row_options']['default_field_elements'] = 1;
-  /* Field: Aggregator: Timestamp */
+  /* Veld: Aggregator: Tijdstip */
   $handler->display->display_options['fields']['timestamp']['id'] = 'timestamp';
   $handler->display->display_options['fields']['timestamp']['table'] = 'aggregator_item';
   $handler->display->display_options['fields']['timestamp']['field'] = 'timestamp';
@@ -290,7 +307,7 @@ function doesdesign_views_default_views() {
   $handler->display->display_options['fields']['timestamp']['empty_zero'] = 0;
   $handler->display->display_options['fields']['timestamp']['hide_alter_empty'] = 1;
   $handler->display->display_options['fields']['timestamp']['date_format'] = 'medium';
-  /* Field: Aggregator: Title */
+  /* Veld: Aggregator: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'aggregator_item';
   $handler->display->display_options['fields']['title']['field'] = 'title';
@@ -313,7 +330,7 @@ function doesdesign_views_default_views() {
   $handler->display->display_options['fields']['title']['empty_zero'] = 0;
   $handler->display->display_options['fields']['title']['hide_alter_empty'] = 0;
   $handler->display->display_options['fields']['title']['display_as_link'] = 1;
-  /* Sort criterion: Aggregator: Timestamp */
+  /* Sorteercriterium: Aggregator: Tijdstip */
   $handler->display->display_options['sorts']['timestamp']['id'] = 'timestamp';
   $handler->display->display_options['sorts']['timestamp']['table'] = 'aggregator_item';
   $handler->display->display_options['sorts']['timestamp']['field'] = 'timestamp';
@@ -345,16 +362,15 @@ function doesdesign_views_default_views() {
     t('Master'),
     t('Doesdesign op het web'),
     t('meer'),
-    t('Apply'),
-    t('Reset'),
-    t('Sort by'),
+    t('Toepassen'),
+    t('Opnieuw instellen'),
+    t('Sorteer volgens'),
     t('Asc'),
-    t('Desc'),
-    t('Items per page'),
-    t('- All -'),
+    t('Aflopend'),
+    t('Items per pagina'),
+    t('- Alle -'),
     t('Offset'),
     t('Page'),
-    t('more'),
     t('Block'),
   );
   $export['doesdesign_op_het_web'] = $view;
@@ -372,16 +388,22 @@ function doesdesign_views_default_views() {
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'Doesdesign op het web';
+  $handler->display->display_options['use_more_text'] = 'meer';
   $handler->display->display_options['access']['type'] = 'none';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['query']['options']['query_comment'] = FALSE;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Opnieuw instellen';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sorteer volgens';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Aflopend';
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '6';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Items per pagina';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['row_plugin'] = 'fields';
-  /* Field: Aggregator: Title */
+  /* Veld: Aggregator: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'aggregator_item';
   $handler->display->display_options['fields']['title']['field'] = 'title';
@@ -404,7 +426,7 @@ function doesdesign_views_default_views() {
   $handler->display->display_options['fields']['title']['empty_zero'] = 0;
   $handler->display->display_options['fields']['title']['hide_alter_empty'] = 0;
   $handler->display->display_options['fields']['title']['display_as_link'] = 1;
-  /* Field: Aggregator: Body */
+  /* Veld: Aggregator: Berichttekst */
   $handler->display->display_options['fields']['description']['id'] = 'description';
   $handler->display->display_options['fields']['description']['table'] = 'aggregator_item';
   $handler->display->display_options['fields']['description']['field'] = 'description';
@@ -426,7 +448,7 @@ function doesdesign_views_default_views() {
   $handler->display->display_options['fields']['description']['hide_empty'] = 0;
   $handler->display->display_options['fields']['description']['empty_zero'] = 0;
   $handler->display->display_options['fields']['description']['hide_alter_empty'] = 0;
-  /* Sort criterion: Aggregator: Timestamp */
+  /* Sorteercriterium: Aggregator: Tijdstip */
   $handler->display->display_options['sorts']['timestamp']['id'] = 'timestamp';
   $handler->display->display_options['sorts']['timestamp']['table'] = 'aggregator_item';
   $handler->display->display_options['sorts']['timestamp']['field'] = 'timestamp';
@@ -441,14 +463,14 @@ function doesdesign_views_default_views() {
   $translatables['flickr_photo_s'] = array(
     t('Master'),
     t('Doesdesign op het web'),
-    t('more'),
-    t('Apply'),
-    t('Reset'),
-    t('Sort by'),
+    t('meer'),
+    t('Toepassen'),
+    t('Opnieuw instellen'),
+    t('Sorteer volgens'),
     t('Asc'),
-    t('Desc'),
-    t('Items per page'),
-    t('- All -'),
+    t('Aflopend'),
+    t('Items per pagina'),
+    t('- Alle -'),
     t('Offset'),
     t('Page'),
     t('Block'),
@@ -475,11 +497,16 @@ function doesdesign_views_default_views() {
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['query']['options']['query_comment'] = FALSE;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Opnieuw instellen';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sorteer volgens';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Aflopend';
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '10';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Items per pagina';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['row_plugin'] = 'node';
-  /* Field: Content: Title */
+  /* Veld: Inhoud: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
@@ -495,19 +522,19 @@ function doesdesign_views_default_views() {
   $handler->display->display_options['fields']['title']['hide_empty'] = 0;
   $handler->display->display_options['fields']['title']['empty_zero'] = 0;
   $handler->display->display_options['fields']['title']['link_to_node'] = 1;
-  /* Sort criterion: Content: Post date */
+  /* Sorteercriterium: Inhoud: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
-  /* Filter criterion: Content: Published */
+  /* Filter criterion: Inhoud: Gepubliceerd */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
   $handler->display->display_options['filters']['status']['value'] = 1;
   $handler->display->display_options['filters']['status']['group'] = 1;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
-  /* Filter criterion: Content: Type */
+  /* Filter criterion: Inhoud: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
@@ -542,7 +569,7 @@ function doesdesign_views_default_views() {
   $handler->display->display_options['row_options']['default_field_elements'] = 1;
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Content revision: Updated date */
+  /* Veld: Content revision: Datum bijgewerkt */
   $handler->display->display_options['fields']['timestamp']['id'] = 'timestamp';
   $handler->display->display_options['fields']['timestamp']['table'] = 'node_revision';
   $handler->display->display_options['fields']['timestamp']['field'] = 'timestamp';
@@ -566,7 +593,7 @@ function doesdesign_views_default_views() {
   $handler->display->display_options['fields']['timestamp']['empty_zero'] = 0;
   $handler->display->display_options['fields']['timestamp']['hide_alter_empty'] = 1;
   $handler->display->display_options['fields']['timestamp']['date_format'] = 'medium';
-  /* Field: Content: Title */
+  /* Veld: Inhoud: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
@@ -594,16 +621,15 @@ function doesdesign_views_default_views() {
     t('Master'),
     t('Nieuws'),
     t('meer'),
-    t('Apply'),
-    t('Reset'),
-    t('Sort by'),
+    t('Toepassen'),
+    t('Opnieuw instellen'),
+    t('Sorteer volgens'),
     t('Asc'),
-    t('Desc'),
-    t('Items per page'),
-    t('- All -'),
+    t('Aflopend'),
+    t('Items per pagina'),
+    t('- Alle -'),
     t('Offset'),
     t('Page'),
-    t('more'),
     t('Block'),
     t('News'),
   );
@@ -621,23 +647,27 @@ function doesdesign_views_default_views() {
 
   /* Display: Defaults */
   $handler = $view->new_display('default', 'Defaults', 'default');
+  $handler->display->display_options['use_more_text'] = 'meer';
   $handler->display->display_options['access']['type'] = 'none';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['query']['options']['query_comment'] = FALSE;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Opnieuw instellen';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sorteer volgens';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Aflopend';
   $handler->display->display_options['pager']['type'] = 'some';
   $handler->display->display_options['pager']['options']['items_per_page'] = '6';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['row_plugin'] = 'fields';
-  /* Field: Content: Title */
+  /* Veld: Inhoud: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
   $handler->display->display_options['fields']['title']['label'] = '';
   $handler->display->display_options['fields']['title']['link_to_node'] = 1;
-  /* Field: Content: Post date */
+  /* Veld: Inhoud: Post date */
   $handler->display->display_options['fields']['created']['id'] = 'created';
   $handler->display->display_options['fields']['created']['table'] = 'node';
   $handler->display->display_options['fields']['created']['field'] = 'created';
@@ -661,7 +691,7 @@ function doesdesign_views_default_views() {
   $handler->display->display_options['fields']['created']['hide_alter_empty'] = 0;
   $handler->display->display_options['fields']['created']['date_format'] = 'custom';
   $handler->display->display_options['fields']['created']['custom_date_format'] = 'd M Y';
-  /* Field: Field: Afbeelding */
+  /* Veld: Veld: Afbeelding */
   $handler->display->display_options['fields']['field_image']['id'] = 'field_image';
   $handler->display->display_options['fields']['field_image']['table'] = 'field_data_field_image';
   $handler->display->display_options['fields']['field_image']['field'] = 'field_image';
@@ -694,12 +724,12 @@ function doesdesign_views_default_views() {
   $handler->display->display_options['fields']['field_image']['delta_offset'] = '0';
   $handler->display->display_options['fields']['field_image']['delta_reversed'] = 0;
   $handler->display->display_options['fields']['field_image']['field_api_classes'] = 0;
-  /* Sort criterion: Content: Post date */
+  /* Sorteercriterium: Inhoud: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
-  /* Filter criterion: Content: Type */
+  /* Filter criterion: Inhoud: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
@@ -708,13 +738,13 @@ function doesdesign_views_default_views() {
   );
   $handler->display->display_options['filters']['type']['group'] = '0';
   $handler->display->display_options['filters']['type']['expose']['operator'] = FALSE;
-  /* Filter criterion: Content: Published */
+  /* Filter criterion: Inhoud: Gepubliceerd */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
   $handler->display->display_options['filters']['status']['value'] = '1';
   $handler->display->display_options['filters']['status']['group'] = '0';
-  /* Filter criterion: Content translation: Language */
+  /* Filter criterion: Handler defect of ontbreekt */
   $handler->display->display_options['filters']['language']['id'] = 'language';
   $handler->display->display_options['filters']['language']['table'] = 'node';
   $handler->display->display_options['filters']['language']['field'] = 'language';
@@ -727,12 +757,12 @@ function doesdesign_views_default_views() {
   $handler = $view->new_display('block', 'Blok', 'block_1');
   $translatables['nieuwe_objecten'] = array(
     t('Defaults'),
-    t('more'),
-    t('Apply'),
-    t('Reset'),
-    t('Sort by'),
+    t('meer'),
+    t('Toepassen'),
+    t('Opnieuw instellen'),
+    t('Sorteer volgens'),
     t('Asc'),
-    t('Desc'),
+    t('Aflopend'),
     t('Toegevoegd'),
     t('Blok'),
   );
@@ -751,16 +781,22 @@ function doesdesign_views_default_views() {
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'Sieraden';
+  $handler->display->display_options['use_more_text'] = 'meer';
   $handler->display->display_options['access']['type'] = 'perm';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['query']['options']['query_comment'] = FALSE;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Opnieuw instellen';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sorteer volgens';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Aflopend';
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '10';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Items per pagina';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['row_plugin'] = 'node';
-  /* Field: Content: Title */
+  /* Veld: Inhoud: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
@@ -776,23 +812,23 @@ function doesdesign_views_default_views() {
   $handler->display->display_options['fields']['title']['hide_empty'] = 0;
   $handler->display->display_options['fields']['title']['empty_zero'] = 0;
   $handler->display->display_options['fields']['title']['link_to_node'] = 1;
-  /* Field: Field: Afbeelding (field_image:delta) */
+  /* Veld: Veld: Afbeelding (field_image:delta) */
   $handler->display->display_options['fields']['delta']['id'] = 'delta';
   $handler->display->display_options['fields']['delta']['table'] = 'field_data_field_image';
   $handler->display->display_options['fields']['delta']['field'] = 'delta';
-  /* Sort criterion: Content: Post date */
+  /* Sorteercriterium: Inhoud: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
-  /* Filter criterion: Content: Published */
+  /* Filter criterion: Inhoud: Gepubliceerd */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
   $handler->display->display_options['filters']['status']['value'] = 1;
   $handler->display->display_options['filters']['status']['group'] = 1;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
-  /* Filter criterion: Content: Type */
+  /* Filter criterion: Inhoud: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
@@ -859,7 +895,7 @@ function doesdesign_views_default_views() {
   $handler->display->display_options['row_options']['default_field_elements'] = 1;
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Content: Title */
+  /* Veld: Inhoud: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
@@ -884,7 +920,7 @@ function doesdesign_views_default_views() {
   $handler->display->display_options['fields']['title']['empty_zero'] = 0;
   $handler->display->display_options['fields']['title']['hide_alter_empty'] = 1;
   $handler->display->display_options['fields']['title']['link_to_node'] = 1;
-  /* Field: Field: Afbeelding */
+  /* Veld: Veld: Afbeelding */
   $handler->display->display_options['fields']['field_image']['id'] = 'field_image';
   $handler->display->display_options['fields']['field_image']['table'] = 'field_data_field_image';
   $handler->display->display_options['fields']['field_image']['field'] = 'field_image';
@@ -918,7 +954,7 @@ function doesdesign_views_default_views() {
   $handler->display->display_options['fields']['field_image']['delta_reversed'] = 0;
   $handler->display->display_options['fields']['field_image']['delta_first_last'] = 0;
   $handler->display->display_options['fields']['field_image']['field_api_classes'] = 0;
-  /* Field: Content: Body */
+  /* Veld: Inhoud: Body */
   $handler->display->display_options['fields']['body']['id'] = 'body';
   $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
   $handler->display->display_options['fields']['body']['field'] = 'body';
@@ -945,21 +981,21 @@ function doesdesign_views_default_views() {
   $handler->display->display_options['fields']['body']['hide_alter_empty'] = 1;
   $handler->display->display_options['fields']['body']['field_api_classes'] = 0;
   $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Content: Published */
+  /* Filter criterion: Inhoud: Gepubliceerd */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'node';
   $handler->display->display_options['filters']['status']['field'] = 'status';
   $handler->display->display_options['filters']['status']['value'] = 1;
   $handler->display->display_options['filters']['status']['group'] = 1;
   $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
-  /* Filter criterion: Content: Type */
+  /* Filter criterion: Inhoud: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
   $handler->display->display_options['filters']['type']['field'] = 'type';
   $handler->display->display_options['filters']['type']['value'] = array(
     'object' => 'object',
   );
-  /* Filter criterion: Content: Promoted to front page */
+  /* Filter criterion: Inhoud: Aangeraden op de voorpagina */
   $handler->display->display_options['filters']['promote']['id'] = 'promote';
   $handler->display->display_options['filters']['promote']['table'] = 'node';
   $handler->display->display_options['filters']['promote']['field'] = 'promote';
@@ -967,14 +1003,14 @@ function doesdesign_views_default_views() {
   $translatables['sieraden'] = array(
     t('Master'),
     t('Sieraden'),
-    t('more'),
-    t('Apply'),
-    t('Reset'),
-    t('Sort by'),
+    t('meer'),
+    t('Toepassen'),
+    t('Opnieuw instellen'),
+    t('Sorteer volgens'),
     t('Asc'),
-    t('Desc'),
-    t('Items per page'),
-    t('- All -'),
+    t('Aflopend'),
+    t('Items per pagina'),
+    t('- Alle -'),
     t('Offset'),
     t('Afbeelding (field_image:delta)'),
     t('.'),
@@ -997,25 +1033,31 @@ function doesdesign_views_default_views() {
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['use_more_text'] = 'meer';
   $handler->display->display_options['access']['type'] = 'none';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['query']['options']['query_comment'] = FALSE;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Opnieuw instellen';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sorteer volgens';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Aflopend';
   $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Items per pagina';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
   $handler->display->display_options['style_plugin'] = 'grid';
   $handler->display->display_options['style_options']['fill_single_line'] = 1;
   $handler->display->display_options['row_plugin'] = 'fields';
   $handler->display->display_options['row_options']['hide_empty'] = 0;
   $handler->display->display_options['row_options']['default_field_elements'] = 1;
-  /* Header: Global: View area */
+  /* Kop: Global: View area */
   $handler->display->display_options['header']['view']['id'] = 'view';
   $handler->display->display_options['header']['view']['table'] = 'views';
   $handler->display->display_options['header']['view']['field'] = 'view';
   $handler->display->display_options['header']['view']['empty'] = FALSE;
   $handler->display->display_options['header']['view']['view_to_insert'] = 'categoriebeschrijvingen:default';
   $handler->display->display_options['header']['view']['inherit_arguments'] = 1;
-  /* Field: Field: Afbeelding */
+  /* Veld: Veld: Afbeelding */
   $handler->display->display_options['fields']['field_image']['id'] = 'field_image';
   $handler->display->display_options['fields']['field_image']['table'] = 'field_data_field_image';
   $handler->display->display_options['fields']['field_image']['field'] = 'field_image';
@@ -1049,7 +1091,7 @@ function doesdesign_views_default_views() {
   $handler->display->display_options['fields']['field_image']['delta_offset'] = '0';
   $handler->display->display_options['fields']['field_image']['delta_reversed'] = 0;
   $handler->display->display_options['fields']['field_image']['field_api_classes'] = 0;
-  /* Field: Content: Title */
+  /* Veld: Inhoud: Titel */
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
@@ -1074,7 +1116,7 @@ function doesdesign_views_default_views() {
   $handler->display->display_options['fields']['title']['empty_zero'] = 0;
   $handler->display->display_options['fields']['title']['hide_alter_empty'] = 0;
   $handler->display->display_options['fields']['title']['link_to_node'] = 1;
-  /* Field: Content: Body */
+  /* Veld: Inhoud: Body */
   $handler->display->display_options['fields']['body']['id'] = 'body';
   $handler->display->display_options['fields']['body']['table'] = 'field_data_body';
   $handler->display->display_options['fields']['body']['field'] = 'body';
@@ -1098,17 +1140,17 @@ function doesdesign_views_default_views() {
   $handler->display->display_options['fields']['body']['empty_zero'] = 0;
   $handler->display->display_options['fields']['body']['hide_alter_empty'] = 0;
   $handler->display->display_options['fields']['body']['field_api_classes'] = 0;
-  /* Sort criterion: Content: Sticky */
+  /* Sorteercriterium: Inhoud: Vastgeplakt (sticky) */
   $handler->display->display_options['sorts']['sticky']['id'] = 'sticky';
   $handler->display->display_options['sorts']['sticky']['table'] = 'node';
   $handler->display->display_options['sorts']['sticky']['field'] = 'sticky';
   $handler->display->display_options['sorts']['sticky']['order'] = 'DESC';
-  /* Sort criterion: Content: Post date */
+  /* Sorteercriterium: Inhoud: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
-  /* Contextual filter: Content: Has taxonomy term ID (with depth) */
+  /* Contextual filter: Inhoud: Has taxonomy term ID (with depth) */
   $handler->display->display_options['arguments']['term_node_tid_depth']['id'] = 'term_node_tid_depth';
   $handler->display->display_options['arguments']['term_node_tid_depth']['table'] = 'node';
   $handler->display->display_options['arguments']['term_node_tid_depth']['field'] = 'term_node_tid_depth';
@@ -1122,7 +1164,7 @@ function doesdesign_views_default_views() {
   $handler->display->display_options['arguments']['term_node_tid_depth']['validate']['type'] = 'taxonomy_term';
   $handler->display->display_options['arguments']['term_node_tid_depth']['depth'] = '0';
   $handler->display->display_options['arguments']['term_node_tid_depth']['break_phrase'] = 1;
-  /* Contextual filter: Content: Has taxonomy term ID depth modifier */
+  /* Contextual filter: Inhoud: Has taxonomy term ID depth modifier */
   $handler->display->display_options['arguments']['term_node_tid_depth_modifier']['id'] = 'term_node_tid_depth_modifier';
   $handler->display->display_options['arguments']['term_node_tid_depth_modifier']['table'] = 'node';
   $handler->display->display_options['arguments']['term_node_tid_depth_modifier']['field'] = 'term_node_tid_depth_modifier';
@@ -1130,13 +1172,13 @@ function doesdesign_views_default_views() {
   $handler->display->display_options['arguments']['term_node_tid_depth_modifier']['default_argument_type'] = 'fixed';
   $handler->display->display_options['arguments']['term_node_tid_depth_modifier']['summary']['format'] = 'default_summary';
   $handler->display->display_options['arguments']['term_node_tid_depth_modifier']['specify_validation'] = 1;
-  /* Filter criterion: Content: Published or admin */
+  /* Filter criterion: Inhoud: Published or admin */
   $handler->display->display_options['filters']['status_extra']['id'] = 'status_extra';
   $handler->display->display_options['filters']['status_extra']['table'] = 'node';
   $handler->display->display_options['filters']['status_extra']['field'] = 'status_extra';
   $handler->display->display_options['filters']['status_extra']['group'] = 0;
   $handler->display->display_options['filters']['status_extra']['expose']['operator'] = FALSE;
-  /* Filter criterion: Content translation: Language */
+  /* Filter criterion: Handler defect of ontbreekt */
   $handler->display->display_options['filters']['language']['id'] = 'language';
   $handler->display->display_options['filters']['language']['table'] = 'node';
   $handler->display->display_options['filters']['language']['field'] = 'language';
@@ -1153,6 +1195,8 @@ function doesdesign_views_default_views() {
   $handler = $view->new_display('feed', 'Feed', 'feed');
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = 15;
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Items per pagina';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
   $handler->display->display_options['style_plugin'] = 'rss';
   $handler->display->display_options['row_plugin'] = 'node_rss';
   $handler->display->display_options['path'] = 'taxonomy/term/%/%/feed';
@@ -1162,16 +1206,16 @@ function doesdesign_views_default_views() {
   );
   $translatables['taxonomy_term_2'] = array(
     t('Master'),
-    t('more'),
-    t('Apply'),
-    t('Reset'),
-    t('Sort by'),
+    t('meer'),
+    t('Toepassen'),
+    t('Opnieuw instellen'),
+    t('Sorteer volgens'),
     t('Asc'),
-    t('Desc'),
-    t('Items per page'),
-    t('- All -'),
+    t('Aflopend'),
+    t('Items per pagina'),
+    t('- Alle -'),
     t('Offset'),
-    t('All'),
+    t('Alle'),
     t('%1'),
     t('Page'),
     t('Feed'),
@@ -1190,35 +1234,39 @@ function doesdesign_views_default_views() {
 
   /* Display: Defaults */
   $handler = $view->new_display('default', 'Defaults', 'default');
-  $handler->display->display_options['title'] = 'Materialen';
+  $handler->display->display_options['title'] = 'Material';
+  $handler->display->display_options['use_more_text'] = 'meer';
   $handler->display->display_options['access']['type'] = 'none';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['query']['options']['query_comment'] = FALSE;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Opnieuw instellen';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sorteer volgens';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Aflopend';
   $handler->display->display_options['pager']['type'] = 'none';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['style_plugin'] = 'list';
   $handler->display->display_options['style_options']['grouping'] = '';
   $handler->display->display_options['row_plugin'] = 'fields';
-  /* Header: Global: Text area */
+  /* Kop: Global: Tekstveld */
   $handler->display->display_options['header']['text']['id'] = 'text';
   $handler->display->display_options['header']['text']['table'] = 'views';
   $handler->display->display_options['header']['text']['field'] = 'area';
   $handler->display->display_options['header']['text']['empty'] = FALSE;
   $handler->display->display_options['header']['text']['format'] = '1';
   $handler->display->display_options['header']['text']['tokenize'] = 0;
-  /* Field: Taxonomy term: Name */
+  /* Veld: Taxonomie term: Naam */
   $handler->display->display_options['fields']['name']['id'] = 'name';
   $handler->display->display_options['fields']['name']['table'] = 'taxonomy_term_data';
   $handler->display->display_options['fields']['name']['field'] = 'name';
   $handler->display->display_options['fields']['name']['label'] = '';
   $handler->display->display_options['fields']['name']['link_to_taxonomy'] = 1;
-  /* Sort criterion: Taxonomy term: Weight */
+  /* Sorteercriterium: Taxonomie term: Gewicht */
   $handler->display->display_options['sorts']['weight']['id'] = 'weight';
   $handler->display->display_options['sorts']['weight']['table'] = 'taxonomy_term_data';
   $handler->display->display_options['sorts']['weight']['field'] = 'weight';
-  /* Filter criterion: Taxonomy term: Vocabulary */
+  /* Filter criterion: Taxonomie term: Woordenlijst */
   $handler->display->display_options['filters']['vid']['id'] = 'vid';
   $handler->display->display_options['filters']['vid']['table'] = 'taxonomy_term_data';
   $handler->display->display_options['filters']['vid']['field'] = 'vid';
@@ -1232,13 +1280,13 @@ function doesdesign_views_default_views() {
   $handler = $view->new_display('block', 'Blok', 'block_1');
   $translatables['toon_termen_materialen'] = array(
     t('Defaults'),
-    t('Materialen'),
-    t('more'),
-    t('Apply'),
-    t('Reset'),
-    t('Sort by'),
+    t('Material'),
+    t('meer'),
+    t('Toepassen'),
+    t('Opnieuw instellen'),
+    t('Sorteer volgens'),
     t('Asc'),
-    t('Desc'),
+    t('Aflopend'),
     t('Blok'),
   );
   $export['toon_termen_materialen'] = $view;
@@ -1256,36 +1304,42 @@ function doesdesign_views_default_views() {
   /* Display: Defaults */
   $handler = $view->new_display('default', 'Defaults', 'default');
   $handler->display->display_options['title'] = 'Sieraden en objecten';
+  $handler->display->display_options['use_more_text'] = 'meer';
   $handler->display->display_options['access']['type'] = 'none';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['query']['options']['query_comment'] = FALSE;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Opnieuw instellen';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sorteer volgens';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Aflopend';
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '25';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Items per pagina';
   $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all'] = 0;
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
   $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['row_plugin'] = 'fields';
-  /* Header: Global: Text area */
+  /* Kop: Global: Tekstveld */
   $handler->display->display_options['header']['text']['id'] = 'text';
   $handler->display->display_options['header']['text']['table'] = 'views';
   $handler->display->display_options['header']['text']['field'] = 'area';
   $handler->display->display_options['header']['text']['empty'] = FALSE;
   $handler->display->display_options['header']['text']['format'] = '1';
   $handler->display->display_options['header']['text']['tokenize'] = 0;
-  /* Field: Taxonomy term: Name */
+  /* Veld: Taxonomie term: Naam */
   $handler->display->display_options['fields']['name']['id'] = 'name';
   $handler->display->display_options['fields']['name']['table'] = 'taxonomy_term_data';
   $handler->display->display_options['fields']['name']['field'] = 'name';
   $handler->display->display_options['fields']['name']['label'] = '';
   $handler->display->display_options['fields']['name']['link_to_taxonomy'] = 1;
-  /* Sort criterion: Taxonomy term: Weight */
+  /* Sorteercriterium: Taxonomie term: Gewicht */
   $handler->display->display_options['sorts']['weight']['id'] = 'weight';
   $handler->display->display_options['sorts']['weight']['table'] = 'taxonomy_term_data';
   $handler->display->display_options['sorts']['weight']['field'] = 'weight';
-  /* Filter criterion: Taxonomy term: Vocabulary */
+  /* Filter criterion: Taxonomie term: Woordenlijst */
   $handler->display->display_options['filters']['vid']['id'] = 'vid';
   $handler->display->display_options['filters']['vid']['table'] = 'taxonomy_term_data';
   $handler->display->display_options['filters']['vid']['field'] = 'vid';
@@ -1319,7 +1373,7 @@ function doesdesign_views_default_views() {
   $handler->display->display_options['row_plugin'] = 'fields';
   $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Taxonomy term: Name */
+  /* Veld: Taxonomie term: Naam */
   $handler->display->display_options['fields']['name']['id'] = 'name';
   $handler->display->display_options['fields']['name']['table'] = 'taxonomy_term_data';
   $handler->display->display_options['fields']['name']['field'] = 'name';
@@ -1345,7 +1399,7 @@ function doesdesign_views_default_views() {
   $handler->display->display_options['fields']['name']['hide_alter_empty'] = 1;
   $handler->display->display_options['fields']['name']['link_to_taxonomy'] = 1;
   $handler->display->display_options['fields']['name']['convert_spaces'] = 0;
-  /* Field: Taxonomy term: Term description */
+  /* Veld: Taxonomie term: Omschrijving van term */
   $handler->display->display_options['fields']['description']['id'] = 'description';
   $handler->display->display_options['fields']['description']['table'] = 'taxonomy_term_data';
   $handler->display->display_options['fields']['description']['field'] = 'description';
@@ -1372,14 +1426,14 @@ function doesdesign_views_default_views() {
   $translatables['toon_termen_soorten_objecten'] = array(
     t('Defaults'),
     t('Sieraden en objecten'),
-    t('more'),
-    t('Apply'),
-    t('Reset'),
-    t('Sort by'),
+    t('meer'),
+    t('Toepassen'),
+    t('Opnieuw instellen'),
+    t('Sorteer volgens'),
     t('Asc'),
-    t('Desc'),
-    t('Items per page'),
-    t('- All -'),
+    t('Aflopend'),
+    t('Items per pagina'),
+    t('- Alle -'),
     t('Offset'),
     t('Blok'),
     t('Page'),
