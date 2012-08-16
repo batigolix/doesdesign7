@@ -34,6 +34,7 @@ stylesheets[all][] = css-smart-grid/css/smart-grid.min.css
 stylesheets[all][] = css/style.css
 stylesheets[print][] = css/print.css
 scripts[] = css-smart-grid/js/modernizr.js
+scripts[] = js/scripts.js
 
 ; Compass Support
 ; http://drupal.org/project/compass

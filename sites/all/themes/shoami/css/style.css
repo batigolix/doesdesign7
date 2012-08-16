@@ -106,6 +106,9 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
     text-decoration: underline; }
 
+#content-header h1 {
+  margin-bottom: 0; }
+
 a:hover, a:active, a:link, a:visited {
   color: #635753; }
 
@@ -255,13 +258,11 @@ body {
   background-size: 100% 100%;
   padding: 20px 0; }
 
-#header .three .block {
-  background: white;
-  opacity: .6;
-  filter: alpha(opacity=6);
-  -ms-filter: "alpha(opacity=$value)";
-  -khtml-opacity: .6;
-  -moz-opacity: .6; }
+#block-block-6 {
+  background: url(../images/fff-50.png);
+  border: 1px dotted #999999;
+  padding: 6px;
+  margin-bottom: 6p; }
 
 #page {
   font-size: 0.9em;
@@ -272,7 +273,7 @@ body {
   border-left: 3px solid #635753;
   border-right: 3px solid #635753;
   background: url(../images/bg-body.jpg); }
-  #content_top .block, #content_top .node-page, #content_top #content-header, #main .block, #main .node-page, #main #content-header, #footer .block, #footer .node-page, #footer #content-header {
+  #content_top .block, #content_top #content-header, #main .block, #main #content-header, #footer .block, #footer #content-header {
     padding: 15px 15px 0 15px; }
 
 .container .columns {

@@ -124,6 +124,10 @@ h1, h2, h3, h4, h5, h6
     font-weight: 700
     text-decoration: underline
 
+#content-header
+  h1
+    margin-bottom: 0
+
 a
   &:hover, &:active, &:link, &:visited
     color: $dark_grey
@@ -259,11 +263,13 @@ body
   background-size: 100% 100%
   padding: 20px 0
 
-#header
-  .three
-    .block
-      background: #FFF
-      @include opacity(6)  
+#block-block-6
+  background: url(../images/fff-50.png)
+  // @include opacity(6)  
+  border: 1px dotted #999
+  padding: 6px
+  margin-bottom: 6p 
+
 #page
   font-size: 0.9em
   line-height: 1.3em
@@ -274,7 +280,7 @@ body
   border-left: 3px solid $dark_grey
   border-right: 3px solid $dark_grey
   background: url(../images/bg-body.jpg)
-  .block, .node-page, #content-header
+  .block, #content-header
     padding: 15px 15px 0 15px
 
 // overriding smart css to allow for 3px border 
@@ -284,12 +290,11 @@ body
 // individual aspects of content regions
 #content_top
   border-top: 3px solid $dark_grey
-
+    
 #footer
   border-bottom: 3px solid $dark_grey
   p
-    font-size: 0.8em
-    
+    font-size: 0.8em    
   
 h2.block-title
   font-size: 1.4em  
