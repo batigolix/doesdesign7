@@ -240,7 +240,7 @@ a:hover, a:active, a:link, a:visited {
 .block .content h3 {
   font-size: 1.2em; }
 
-#content-area .field-name-taxonomy-vocabulary-6, #content-area .field-name-field-gewicht, #content-area .field-name-field-prijs {
+#content-area .field-name-taxonomy-vocabulary-6, #content-area .field-name-field-gewicht, #content-area .field-name-field-prijs, #content-area .field-name-taxonomy-vocabulary-7 {
   border-bottom: 1px dotted #999999; }
 #content-area .field-name-taxonomy-vocabulary-6, #content-area .field-name-field-gewicht, #content-area .field-name-field-prijs, #content-area .field-name-taxonomy-vocabulary-7 {
   line-height: 1.3em;
@@ -256,7 +256,7 @@ a:hover, a:active, a:link, a:visited {
 body {
   background: url(../images/achtergrond.jpg) no-repeat fixed center center;
   background-size: 100% 100%;
-  padding: 20px 0; }
+  padding: 0; }
 
 #block-block-6 {
   background: url(../images/fff-50.png);
@@ -336,3 +336,6 @@ h2.block-title {
   display: none; }
 .front #block-views-sieraden-block_1 {
   padding-top: 0; }
+
+.node label {
+  font-weight: bold; }
