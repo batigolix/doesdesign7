@@ -203,14 +203,14 @@ a:hover, a:active, a:link, a:visited {
     font-size: 1.2em;
     list-style: none;
     background: #d3cdc8 url(../images/menubalk.png);
-    -moz-border-radius: 100px/50px;
-    -webkit-border-radius: 100px/50px;
-    border-radius: 100px/50px;
+    -moz-border-radius: 75px/67px;
+    -webkit-border-radius: 75px/67px;
+    border-radius: 75px/67px;
     padding: 6px 6px 10px 8px;
     margin: 0 6px 6px 0;
-    -moz-box-shadow: 3px 3px 5px #333333;
-    -webkit-box-shadow: 3px 3px 5px #333333;
-    box-shadow: 3px 3px 5px #333333;
+    -moz-box-shadow: 1px 1px 1px #cccccc;
+    -webkit-box-shadow: 1px 1px 1px #cccccc;
+    box-shadow: 1px 1px 1px #cccccc;
     -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color')";
     filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color'); }
     #block-system-main-menu .menu li:hover {
@@ -222,10 +222,10 @@ a:hover, a:active, a:link, a:visited {
       font-family: "Gentium Basic", Georgia, serif, cursive;
       font-weight: bold;
       font-weight: 700;
-      -moz-text-shadow: 0 2px 2px black;
-      -webkit-text-shadow: 0 2px 2px black;
-      -o-text-shadow: 0 2px 2px black;
-      text-shadow: 0 2px 2px black; }
+      -moz-text-shadow: 0 1px 1px black;
+      -webkit-text-shadow: 0 1px 1px black;
+      -o-text-shadow: 0 1px 1px black;
+      text-shadow: 0 1px 1px black; }
 
 .view-toon-termen-soorten-objecten .views-row {
   font-size: 1.2em;
@@ -263,6 +263,8 @@ body {
   border: 1px dotted #999999;
   padding: 6px;
   margin-bottom: 6p; }
+  #block-block-6 .content div {
+    margin-bottom: 6px; }
 
 #page {
   font-size: 0.9em;

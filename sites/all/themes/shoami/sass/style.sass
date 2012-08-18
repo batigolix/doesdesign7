@@ -212,12 +212,12 @@ a
       font-size: 1.2em
       list-style: none
       background: $light_beige url(../images/menubalk.png)
-      -moz-border-radius: 100px / 50px
-      -webkit-border-radius: 100px / 50px
-      border-radius: 100px / 50px
+      -moz-border-radius: 75px / 67px
+      -webkit-border-radius: 75px / 67px
+      border-radius: 75px / 67px
       padding: 6px 6px 10px 8px
       margin: 0 6px 6px 0
-      @include shadow(3px, 3px, 5px, #333)
+      @include shadow(1px, 1px, 1px, #CCC)
       &:hover
         color: #333
       a
@@ -225,7 +225,7 @@ a
         color: #FFF
         padding: 6px
         @include font() 
-        @include text-shadow(0,2px,#000,2px)
+        @include text-shadow(0,1px,#000,1px)
 
 .view-toon-termen-soorten-objecten
   .views-row
@@ -269,6 +269,9 @@ body
   border: 1px dotted #999
   padding: 6px
   margin-bottom: 6p 
+  .content
+    div
+      margin-bottom: 6px
 
 #page
   font-size: 0.9em
