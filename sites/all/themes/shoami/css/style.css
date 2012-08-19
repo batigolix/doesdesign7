@@ -174,18 +174,18 @@ a:hover, a:active, a:link, a:visited {
   font-size: 1.5em;
   font-style: oblique; }
 
-.view-taxonomy-term-2 .views-field {
+.view-taxonomy-term-2 .views-field, .view-taxonomy-term .views-field {
   margin-bottom: 7px; }
-  .view-taxonomy-term-2 .views-field .views-field-image {
+  .view-taxonomy-term-2 .views-field .views-field-image, .view-taxonomy-term .views-field .views-field-image {
     top: 0px; }
-  .view-taxonomy-term-2 .views-field .views-field-title {
+  .view-taxonomy-term-2 .views-field .views-field-title, .view-taxonomy-term .views-field .views-field-title {
     top: 20px; }
-  .view-taxonomy-term-2 .views-field h2 {
+  .view-taxonomy-term-2 .views-field h2, .view-taxonomy-term .views-field h2 {
     font-size: 1.4em;
     line-height: 1.2em; }
-  .view-taxonomy-term-2 .views-field a {
+  .view-taxonomy-term-2 .views-field a, .view-taxonomy-term .views-field a {
     text-decoration: none; }
-    .view-taxonomy-term-2 .views-field a .views-field-body {
+    .view-taxonomy-term-2 .views-field a .views-field-body, .view-taxonomy-term .views-field a .views-field-body {
       top: 60px; }
 
 .item-list ul.pager {
