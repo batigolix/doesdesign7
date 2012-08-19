@@ -16,7 +16,7 @@ function adhesive_tape_form_alter(&$form, &$form_state, $form_id) {
       unset ($form['options']['promote']);
     break;
     case 'object_node_form':
-      kpr($form);
+      //kpr($form);
       // move spotlight checkbox to publishing options
       $form['options']['authorn'] = $form['author']['name'];
       $form['options']['authord'] = $form['author']['date'];
@@ -116,6 +116,10 @@ function adhesive_tape_validate_node_form($form, &$form_state) {
   }
 }  
 
+/*
+ * add the media plugin for ckeditor (not in use)
+ */
+
 function adhesive_tape_wysiwyg_plugin($editor, $version) {
    switch ($editor) {
     case 'ckeditor':
@@ -136,7 +140,7 @@ function adhesive_tape_wysiwyg_plugin($editor, $version) {
 }
 
 /*
- * preprocess node. add ds field. addthis
+ * preprocess node. add DS preprocess field. addthis
  */
 
 function adhesive_tape_preprocess_node(&$vars) {
@@ -145,16 +149,13 @@ function adhesive_tape_preprocess_node(&$vars) {
   $vars['addthis'] = '<!-- AddThis Button BEGIN --><div class="addthis_toolbox addthis_default_style "><a class="addthis_button_preferred_1"></a><a class="addthis_button_preferred_2"></a><a class="addthis_button_preferred_4"></a><a class="addthis_button_compact"></a><a class="addthis_counter addthis_bubble_style"></a></div><script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4e8734f56e58164b"></script><!-- AddThis Button END -->';
 }
 
-
-
-
 /**
  * Implements hook_menu().
  */
 
 function adhesive_tape_menu() {
-  $items['xxxxxfrontpage'] = array(
-    'title' => 'Frontpage WBI',
+  $items['xfrontpage'] = array(
+    'title' => 'Frontpage',
     'description' => 'Frontpage',
     'page callback' => 'adhesive_tape_frontpage',
     'type' => MENU_CALLBACK,
@@ -177,7 +178,7 @@ function adhesive_tape_frontpage() {
 /**
  * Implements hook_node_view().
  *
- * Adds a Facebook like button to page nodes.
+ * Adds a link to the contact form
  */
 function adhesive_tape_node_view($node, $view_mode, $langcode) {
   switch ($node->type) {
