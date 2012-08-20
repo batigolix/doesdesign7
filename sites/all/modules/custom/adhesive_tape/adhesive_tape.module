@@ -7,7 +7,7 @@ function adhesive_tape_form_alter(&$form, &$form_state, $form_id) {
 
   // set some stuff on all node editing forms
   if (isset($form['#node_edit_form']) && $form['#node_edit_form']==TRUE) {
-    unset ($form['revision_information']); // and this one is the "Revision information" one
+//    unset ($form['revision_information']); // and this one is the "Revision information" one
     // unset ($form['options']['sticky']);
   }  
   switch ($form_id) {
