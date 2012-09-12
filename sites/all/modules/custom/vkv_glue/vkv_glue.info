@@ -1,0 +1,5 @@
+name = VKV glue
+description = Holds custom code for a project
+package = custom
+version = 7.x-1.dev
+core = 7.x

@@ -1,0 +1,518 @@
+<?php
+
+function vkv_glue_form_alter(&$form, &$form_state, $form_id) {
+  // todo clean up node form nicely
+  //  dsm($form);
+    unset($form['print']);
+
+  // set some stuff on all node editing forms
+  if (isset($form['#node_edit_form']) && $form['#node_edit_form']==TRUE) {
+//    unset ($form['revision_information']); // and this one is the "Revision information" one
+    // unset ($form['options']['sticky']);
+  }  
+  switch ($form_id) {
+    case 'page_node_form':
+      // no promote
+      unset ($form['options']['promote']);
+    break;
+    case 'object_node_form':
+      //kpr($form);
+      // move spotlight checkbox to publishing options
+      $form['options']['authorn'] = $form['author']['name'];
+      $form['options']['authord'] = $form['author']['date'];
+      $form['options']['authorn']['#weight'] = 98;
+      $form['options']['authord']['#weight'] = 99;
+      unset($form['author']);
+      unset($form['print']);
+      $form['#validate'][] = 'vkv_glue_validate_node_form';
+      // $form['options']['field_in_the_spotlight'] = $form['field_in_the_spotlight'];
+      $form['meta_info'] = array(
+        '#type' => 'fieldset',
+        '#title' => t('Meta informatie'),
+        '#description' => t('Prijs, materiaal, categorie, etc'),
+        '#collapsible' => TRUE,
+        '#collapsed' => TRUE,
+        '#group' => 'additional_settings',
+      );
+      $form['meta_info']['field_prijs'] = $form['field_prijs'];
+      unset ($form['field_prijs']);
+      $form['meta_info']['field_gewicht'] = $form['field_gewicht'];
+      unset ($form['field_gewicht']);
+      $form['meta_info']['field_article_number'] = $form['field_article_number'];
+      unset ($form['field_article_number']);
+      $form['meta_info']['taxonomy_vocabulary_8'] = $form['taxonomy_vocabulary_8'];
+      unset ($form['taxonomy_vocabulary_8']);
+      $form['meta_info']['taxonomy_vocabulary_7'] = $form['taxonomy_vocabulary_7'];
+      unset ($form['taxonomy_vocabulary_7']);
+      $form['meta_info']['taxonomy_vocabulary_6'] = $form['taxonomy_vocabulary_6'];
+      unset ($form['taxonomy_vocabulary_6']);
+
+      // taxo terms: 8 = jaar, 7 = cat, 6 = materiaal
+
+      
+      // order fields within met info
+      $form['meta_info']['taxonomy_vocabulary_6']['#weight'] = -4;
+      $form['meta_info']['taxonomy_vocabulary_7']['#weight'] = -5;
+      $form['meta_info']['taxonomy_vocabulary_8']['#weight'] = 99;
+      $form['meta_info']['field_article_number']['#weight'] = 100;
+      
+      // order of verti tabs
+      $form['options']['#weight'] = 5; // this one is the vertical tab named "Publishing options"
+      $form['meta_info']['#weight'] = 0; // this one is the vertical tab named "Publishing options"
+      $form['path']['#weight'] = 10; // this one is the vertical tab named "Publishing options"
+
+    break;
+    case 'slideshow_item_node_form':
+      $form['#validate'][] = 'vkv_glue_validate_node_form';
+      $form['title']['#description'] = 'Maximum number of characters: 25';
+    break;
+    case 'webform_client_form_37':
+  // todo get dynamic email adres
+  /*      kpr($form['submitted']);
+      $node = menu_get_object(); 
+      $email = $node->field_email['und']['0']['value'];
+      // $form['submitted']['recipient']['#value'] = $email;
+      $form['submitted']['recipient']['#value'] = $email;
+  */
+    break;
+  }
+  $form['#after_build'][] = 'vkv_glue_after_build';
+}
+
+function vkv_glue_after_build($form) {
+  // do stuff on all node editing forms
+  if (isset($form['#node_edit_form']) && $form['#node_edit_form'] == TRUE) {
+    // kpr($form);
+    // TODO remove print verti tab  
+    unset($form['print']);
+    $form['domain']['lang'] = $form['language'];
+    $form['domain']['lang']['#weight'] = -999;
+    $form['domain']['#title'] = 'Portal & language';
+    unset($form['language']);
+  }
+/*  switch ($form['type']['#value']) {
+    case 'article':
+//      $form['options']['spot'] = $form['field_in_the_spotlight'];
+//      unset($form['field_in_the_spotlight']);
+    break;
+  }
+*/
+  return $form;
+}
+
+/**
+ * restrict length of introduction text area.
+ */
+
+function vkv_glue_validate_node_form($form, &$form_state) {
+  switch ($form['form_id']['#value']) {
+	  // todo set max chars
+    case 'article_node_form':
+      $intro_length = strlen($form_state['values']['field_summary']['und']['0']['value']);
+      if ($intro_length > 250000) {
+        form_set_error('', t('The field <strong>introduction</strong> may not contain more than 250 characters. It is currently @num characters long.', array('@num' => $intro_length)));
+      }
+    break;
+  }
+}  
+
+/*
+ * add the media plugin for ckeditor (not in use)
+ */
+
+function vkv_glue_wysiwyg_plugin($editor, $version) {
+   switch ($editor) {
+    case 'ckeditor':
+      return array(
+/*        'youtube' => array(
+          'buttons' => array('youtube' => t('Youtube')),
+          'load' => TRUE,
+          'internal' => TRUE,
+        ),
+*/ 
+        'MediaEmbed' => array(
+          'buttons' => array('MediaEmbed' => t('MediaEmbed')),
+          'load' => TRUE,
+          'internal' => TRUE,
+        ),
+      );
+  }
+}
+
+/*
+ * preprocess node. add DS preprocess field. addthis
+ */
+
+function vkv_glue_preprocess_node(&$vars) {
+  // adds ds preprocess field. see http://www.lullabot.com/articles/display-suite-building-fancy-teasers-without-custom-templates
+  // custom add this buttons. http://www.addthis.com/forum/viewtopic.php?f=3&t=27736
+  $vars['addthis'] = '<!-- AddThis Button BEGIN --><div class="addthis_toolbox addthis_default_style "><a class="addthis_button_preferred_1"></a><a class="addthis_button_preferred_2"></a><a class="addthis_button_preferred_4"></a><a class="addthis_button_compact"></a><a class="addthis_counter addthis_bubble_style"></a></div><script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=ra-4e8734f56e58164b"></script><!-- AddThis Button END -->';
+}
+
+/**
+ * Implements hook_menu().
+ */
+
+function vkv_glue_menu() {
+  $items['xfrontpage'] = array(
+    'title' => 'Frontpage',
+    'description' => 'Frontpage',
+    'page callback' => 'vkv_glue_frontpage',
+    'type' => MENU_CALLBACK,
+    'access callback' => 'is_string',
+    'access arguments' => array('string'),
+  );
+  return $items;
+}
+
+/**
+* Display empty frontpage wo title
+**/
+
+function vkv_glue_frontpage() {
+  drupal_set_title('');
+  return '';
+}
+
+
+/**
+ * Implements hook_node_view().
+ *
+ * Adds a link to the contact form
+ */
+function vkv_glue_node_view($node, $view_mode, $langcode) {
+  switch ($node->type) {
+    case 'object':
+      $node->content['vkv_glue_contact_subject'] = array(
+        '#type' => 'item',
+        '#title' => t('Contact: '),
+        '#markup' => l(
+          t('Ask a question about this object'),'contact',array(
+            'attributes' => array(
+            'class' => 'nice-link'
+            ),
+            'query' => array(
+              'subject' => $node->title
+            )
+          )
+        )
+      );
+    break;
+  }
+}
+
+/**
+ * Implements hook_field_extra_fields().
+ *
+ * Declare our Facebook Like button as a pseudo-field.
+ */
+function vkv_glue_field_extra_fields() {
+  // The levels of the array that we return correspond to the
+  // entity type, bundle and then either 'display' or 'form'.
+  // In this case, we apply to 'page' nodes, when we display them.
+  $extra['node']['object']['display'] = array(
+    // The keys here must correspond to the keys of the items
+    // that we add in our hook_node_view() or similar function.
+    // Prefix it with our module name to ensure it doesn't clash
+    // with anything from other modules.
+    'vkv_glue_contact_subject' => array(
+      'label' => t('Custom link to contact form that sends subject along'),
+      'description' => t('Custom link to contact form that sends subject along, added in vkv_glue_node_view().'),
+      'weight' => 10,
+    ),
+  );  return $extra;
+}
+
+function vkv_glue_flexifilters() {
+  return array(
+    // Exported flexifilter array here.
+array (
+  'label' => 'WDV Format',
+  'description' => 'This is an example format which provides a wikimedia-style input format.',
+  'id' => '1',
+  'enabled' => false,
+  'advanced' => true,
+  'cache' => '1',
+  'components' => 
+  array (
+    0 => 
+    array (
+      'class' => 'flexifilter_text_prepend',
+      'settings' => 
+      array (
+        'text' => '</nowiki>',
+        'step' => 'process',
+      ),
+      'id' => '2',
+    ),
+    1 => 
+    array (
+      'class' => 'flexifilter_text_append',
+      'settings' => 
+      array (
+        'text' => '<nowiki>',
+        'step' => 'process',
+      ),
+      'id' => '3',
+    ),
+    2 => 
+    array (
+      'class' => 'flexifilter_chunk_grab',
+      'settings' => 
+      array (
+        'starts' => '</nowiki>',
+        'ends' => '<nowiki>',
+        'pass_limits' => 0,
+        'case_sensitive' => 0,
+        'include_rest' => 1,
+        'step' => 'process',
+        'components' => 
+        array (
+          0 => 
+          array (
+            'class' => 'flexifilter_text_alternation',
+            'settings' => 
+            array (
+              'find' => '====',
+              'replace' => '<h4>
+</h4>',
+              'step' => 'process',
+            ),
+            'id' => '5',
+          ),
+          1 => 
+          array (
+            'class' => 'flexifilter_text_alternation',
+            'settings' => 
+            array (
+              'find' => '===',
+              'replace' => '<h3>
+</h3>',
+              'step' => 'process',
+            ),
+            'id' => '6',
+          ),
+          2 => 
+          array (
+            'class' => 'flexifilter_text_alternation',
+            'settings' => 
+            array (
+              'find' => '!!',
+              'replace' => '<h2>
+</h2>',
+              'step' => 'process',
+            ),
+            'id' => '7',
+          ),
+          3 => 
+          array (
+            'class' => 'flexifilter_text_alternation',
+            'settings' => 
+            array (
+              'find' => '\'\'\'',
+              'replace' => '<strong>
+</strong>',
+              'step' => 'process',
+            ),
+            'id' => '8',
+          ),
+          4 => 
+          array (
+            'class' => 'flexifilter_text_alternation',
+            'settings' => 
+            array (
+              'find' => '\'\'',
+              'replace' => '<em>
+</em>',
+              'step' => 'process',
+            ),
+            'id' => '9',
+          ),
+          5 => 
+          array (
+            'class' => 'flexifilter_chunk_grab',
+            'settings' => 
+            array (
+              'starts' => '[[',
+              'ends' => ']]',
+              'pass_limits' => 0,
+              'case_sensitive' => 0,
+              'include_rest' => 1,
+              'step' => 'process',
+              'components' => 
+              array (
+                0 => 
+                array (
+                  'class' => 'flexifilter_control_if',
+                  'settings' => 
+                  array (
+                    'components' => 
+                    array (
+                      0 => 
+                      array (
+                        'class' => 'flexifilter_text_replace',
+                        'settings' => 
+                        array (
+                          'find' => '~',
+                          'replace' => '\\~',
+                          'step' => 'process',
+                        ),
+                        'id' => '12',
+                      ),
+                      1 => 
+                      array (
+                        'class' => 'flexifilter_text_append',
+                        'settings' => 
+                        array (
+                          'text' => '~~',
+                          'step' => 'process',
+                        ),
+                        'id' => '13',
+                      ),
+                      2 => 
+                      array (
+                        'class' => 'flexifilter_advanced_append',
+                        'settings' => 
+                        array (
+                          'step' => 'process',
+                          'components' => 
+                          array (
+                            0 => 
+                            array (
+                              'class' => 'flexifilter_text_replace',
+                              'settings' => 
+                              array (
+                                'find' => '~~',
+                                'replace' => '</a>',
+                                'step' => 'process',
+                              ),
+                              'id' => '15',
+                            ),
+                          ),
+                        ),
+                        'id' => '14',
+                      ),
+                      3 => 
+                      array (
+                        'class' => 'flexifilter_text_replace',
+                        'settings' => 
+                        array (
+                          'find' => '~~',
+                          'replace' => '">',
+                          'step' => 'process',
+                        ),
+                        'id' => '16',
+                      ),
+                      4 => 
+                      array (
+                        'class' => 'flexifilter_text_prepend',
+                        'settings' => 
+                        array (
+                          'text' => '<a href="http://en.wikipedia.org/wiki/',
+                          'step' => 'process',
+                        ),
+                        'id' => '18',
+                      ),
+                      5 => 
+                      array (
+                        'class' => 'flexifilter_text_replace',
+                        'settings' => 
+                        array (
+                          'find' => '\\~',
+                          'replace' => '~',
+                          'step' => 'process',
+                        ),
+                        'id' => '20',
+                      ),
+                    ),
+                    'condition' => 
+                    array (
+                      'class' => 'flexifilter_group_not',
+                      'settings' => 
+                      array (
+                        'conditions' => 
+                        array (
+                          0 => 
+                          array (
+                            'class' => 'flexifilter_text_search',
+                            'settings' => 
+                            array (
+                              'find' => '|',
+                              'is_regex' => 0,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  'id' => '11',
+                ),
+                1 => 
+                array (
+                  'class' => 'flexifilter_control_if',
+                  'settings' => 
+                  array (
+                    'components' => 
+                    array (
+                      0 => 
+                      array (
+                        'class' => 'flexifilter_text_prepend',
+                        'settings' => 
+                        array (
+                          'text' => '<a href="http://en.wikipedia.org/wiki/',
+                          'step' => 'process',
+                        ),
+                        'id' => '25',
+                      ),
+                      1 => 
+                      array (
+                        'class' => 'flexifilter_text_replace',
+                        'settings' => 
+                        array (
+                          'find' => '|',
+                          'replace' => '">',
+                          'step' => 'process',
+                        ),
+                        'id' => '26',
+                      ),
+                      2 => 
+                      array (
+                        'class' => 'flexifilter_text_append',
+                        'settings' => 
+                        array (
+                          'text' => '</a>',
+                          'step' => 'process',
+                        ),
+                        'id' => '27',
+                      ),
+                    ),
+                    'condition' => 
+                    array (
+                      'class' => 'flexifilter_text_search',
+                      'settings' => 
+                      array (
+                        'find' => '|',
+                        'is_regex' => 0,
+                      ),
+                    ),
+                  ),
+                  'id' => '24',
+                ),
+              ),
+            ),
+            'id' => '10',
+          ),
+        ),
+      ),
+      'id' => '4',
+    ),
+    'id_next' => 29,
+    'id_prefix' => 'flexifilter_component_',
+  ),
+  'fid' => 'new',
+)
+    
+    
+        // Another exported flexifilter array here.
+  );
+}
