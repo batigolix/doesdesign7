@@ -45,7 +45,7 @@ while ($row = mysql_fetch_assoc($result))
     $body = preg_replace('/\%\%\%/', '<hr />',$body);
     $body = preg_replace('/__(.*?)__/', '<strong>${1}</strong>',$body);
     $body = preg_replace('/\*(.*?)\\r/', '<li>$1</li>',$body); 
-//    $body = preg_replace('/\[^img_assist(.*?)\|(.*?)\]/', '<a href="${2}">${1}</a>',$body);
+    $body = preg_replace('/\[[^img_](.*)\|(.*)\]/', '<a href="${2}">${1}</a>',$body);
     $body = preg_replace('/\!\!\!(.*?)\\r/', '<h3>${1}</h3>',$body);
     $body = preg_replace('/\!\!(.*?)\\r/', '<h2>${1}</h2>',$body);
     $body = preg_replace('/\!(.*?)\\r/', '<h1>${1}</h1>',$body);
