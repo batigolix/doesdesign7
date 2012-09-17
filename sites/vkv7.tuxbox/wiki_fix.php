@@ -6,8 +6,10 @@
 
 
 $server = "localhost";
-$login = "boris";
-$password = "themancomesaround";
+//$login = "boris";
+//$password = "themancomesaround";
+$login = "root";
+$password = "root";
 $database = "vkv7";
 $prefix = '';
 $really_update = FALSE; # Set this to TRUE to actually run this Drupal 6-to-7 conversion
@@ -22,7 +24,7 @@ $db_selected = mysql_select_db($database, $link);
 if (!$db_selected)
    die ('Select DB error : ' . mysql_error());
 
-$query = "SELECT * FROM ${prefix}field_data_body WHERE body_format = 4";
+$query = "SELECT * FROM ${prefix}field_data_body";
 $result = mysql_query($query);
 if (!$result) {
     $message  = 'Query error : ' . mysql_error() . "\n";
@@ -45,23 +47,23 @@ while ($row = mysql_fetch_assoc($result))
     $body = preg_replace('/\%\%\%/', '<hr />',$body);
     $body = preg_replace('/__(.*?)__/', '<strong>${1}</strong>',$body);
     $body = preg_replace('/\*(.*?)\\r/', '<li>$1</li>',$body); 
-    $body = preg_replace('/\[[^img_](.*)\|(.*)\]/', '<a href="${2}">${1}</a>',$body);
-    $body = preg_replace('/\!\!\!(.*?)\\r/', '<h3>${1}</h3>',$body);
+    $body = preg_replace('/[\[^img_](.*)\|(.*)\]/', '<a href="${2}">${1}</a>',$body);
+    $body = preg_replace('/\!\!\!(.*?)\\r/', '<h1>${1}</h1>',$body);
     $body = preg_replace('/\!\!(.*?)\\r/', '<h2>${1}</h2>',$body);
-    $body = preg_replace('/\!(.*?)\\r/', '<h1>${1}</h1>',$body);
+    $body = preg_replace('/\!(.*?)\\r/', '<h3>${1}</h3>',$body);
     echo "\n$count #######################################################################\n";
     echo "Entity ID: ${row['entity_id']}\n";
 //        echo "match: "; print_r($match); echo "######### \n";
     echo "Body: $body \n";
 
-    if ($really_update) {
-      $update_query = "UPDATE ${prefix}field_data_body SET body_value = '${body}' WHERE entity_id = " . $id;
-     echo $update_query;
-      mysql_query($update_query);
-    }
+//      $update_query = "UPDATE ${prefix}field_data_body SET body_value = '${body}' WHERE entity_id = " . $id;
+//     echo $update_query;
+//      mysql_query($update_query);
 
-/*    if ($really_update) {
-        $update_query = "UPDATE ${prefix}field_data_body SET body_value = " . $body . "WHERE entity_id = " . $id;
+
+    if ($really_update) {
+//        $update_query = "UPDATE ${prefix}field_data_body SET body_value = " . $body . "WHERE entity_id = " . $id;
+      $update_query = "UPDATE ${prefix}field_data_body SET body_value = '${body}' WHERE entity_id = " . $id;
         $res = mysql_query($update_query);
     
         if (!$res) {
@@ -70,7 +72,6 @@ while ($row = mysql_fetch_assoc($result))
             die($message);
         }
     }
-*/
 //    foreach ($matches as $match) {
 //        list($img, $offset_in_tmp) = $match;
         //        $tmp = $match;
