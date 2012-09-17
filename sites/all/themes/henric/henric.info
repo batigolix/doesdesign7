@@ -42,3 +42,5 @@ stylesheets[print][] = css/print.css
 ;settings[basic_breadcrumb_separator] = »
 ;settings[wireframe_mode] = 0
 ;settings[clear_registry] = 0
+
+fonts[google_fonts_api][] = "Fredoka One&subset=latin#regular"

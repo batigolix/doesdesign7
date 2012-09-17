@@ -60,7 +60,7 @@ table#content {
   margin: 0 0 180px 0;
 } 
 
-#logo {
+#site-name {
  position: absolute;
  top: 95px;
  border: yellow 0px solid;
@@ -83,9 +83,6 @@ table#content {
   color: black;
   text-decoration: underline;
   }
-#site-name {
-  display: none;
-}
 h1 { 
   font-size: 1.7em; 
   padding: 0;
@@ -160,6 +157,12 @@ border: red 2px solid;
 br.clear {
   clear: both;
 }
+
+#main {
+  margin-top: 40px;  
+  
+}
+
 .breadcrumb {
   padding: 4px 0 0 0;
   color: #EEE;
@@ -215,7 +218,6 @@ legend {
   }
 #navigation {
  color: #000;
- padding: 4px 4px 8px 8px; 
  font-size: 1em;
  filter:alpha(opacity=70);
  -moz-opacity:.70;
@@ -227,11 +229,21 @@ legend {
  }
 #secondary-menu form, #secondary-menu input, #secondary-menu div {
  margin: 0; padding: 0; display: inline; 
-border: green 0px solid;
+ border: green 0px solid;
 }
 #secondary-menu  input {
  font-size; 0.8em;
 }
+#secondary {
+  padding: 8px;
+  
+}
+#secondary li {
+  display: inline;
+  list-style-type: none;
+  padding: 0 0.5em;
+}
+
 .info, .terms { 
   display: none; 
 }
@@ -257,7 +269,7 @@ input {
   opacity:1.0;
 }
 
-.site-name {
+#site-name {
   font-size: 1.2em;
 }
 pre {
@@ -295,14 +307,13 @@ color: #FFF;
 	}  
 	
 	
- #logo .site-name {
+#site-name {
   font-size: 350%;
-  font-weight: bold;
   font-family: 'Fredoka One';
   text-shadow: black 0.1em 0.1em 0.2em;
    }	
 
-#logo .site-name a {
+#site-name a {
   color: #FFF;
   text-decoration: none;
 }
