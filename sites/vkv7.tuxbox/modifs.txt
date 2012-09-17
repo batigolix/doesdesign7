@@ -1,0 +1,11 @@
+
+
+mysqldump -u boris -p vkv7 field_data_body > field_data_body.sql
+
+find field_data_body.sql -type f -exec sed -i 's/\%\%\%/<hr />/g' {} \;
+
+
+
+delete stories
+
+node convert page to book
