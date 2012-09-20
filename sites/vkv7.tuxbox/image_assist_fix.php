@@ -10,10 +10,11 @@
 
 
 $server = "localhost";
-$login = "root";
-$password = "";
-$database = "mydatabase";
-$prefix = 'lak';
+$login = "boris";
+$password = "themancomesaround";
+$database = "vkv7";
+$prefix = '';
+//$really_update = FALSE; # Set this to TRUE to actually run this Drupal 6-to-7 conversion
 $really_update = TRUE; # Set this to TRUE to actually run this Drupal 6-to-7 conversion
 
 
@@ -68,6 +69,7 @@ while ($row = mysql_fetch_assoc($result))
         list($_, $height) = explode('=', $height, 2);
         
         echo "NID: $nid \n";
+        echo "DESC: $desc \n";
         
         $query_image = "SELECT * FROM ${prefix}image WHERE nid=".$nid;
         $result_image = mysql_query($query_image);
@@ -84,7 +86,7 @@ while ($row = mysql_fetch_assoc($result))
         $img_path = $row_file['filepath'];
         
         if ($img_path[0] != '/')  
-            $img_path = '/' . $img_path;
+            $img_path = '/' . str_replace('feature', 'preview', $img_path);
         
         echo "Src: $img_path \n";
         
@@ -94,7 +96,7 @@ while ($row = mysql_fetch_assoc($result))
         
         mysql_free_result($result_image);
     }
-
+//    echo $tmp;
     
     if ($really_update) {
         $update_query = "UPDATE ${prefix}field_data_body SET body_value = '".addslashes($tmp)."' WHERE entity_id = ".$row['entity_id'];
