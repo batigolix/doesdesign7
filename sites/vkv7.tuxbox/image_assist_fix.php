@@ -86,7 +86,7 @@ while ($row = mysql_fetch_assoc($result))
         $img_path = $row_file['filepath'];
         
         if ($img_path[0] != '/')  
-            $img_path = '/' . str_replace('feature', 'preview', $img_path);
+            $img_path = '/' . str_replace('.feature', '', $img_path);
         
         echo "Src: $img_path \n";
         

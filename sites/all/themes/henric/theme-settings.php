@@ -1,7 +1,7 @@
 <?php
 
 // Form override fo theme settings
-function basic_form_system_theme_settings_alter(&$form, $form_state) {
+function henric_form_system_theme_settings_alter(&$form, $form_state) {
 
   $form['options_settings'] = array(
     '#type' => 'fieldset',
@@ -9,54 +9,54 @@ function basic_form_system_theme_settings_alter(&$form, $form_state) {
     '#collapsible' => FALSE,
     '#collapsed' => FALSE
   );
-  $form['options_settings']['basic_tabs'] = array(
+  $form['options_settings']['henric_tabs'] = array(
     '#type' => 'checkbox',
     '#title' =>  t('Use the ZEN tabs'),
     '#description'   => t('Check this if you wish to replace the default tabs by the ZEN tabs'),
-    '#default_value' => theme_get_setting('basic_tabs'),
+    '#default_value' => theme_get_setting('henric_tabs'),
   );
   
-  $form['options_settings']['basic_breadcrumb'] = array(
+  $form['options_settings']['henric_breadcrumb'] = array(
     '#type'          => 'fieldset',
     '#title'         => t('Breadcrumb settings'),
-    '#attributes'    => array('id' => 'basic-breadcrumb'),
+    '#attributes'    => array('id' => 'henric-breadcrumb'),
   );
-  $form['options_settings']['basic_breadcrumb']['basic_breadcrumb'] = array(
+  $form['options_settings']['henric_breadcrumb']['henric_breadcrumb'] = array(
     '#type'          => 'select',
     '#title'         => t('Display breadcrumb'),
-    '#default_value' => theme_get_setting('basic_breadcrumb'),
+    '#default_value' => theme_get_setting('henric_breadcrumb'),
     '#options'       => array(
                           'yes'   => t('Yes'),
                           'admin' => t('Only in admin section'),
                           'no'    => t('No'),
                         ),
   );
-  $form['options_settings']['basic_breadcrumb']['basic_breadcrumb_separator'] = array(
+  $form['options_settings']['henric_breadcrumb']['henric_breadcrumb_separator'] = array(
     '#type'          => 'textfield',
     '#title'         => t('Breadcrumb separator'),
     '#description'   => t('Text only. Don’t forget to include spaces.'),
-    '#default_value' => theme_get_setting('basic_breadcrumb_separator'),
+    '#default_value' => theme_get_setting('henric_breadcrumb_separator'),
     '#size'          => 5,
     '#maxlength'     => 10,
-    '#prefix'        => '<div id="div-basic-breadcrumb-collapse">', // jquery hook to show/hide optional widgets
+    '#prefix'        => '<div id="div-henric-breadcrumb-collapse">', // jquery hook to show/hide optional widgets
   );
-  $form['options_settings']['basic_breadcrumb']['basic_breadcrumb_home'] = array(
+  $form['options_settings']['henric_breadcrumb']['henric_breadcrumb_home'] = array(
     '#type'          => 'checkbox',
     '#title'         => t('Show home page link in breadcrumb'),
-    '#default_value' => theme_get_setting('basic_breadcrumb_home'),
+    '#default_value' => theme_get_setting('henric_breadcrumb_home'),
   );
-  $form['options_settings']['basic_breadcrumb']['basic_breadcrumb_trailing'] = array(
+  $form['options_settings']['henric_breadcrumb']['henric_breadcrumb_trailing'] = array(
     '#type'          => 'checkbox',
     '#title'         => t('Append a separator to the end of the breadcrumb'),
-    '#default_value' => theme_get_setting('basic_breadcrumb_trailing'),
+    '#default_value' => theme_get_setting('henric_breadcrumb_trailing'),
     '#description'   => t('Useful when the breadcrumb is placed just before the title.'),
   );
-  $form['options_settings']['basic_breadcrumb']['basic_breadcrumb_title'] = array(
+  $form['options_settings']['henric_breadcrumb']['henric_breadcrumb_title'] = array(
     '#type'          => 'checkbox',
     '#title'         => t('Append the content title to the end of the breadcrumb'),
-    '#default_value' => theme_get_setting('basic_breadcrumb_title'),
+    '#default_value' => theme_get_setting('henric_breadcrumb_title'),
     '#description'   => t('Useful when the breadcrumb is not placed just before the title.'),
-    '#suffix'        => '</div>', // #div-basic-breadcrumb
+    '#suffix'        => '</div>', // #div-henric-breadcrumb
   );
   
   $form['options_settings']['wireframe_mode'] = array(
