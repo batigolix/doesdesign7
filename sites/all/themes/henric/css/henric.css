@@ -1,5 +1,4 @@
 body {
-  color: #111111;
   margin: 0;
   /* Setting up font size, leading and font family
    * http://www.markboulton.co.uk/journal/comments/five-simple-steps-to-better-typography */
@@ -10,130 +9,6 @@ body {
 #page {
   width: 960px;
   border: 2px solid #333333;
-  background: white url(../images/henric-bg.jpg) left top repeat-x;
-  margin: 0 auto; }
-
-a:link, a:visited {
-  color: black; }
-a:hover {
-  color: #333333; }
-
-#header {
-  height: 158px;
-  width: 100%; }
-
-#primary-menu {
-  margin: 0;
-  text-align: left;
-  font-size: 0.85em;
-  color: black;
-  padding: 4px 4px 8px 8px;
-  filter: alpha(opacity=80);
-  -moz-opacity: 0.8;
-  opacity: 0.8;
-  background: white;
-  margin: 0 0 180px 0; }
-
-#site-name {
-  position: absolute;
-  top: 95px;
-  border: yellow 0px solid;
-  text-align: right;
-  width: 842px;
-  font-size: 350%;
-  font-family: "Fredoka One";
-  text-shadow: black 0.1em 0.1em 0.2em; }
-  #site-name a {
-    color: white;
-    text-decoration: none; }
-
-.primary-links {
-  float: right; }
-
-.site-info {
-  float: left; }
-
-#primary-menu a:hover, #primary-menu a:visited, #primary-menu a:active, #primary-menu a:link {
-  color: #666666;
-  text-decoration: none;
-  font-weight: bold; }
-
-#primary-menu a:hover {
-  color: black;
-  text-decoration: underline; }
-
-h1 {
-  font-size: 1.7em;
-  padding: 0;
-  margin: 16px 0 0 0;
-  color: black; }
-
-h2 {
-  font-size: 1.2em;
-  padding: 0;
-  margin: 16px 0 0 0;
-  color: #009470; }
-
-h2.content-title {
-  font-size: 1.85em;
-  color: #009470;
-  padding: 0 8px 12px 0; }
-
-h3 {
-  font-size: 1.1em;
-  font-weight: bold;
-  padding: 0;
-  margin: 8px 0 0 0; }
-
-h4, h5, h6 {
-  font-size: 1em;
-  font-weight: bold; }
-
-p {
-  padding: 0;
-  margin: 0 0 4px 0; }
-
-#menu {
-  width: 160px;
-  padding: 0px;
-  float: left;
-  border: red 2px solid; }
-
-.block {
-  padding: 6px;
-  margin: 6px;
-  filter: alpha(opacity=75);
-  -moz-opacity: 0.75;
-  opacity: 0.75;
-  background: white; }
-
-.primary-links a:hover, .primary-links a:visited, .primary-links a:active, .primary-links a:link {
-  text-decoration: none;
-  color: black;
-  font-weight: bold;
-  font-size: 0.95em; }
-
-#primary a:hover {
-  color: black;
-  text-decoration: underline; }
-
-.block h3, .block h2 {
-  color: #009470;
-  margin: 0 -6px 6px -6px;
-  padding: 6px;
-  border-bottom: 1px solid #009470; }
-
-#main-content {
-  padding: 6px 16px 16px;
-  filter: alpha(opacity=90);
-  -moz-opacity: 0.9;
-  opacity: 0.9;
-  margin-left: 160px;
-  background: white; }
-
-br.clear {
-  clear: both; }
-=======
   background: white url(../images/henric-bg.jpg) left -70px repeat-x;
   margin: 10px auto;
   text-align: left; }
@@ -235,127 +110,20 @@ table#content {
 #content .inner {
   padding: 6px 16px 16px;
   background: white; }
->>>>>>> 8051de48b38402637a8c667682d2885f9024a772
 
 #main {
   margin-top: 40px; }
 
-<<<<<<< HEAD
-.breadcrumb {
-  padding: 4px 0 0 0;
-  color: #eeeeee;
-  background: #009470;
-  filter: alpha(opacity=75);
-  -moz-opacity: 0.75;
-  opacity: 0.75;
-  padding: 4px;
-  margin: 8px;
-  display: none; }
-
-.breadcrumb a:hover, .breadcrumb a:visited, .breadcrumb a:active, .breadcrumb a:link {
-  color: white; }
-
-legend {
-  font-size: 1.2em;
-  font-weight: bold; }
-
-.bar {
-  border-bottom: #a02f0f solid 4px;
-  margin: 8px -16px 8px -16px; }
-
-.book .nav {
-  border-top: #a02f0f solid 4px;
-  margin: 8px -16px 8px -16px;
-  display: none; }
-
-.book .nav .links, .book .nav .titles {
-  margin: 8px 16px 8px 16px; }
-=======
 .book-navigation {
   margin: 10px; }
   .book-navigation .menu {
     margin: 20px 0; }
   .book-navigation .page-links {
     padding: 10px; }
->>>>>>> 8051de48b38402637a8c667682d2885f9024a772
 
 .storyendbar {
   margin: 8px -16px 8px -16px; }
 
-<<<<<<< HEAD
-#footer-menu {
-  text-align: center;
-  font-size: 0.95em;
-  background: black;
-  color: black;
-  padding: 12px;
-  margin-top: 12px;
-  background: #ffff99; }
-
-#footer-menu a:hover, #footer-menu a:visited, #footer-menu a:active, #footer-menu a:link {
-  text-decoration: none;
-  color: black;
-  font-weight: bold; }
-
-#footer-menu a:hover {
-  color: black;
-  text-decoration: underline; }
-
-#navigation {
-  color: black;
-  font-size: 1em;
-  filter: alpha(opacity=70);
-  -moz-opacity: 0.7;
-  opacity: 0.7;
-  background: black; }
-
-#secondary a:hover, #secondary a:visited, #secondary a:active, #secondary a:link {
-  color: white;
-  text-decoration: underline;
-  font-weight: bold; }
-
-#secondary-menu form, #secondary-menu input, #secondary-menu div {
-  margin: 0;
-  padding: 0;
-  display: inline;
-  border: green 0px solid; }
-
-#secondary-menu input {
-  font-size: 0.8em; }
-
-#secondary {
-  padding: 8px; }
-
-#secondary li {
-  display: inline;
-  list-style-type: none;
-  padding: 0 0.5em; }
-
-.info, .terms {
-  display: none; }
-
-.decopic {
-  border: #eeeeee solid 4px;
-  float: right;
-  display: inline; }
-
-.decopic img {
-  border: #000066; }
-
-.example {
-  margin-left: 24px;
-  line-height: 175%;
-  font-size: 1.1em; }
-
-input {
-  filter: alpha(opacity=100);
-  -moz-opacity: 1;
-  opacity: 1; }
-
-pre {
-  font-size: 1.2em; }
-
-=======
 #navigation {
   color: black;
   font-size: 1em;
@@ -376,7 +144,6 @@ pre {
         text-decoration: underline;
         font-weight: bold; }
 
->>>>>>> 8051de48b38402637a8c667682d2885f9024a772
 .comment {
   border: 1px #cccccc solid;
   padding: 8px;
@@ -389,30 +156,6 @@ pre {
   font-size: 1.6em;
   font-weight: bold;
   color: white;
-<<<<<<< HEAD
-  filter: alpha(opacity=80);
-  -moz-opacity: 0.8;
-  opacity: 0.8; }
-
-#sidebar-right, #sidebar-left {
-  width: 200px; }
-
-.form-submit {
-  border: 2px solid black;
-  font-size: 100%;
-  background: #009470;
-  color: white;
-  font-weight: bold;
-  margin: 10px 0; }
-
-#footer-message {
-  width: 742px;
-  margin: 10px auto;
-  text-align: center; }
-
-.submitted, .hide {
-  display: none; }
-=======
   opacity: .80;
   filter: alpha(opacity=80);
   -ms-filter: "alpha(opacity=$value)";
@@ -460,4 +203,3 @@ hr {
   filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color');
   margin: 10px 0;
   border: 0; }
->>>>>>> 8051de48b38402637a8c667682d2885f9024a772
