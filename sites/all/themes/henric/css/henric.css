@@ -22,44 +22,39 @@ a:hover {
   color: #333333; }
 
 /* Titles. */
-#site-name {
-  font-size: 2.2em;
-  line-height: 1.3em;
-  font-weight: 300;
-  padding: 0 0 0.5em;
-  margin: 0; }
-
 h1, h2, .content-title, h3, h4, h5, h6 {
   line-height: 1.3em; }
 
 h1 {
-  font-size: 2.4em;
+  font-size: 1.8em;
   font-weight: 600;
   padding: 0 0 0.5em;
   margin: 0; }
 
 h2, .content-title {
-  font-size: 1.8em;
+  font-size: 1.5em;
   font-weight: 300;
   margin-bottom: 0.75em;
   color: #009470; }
 
 h3 {
-  font-size: 1.4em;
+  font-size: 1.2em;
   margin-bottom: 1em; }
 
 h4 {
-  font-size: 1.2em;
-  margin-bottom: 0.8em; }
+  font-size: 1.1em;
+  margin-bottom: 0.8em;
+  font-weight: bold;
+  font-style: oblique; }
 
 h5 {
-  font-size: 1.1em;
+  font-size: 1em;
   font-weight: 600;
   margin-bottom: 0; }
 
 h6 {
   font-size: 1em;
-  font-weight: bold; }
+  font-style: oblique; }
 
 /* Paragraph styles. */
 p {
@@ -89,7 +84,7 @@ table#content {
 .site-info {
   float: left; }
 
-.block {
+.sidebar .block {
   border: 1px solid #999999;
   padding: 6px;
   margin: 12px 6px;
@@ -104,9 +99,9 @@ table#content {
   box-shadow: 1px 1px 6px #cccccc;
   -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color')";
   filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color'); }
-  .block .content {
+  .sidebar .block .content {
     padding: 0 10px 10px 10px; }
-  .block h3, .block h2, .block .content-title {
+  .sidebar .block h3, .sidebar .block h2, .sidebar .block .content-title {
     font-size: 1.3em;
     margin: 0 -6px 6px -6px;
     padding: 6px;
@@ -186,12 +181,25 @@ input.form-submit {
 #site-name {
   font-family: "Fredoka One";
   text-shadow: black 0.1em 0.1em 0.2em;
-  font-size: 1.2em;
+  font-size: 2.6em;
   position: absolute;
   top: 95px;
+  left: 510px;
   border: yellow 0px solid;
   text-align: right;
-  width: 842px; }
+  font-weight: 300; }
   #site-name a {
     color: white;
     text-decoration: none; }
+
+hr {
+  color: #009470;
+  background-color: #009470;
+  height: 1px;
+  -moz-box-shadow: 1px 1px 3px #cccccc;
+  -webkit-box-shadow: 1px 1px 3px #cccccc;
+  box-shadow: 1px 1px 3px #cccccc;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color')";
+  filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color');
+  margin: 10px 0;
+  border: 0; }

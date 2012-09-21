@@ -1,11 +1,25 @@
+X - update field_data_body set body_summary = NULL;
+X - update field_data_body set body_format = 3;
+
+X - enable some modules
 
 
-mysqldump -u boris -p vkv7 field_data_body > field_data_body.sql
+X - delete stories
+X - delete content type story
 
-find field_data_body.sql -type f -exec sed -i 's/\%\%\%/<hr />/g' {} \;
+X - disabnle the summmaruy on body field
+
+
+X - node convert page to book
+
+
+X - set admin theme
+
+X - set allowed html
+<a> <em> <strong> <cite> <blockquote> <code> <ul> <ol> <li> <dl> <dt> <dd> <table> <h2> <h3> <h4> <h5> <h6> <iframe> <object> <pre> <address> <hr> <embed> <param> <img>
+
+clean up input filters
 
 
 
-delete stories
-
-node convert page to book
+a em strong cite blockquote code ul ol li dl dt dd table h2 h3 h4 h5 h6 iframe object pre address hr embed param img

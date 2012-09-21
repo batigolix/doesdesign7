@@ -69,7 +69,7 @@ while ($row = mysql_fetch_assoc($result))
         list($_, $height) = explode('=', $height, 2);
         
         echo "NID: $nid \n";
-        echo "DESC: $desc \n";
+        echo "TIT: $title \n";
         
         $query_image = "SELECT * FROM ${prefix}image WHERE nid=".$nid;
         $result_image = mysql_query($query_image);
@@ -86,11 +86,11 @@ while ($row = mysql_fetch_assoc($result))
         $img_path = $row_file['filepath'];
         
         if ($img_path[0] != '/')  
-            $img_path = '/' . str_replace('.feature', '', $img_path);
+            $img_path = '/' . str_replace('.thumbnail', '', str_replace('.feature', '', $img_path));
         
         echo "Src: $img_path \n";
         
-        $image_tag = "<img alt=\"$desc\" src=\"$img_path\" style=\"width: ".$width."px; height: ".$height."px;\">";
+        $image_tag = "<img alt=\"$title\" title=\"$title\" src=\"$img_path\" style=\"width: ".$width."px; height: ".$height."px;\">";
 
         $tmp = str_replace($img, $image_tag, $tmp);
         
