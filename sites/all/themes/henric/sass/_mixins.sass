@@ -22,3 +22,57 @@
   -webkit-border-top-right-radius: $right
   -webkit-border-bottom-left-radius: $bottom
   -webkit-border-bottom-right-radius: $left
+  
+@mixin shadow($hori_offset: 0, $verti_offset: 1px, $blur: 1px, $color: #333)
+  $value: $hori_offset $verti_offset $blur $color
+  -moz-box-shadow: $value
+  -webkit-box-shadow: $value
+  box-shadow: $value
+  -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color')"
+  filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color')
+  
+@mixin opacity($value)
+  opacity: #{"." + $value}
+  filter: alpha(opacity=$value)
+  -ms-filter: "alpha(opacity=$value)"
+  -khtml-opacity: #{"." + $value}
+  -moz-opacity: #{"." + $value}
+
+@mixin linkcolor($value: red)
+  &:hover, &:active, &:visited, &:link
+    color: $value
+    
+@mixin gradient2($from, $to)
+  /* fallback/image non-cover color */
+  background-color: $from
+  /* Firefox 3.6+ */
+  background-image: -moz-linear-gradient($from, $to)
+  /* Safari 4+, Chrome 1+ */
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from($from), to($to))
+  /* Safari 5.1+, Chrome 10+ */
+  background-image: -webkit-linear-gradient($from, $to)
+  /* Opera 11.10+ */
+  background-image: -o-linear-gradient($from, $to)    
+  
+@mixin gradient($color1, $color2)
+  background-color: $color1
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#{$color1}, endColorstr=#{$color2})
+  background-image: -moz-linear-gradient(center top, $color1, $color2)
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from($color1), to($color2))  
+  background-image: -o-linear-gradient($color1, $color2)    
+
+@mixin font($weight:700)
+  font-family: 'Gentium Basic', Georgia, serif, cursive
+  font-weight: bold
+  font-weight: $weight
+
+$horizontal_offset: 2px
+$vertical_offset: 2px
+$blur_radius: 2px
+$shadow_color: rgba( 10, 10, 10, .45)
+@mixin text-shadow($h: $horizontal_offset, $v: $vertical_offset, $c: $shadow_color, $b: $blur_radius)
+  $value: $h $v $b $c
+  -moz-text-shadow: $value
+  -webkit-text-shadow: $value
+  -o-text-shadow: $value
+  text-shadow: $value

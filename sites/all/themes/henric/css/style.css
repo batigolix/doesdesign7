@@ -74,7 +74,6 @@ tr.odd td {
 tr.odd {
   background-color: white; }
 
-/* Code. */
 pre, code, tt {
   font: 1em "andale mono", "lucida console", monospace;
   line-height: 1.5; }
@@ -149,6 +148,7 @@ div.status {
   color: #336600;
   background: #ccff88;
   border-color: #bbee77; }
+<<<<<<< HEAD
 
 /* Region Colors. delete when starting a new theme. */
 #header, #footer {
@@ -162,3 +162,5 @@ div.status {
 
 #navigation {
   background: #feffa5; }
+=======
+>>>>>>> 8051de48b38402637a8c667682d2885f9024a772
