@@ -7,7 +7,18 @@
 *
   @include box-sizing('border-box')
 
-#main, #header
+body
+  color: #111
+  background: #E6FCF7
+
+#page-wrapper
+  font: 15px / 1.7em "Trebuchet MS", Verdana, Helvetica, sans-serif
+  @include breakpoint($narrow)
+    font: 13px / 1.5em "Trebuchet MS", Verdana, Helvetica, sans-serif
+  border: 2px solid #333
+  background: white url(../images/henric-bg-small.jpg) left -50px repeat-x
+  @include breakpoint($narrow)
+    background: white url(../images/henric-bg.jpg) left -50px repeat-x
   @include container
 
 #content
@@ -17,16 +28,141 @@
   @include span-columns(4 omega, 12)
 
 #navigation
+  padding: 10px 8px
   clear: both
   li
+    padding: 0 0.5em
     display: block
-    @include breakpoint($nav-inline)
+    @include breakpoint($narrow)
       display: inline-block
-  @include breakpoint($nav-inline-large)
+  @include breakpoint($medium)
     @include span-columns(12 omega, 12)
+  @include opacity(0.7)
+  background: #000
+  color: #FFF
+  font-weight: bold
+  a
+    &:hover, &:visited, &:active, &:link
+      color: #FFF
+      text-decoration: underline
 
-body
+.sidebar .block 
+  border: 1px solid #999
+  padding: 6px
+  margin: 12px 0 12px 0
+  @include opacity(0.9)
+  background: #FFF
+  .content
+    padding: 0 10px 10px 10px
+  h3, h2
+    font-size: 1.3em
+    margin: 0 -6px 6px -6px
+    padding: 6px
+    border-bottom: 1px solid #009470
+  @include box-shadow(#CCC 1px 1px 6px)
+
+#main #content
+  border: 1px solid #999
+  @include box-shadow(#CCC 1px 1px 6px)
+  @include opacity(0.9)
+  background: #FFF
+  padding: 12px
+  margin: 12px 0 12px 0
+
+
+#header 
+  #site-name 
+    font-family: 'Fredoka One'
+    text-shadow: black 0.1em 0.1em 0.2em
+    font-size: 2em
+    margin: 32px 0
+    @include breakpoint($narrow)
+      font-size: 2.6em
+      margin: 48px 0
+    a
+      color: #FFF
+      text-decoration: none
+    font-weight: 300
+
+a
+  &:link, &:visited 
+    color: #000
+  &:active
+    color: #900
+  &:hover
+    color: #333
+
+/* Titles.
+
+h1, h2, h3, h4, h5, h6
+  line-height: 1.3em
+
+h1
+  font-size: 1.8em
+  font-weight: 600
+  padding: 0 0 0.5em
   margin: 0
-  font: 13px / 1.5em "Trebuchet MS", Verdana, Helvetica, sans-serif
-  color: #111
-  background: #E6FCF7
+
+h2
+  font-size: 1.5em
+  font-weight: 300
+  margin-bottom: 0.75em
+  color: #009470
+
+.content-title
+  @extend h2
+
+h3
+  font-size: 1.2em
+  margin-bottom: 1em
+
+h4
+  font-size: 1.1em
+  margin-bottom: 0.8em
+  font-weight: bold
+  font-style: oblique
+
+h5
+  font-size: 1em
+  font-weight: 600
+  margin-bottom: 0
+
+h6
+  font-size: 1em
+  font-style: oblique
+
+/* Paragraph styles.
+p
+  margin: 0 0 1em 0
+
+hr
+  color: #009470
+  background-color: #009470
+  height: 1px
+  @include box-shadow(#CCCpx, 1px, 3px)
+  margin: 10px 0
+  border: 0
+
+blockquote
+  margin: 1em 3em
+  padding: .5em 1em
+  border-left: 5px solid #fce27c
+  background-color: #f6ebc1
+  p
+    margin: 0
+
+input.form-text
+  font-size: 100%
+  font-weight: bold
+  padding: 4px
+
+input.form-submit
+  @extend input.form-text
+  @include border-radius()
+  background: #009470
+  color: #FFF
+  border: 2px solid black
+
+.hide, #skip-link
+  display: none
+  
