@@ -164,8 +164,42 @@ body {
   text-decoration: none;
 }
 
+/* line 51, ../sass/screen.sass */
+.sidebar .block {
+  border: 1px solid #999999;
+  padding: 6px;
+  margin: 12px 0 12px 0;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=90);
+  opacity: 0.9;
+  background: white;
+  -webkit-box-shadow: #cccccc 1px 1px 6px;
+  -moz-box-shadow: #cccccc 1px 1px 6px;
+  box-shadow: #cccccc 1px 1px 6px;
+}
+/* line 57, ../sass/screen.sass */
+.sidebar .block .content {
+  padding: 0 10px 10px 10px;
+}
+/* line 59, ../sass/screen.sass */
+.sidebar .block h3, .sidebar .block h2, .sidebar .block .content-title {
+  font-size: 1.3em;
+  margin: 0 -6px 6px -6px;
+  padding: 6px;
+  border-bottom: 1px solid #009470;
+}
+
+/* line 66, ../sass/screen.sass */
+#block-book-navigation {
+  display: none;
+}
+
 @media (min-width: 49em) {
-  /* line 52, ../sass/screen.sass */
+  /* line 70, ../sass/screen.sass */
+  #block-book-navigation {
+    display: block;
+  }
+
+  /* line 72, ../sass/screen.sass */
   #page-wrapper {
     background: white url(../images/henric-bg.jpg) left -50px repeat-x;
     font: 13px/1.5em "Trebuchet MS", Verdana, Helvetica, sans-serif;
@@ -185,31 +219,31 @@ body {
   -webkit-background-clip: content-box;
   -moz-background-clip: content-box;
   background-clip: content-box;
-  /* line 56, ../sass/screen.sass */
+  /* line 76, ../sass/screen.sass */
   #main {
     width: 100%;
     float: right;
     margin-right: 0;
   }
-  /* line 58, ../sass/screen.sass */
+  /* line 78, ../sass/screen.sass */
   #main #content {
     width: 69.38776%;
     float: left;
     margin-right: 2.04082%;
   }
-  /* line 60, ../sass/screen.sass */
+  /* line 80, ../sass/screen.sass */
   #main #sidebar-first {
     width: 28.57143%;
     float: right;
     margin-right: 0;
   }
 
-  /* line 62, ../sass/screen.sass */
+  /* line 82, ../sass/screen.sass */
   #navigation li {
     display: inline-block;
   }
 
-  /* line 64, ../sass/screen.sass */
+  /* line 84, ../sass/screen.sass */
   #header #site-name {
     font-size: 2.6em;
     margin: 48px 0;
@@ -230,50 +264,26 @@ body {
   -webkit-background-clip: content-box;
   -moz-background-clip: content-box;
   background-clip: content-box;
-  /* line 70, ../sass/screen.sass */
+  /* line 90, ../sass/screen.sass */
   #main {
     width: 100%;
     float: right;
     margin-right: 0;
   }
-  /* line 72, ../sass/screen.sass */
+  /* line 92, ../sass/screen.sass */
   #main #content {
     width: 71.01449%;
     float: left;
     margin-right: 1.44928%;
   }
-  /* line 74, ../sass/screen.sass */
+  /* line 94, ../sass/screen.sass */
   #main #sidebar-first {
     width: 27.53623%;
     float: right;
     margin-right: 0;
   }
 }
-/* line 77, ../sass/screen.sass */
-.sidebar .block {
-  border: 1px solid #999999;
-  padding: 6px;
-  margin: 12px 0 12px 0;
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=90);
-  opacity: 0.9;
-  background: white;
-  -webkit-box-shadow: #cccccc 1px 1px 6px;
-  -moz-box-shadow: #cccccc 1px 1px 6px;
-  box-shadow: #cccccc 1px 1px 6px;
-}
-/* line 83, ../sass/screen.sass */
-.sidebar .block .content {
-  padding: 0 10px 10px 10px;
-}
-/* line 85, ../sass/screen.sass */
-.sidebar .block h3, .sidebar .block h2, .sidebar .block .content-title {
-  font-size: 1.3em;
-  margin: 0 -6px 6px -6px;
-  padding: 6px;
-  border-bottom: 1px solid #009470;
-}
-
-/* line 92, ../sass/screen.sass */
+/* line 97, ../sass/screen.sass */
 #main #content {
   border: 1px solid #999999;
   -webkit-box-shadow: #cccccc 1px 1px 6px;
@@ -286,26 +296,26 @@ body {
   margin: 12px 0 12px 0;
 }
 
-/* line 101, ../sass/screen.sass */
+/* line 106, ../sass/screen.sass */
 a:link, a:visited {
   color: black;
 }
-/* line 103, ../sass/screen.sass */
+/* line 108, ../sass/screen.sass */
 a:active {
   color: #990000;
 }
-/* line 105, ../sass/screen.sass */
+/* line 110, ../sass/screen.sass */
 a:hover {
   color: #333333;
 }
 
 /* Titles. */
-/* line 110, ../sass/screen.sass */
+/* line 115, ../sass/screen.sass */
 h1, h2, .content-title, h3, h4, h5, h6 {
   line-height: 1.3em;
 }
 
-/* line 113, ../sass/screen.sass */
+/* line 118, ../sass/screen.sass */
 h1 {
   font-size: 1.8em;
   font-weight: 600;
@@ -313,7 +323,7 @@ h1 {
   margin: 0;
 }
 
-/* line 119, ../sass/screen.sass */
+/* line 124, ../sass/screen.sass */
 h2, .content-title {
   font-size: 1.5em;
   font-weight: 300;
@@ -321,13 +331,13 @@ h2, .content-title {
   color: #009470;
 }
 
-/* line 128, ../sass/screen.sass */
+/* line 133, ../sass/screen.sass */
 h3 {
   font-size: 1.2em;
   margin-bottom: 1em;
 }
 
-/* line 132, ../sass/screen.sass */
+/* line 137, ../sass/screen.sass */
 h4 {
   font-size: 1.1em;
   margin-bottom: 0.8em;
@@ -335,39 +345,39 @@ h4 {
   font-style: oblique;
 }
 
-/* line 138, ../sass/screen.sass */
+/* line 143, ../sass/screen.sass */
 h5 {
   font-size: 1em;
   font-weight: 600;
   margin-bottom: 0;
 }
 
-/* line 143, ../sass/screen.sass */
+/* line 148, ../sass/screen.sass */
 h6 {
   font-size: 1em;
   font-style: oblique;
 }
 
 /* Paragraph styles. */
-/* line 148, ../sass/screen.sass */
+/* line 153, ../sass/screen.sass */
 p {
   margin: 0 0 1em 0;
 }
 
-/* line 151, ../sass/screen.sass */
+/* line 156, ../sass/screen.sass */
 .book-navigation {
   margin: 10px;
 }
-/* line 153, ../sass/screen.sass */
+/* line 158, ../sass/screen.sass */
 .book-navigation .menu {
   margin: 20px 0;
 }
-/* line 155, ../sass/screen.sass */
+/* line 160, ../sass/screen.sass */
 .book-navigation .page-links {
   padding: 10px;
 }
 
-/* line 158, ../sass/screen.sass */
+/* line 163, ../sass/screen.sass */
 hr {
   color: #009470;
   background-color: #009470;
@@ -379,26 +389,31 @@ hr {
   border: 0;
 }
 
-/* line 166, ../sass/screen.sass */
+/* line 171, ../sass/screen.sass */
 blockquote {
   margin: 1em 3em;
   padding: 0.5em 1em;
   border-left: 5px solid #fce27c;
   background-color: #f6ebc1;
 }
-/* line 171, ../sass/screen.sass */
+/* line 176, ../sass/screen.sass */
 blockquote p {
   margin: 0;
 }
 
-/* line 174, ../sass/screen.sass */
+/* line 179, ../sass/screen.sass */
 input.form-text, input.form-submit {
   font-size: 100%;
   font-weight: bold;
   padding: 4px;
 }
 
-/* line 179, ../sass/screen.sass */
+/* line 184, ../sass/screen.sass */
+#edit-search-block-form--2 {
+  width: 100%;
+}
+
+/* line 187, ../sass/screen.sass */
 input.form-submit {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -410,7 +425,7 @@ input.form-submit {
   border: 2px solid black;
 }
 
-/* line 186, ../sass/screen.sass */
+/* line 194, ../sass/screen.sass */
 .hide, #skip-link {
   display: none;
 }

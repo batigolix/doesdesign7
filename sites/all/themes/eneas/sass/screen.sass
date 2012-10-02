@@ -48,7 +48,27 @@ body
       text-decoration: none
     font-weight: 300
 
+.sidebar .block 
+  border: 1px solid #999
+  padding: 6px
+  margin: 12px 0 12px 0
+  @include opacity(0.9)
+  background: #FFF
+  .content
+    padding: 0 10px 10px 10px
+  h3, h2
+    font-size: 1.3em
+    margin: 0 -6px 6px -6px
+    padding: 6px
+    border-bottom: 1px solid #009470
+  @include box-shadow(#CCC 1px 1px 6px)
+
+#block-book-navigation
+  display: none
+
 @include at-breakpoint($break-1) // 10 cols
+  #block-book-navigation
+    display: block
   #page-wrapper
     background: white url(../images/henric-bg.jpg) left -50px repeat-x
     font: 13px / 1.5em "Trebuchet MS", Verdana, Helvetica, sans-serif
@@ -73,21 +93,6 @@ body
       @include span-columns(10, $break-2)
     #sidebar-first
       @include span-columns(4 omega, $break-2)
-
-.sidebar .block 
-  border: 1px solid #999
-  padding: 6px
-  margin: 12px 0 12px 0
-  @include opacity(0.9)
-  background: #FFF
-  .content
-    padding: 0 10px 10px 10px
-  h3, h2
-    font-size: 1.3em
-    margin: 0 -6px 6px -6px
-    padding: 6px
-    border-bottom: 1px solid #009470
-  @include box-shadow(#CCC 1px 1px 6px)
 
 #main #content
   border: 1px solid #999
@@ -175,6 +180,9 @@ input.form-text
   font-size: 100%
   font-weight: bold
   padding: 4px
+
+#edit-search-block-form--2
+  width: 100%
 
 input.form-submit
   @extend input.form-text
