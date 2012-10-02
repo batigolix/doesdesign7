@@ -13,19 +13,28 @@ body
 
 #page-wrapper
   font: 15px / 1.7em "Trebuchet MS", Verdana, Helvetica, sans-serif
-  @include breakpoint($narrow)
+  @include at-breakpoint($break)
     font: 13px / 1.5em "Trebuchet MS", Verdana, Helvetica, sans-serif
   border: 2px solid #333
   background: white url(../images/henric-bg-small.jpg) left -50px repeat-x
   @include breakpoint($narrow)
     background: white url(../images/henric-bg.jpg) left -50px repeat-x
-  @include container
+  @include container($total-columns, $break)
 
-#content
-  @include span-columns(8, 12)
-
-#sidebar-first
-  @include span-columns(4 omega, 12)
+@include at-breakpoint($break)
+  $main-columns: 12
+  #header 
+    @include span-columns($main-columns omega, $break)
+    clear: both
+  #navigation
+    @include span-columns($main-columns omega, $break)
+    clear: both
+  #main
+    @include span-columns($main-columns omega, $break)
+    #content 
+      @include span-columns(9, $main-columns)
+    #sidebar-first
+      @include span-columns(3 omega, $main-columns)
 
 #navigation
   padding: 10px 8px
@@ -35,8 +44,6 @@ body
     display: block
     @include breakpoint($narrow)
       display: inline-block
-  @include breakpoint($medium)
-    @include span-columns(12 omega, 12)
   @include opacity(0.7)
   background: #000
   color: #FFF
@@ -69,14 +76,13 @@ body
   padding: 12px
   margin: 12px 0 12px 0
 
-
 #header 
   #site-name 
     font-family: 'Fredoka One'
     text-shadow: black 0.1em 0.1em 0.2em
     font-size: 2em
     margin: 32px 0
-    @include breakpoint($narrow)
+    @include at-breakpoint($break)
       font-size: 2.6em
       margin: 48px 0
     a
@@ -139,7 +145,7 @@ hr
   color: #009470
   background-color: #009470
   height: 1px
-  @include box-shadow(#CCCpx, 1px, 3px)
+  @include box-shadow(#333 1px 1px 2px)
   margin: 10px 0
   border: 0
 
@@ -165,4 +171,3 @@ input.form-submit
 
 .hide, #skip-link
   display: none
-  
