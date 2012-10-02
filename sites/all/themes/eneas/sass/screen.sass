@@ -2,6 +2,7 @@
 @import "susy"
 @import "breakpoint"
 @import "partials/base"
+@import "partials/base"
 @include global-reset
 
 *
@@ -13,28 +14,10 @@ body
 
 #page-wrapper
   font: 15px / 1.7em "Trebuchet MS", Verdana, Helvetica, sans-serif
-  @include at-breakpoint($break)
-    font: 13px / 1.5em "Trebuchet MS", Verdana, Helvetica, sans-serif
+  @include container($total-columns, $break-1, $break-2)
+  @include susy-grid-background
   border: 2px solid #333
   background: white url(../images/henric-bg-small.jpg) left -50px repeat-x
-  @include breakpoint($narrow)
-    background: white url(../images/henric-bg.jpg) left -50px repeat-x
-  @include container($total-columns, $break)
-
-@include at-breakpoint($break)
-  $main-columns: 12
-  #header 
-    @include span-columns($main-columns omega, $break)
-    clear: both
-  #navigation
-    @include span-columns($main-columns omega, $break)
-    clear: both
-  #main
-    @include span-columns($main-columns omega, $break)
-    #content 
-      @include span-columns(9, $main-columns)
-    #sidebar-first
-      @include span-columns(3 omega, $main-columns)
 
 #navigation
   padding: 10px 8px
@@ -42,8 +25,6 @@ body
   li
     padding: 0 0.5em
     display: block
-    @include breakpoint($narrow)
-      display: inline-block
   @include opacity(0.7)
   background: #000
   color: #FFF
@@ -52,6 +33,43 @@ body
     &:hover, &:visited, &:active, &:link
       color: #FFF
       text-decoration: underline
+
+#header 
+  #site-name 
+    font-family: 'Fredoka One'
+    text-shadow: black 0.1em 0.1em 0.2em
+    font-size: 2em
+    margin: 32px 0
+    a
+      color: #FFF
+      text-decoration: none
+    font-weight: 300
+
+@include at-breakpoint($break-1) // 10 cols
+  #page-wrapper
+    background: white url(../images/henric-bg.jpg) left -50px repeat-x
+    font: 13px / 1.5em "Trebuchet MS", Verdana, Helvetica, sans-serif
+  @include susy-grid-background
+  #main
+    @include span-columns($break-1 omega)
+    #content 
+      @include span-columns(7, $break-1)
+    #sidebar-first
+      @include span-columns(3 omega, $break-1)
+  #navigation li
+    display: inline-block
+  #header #site-name
+    font-size: 2.6em
+    margin: 48px 0
+
+@include at-breakpoint($break-2) // 14 cols
+  @include susy-grid-background
+  #main
+    @include span-columns($break-2 omega)
+    #content 
+      @include span-columns(10, $break-2)
+    #sidebar-first
+      @include span-columns(4 omega, $break-2)
 
 .sidebar .block 
   border: 1px solid #999
@@ -75,20 +93,6 @@ body
   background: #FFF
   padding: 12px
   margin: 12px 0 12px 0
-
-#header 
-  #site-name 
-    font-family: 'Fredoka One'
-    text-shadow: black 0.1em 0.1em 0.2em
-    font-size: 2em
-    margin: 32px 0
-    @include at-breakpoint($break)
-      font-size: 2.6em
-      margin: 48px 0
-    a
-      color: #FFF
-      text-decoration: none
-    font-weight: 300
 
 a
   &:link, &:visited 
@@ -140,6 +144,13 @@ h6
 /* Paragraph styles.
 p
   margin: 0 0 1em 0
+
+.book-navigation
+  margin: 10px
+  .menu
+    margin: 20px 0
+  .page-links
+    padding: 10px
 
 hr
   color: #009470
