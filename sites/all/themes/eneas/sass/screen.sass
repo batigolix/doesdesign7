@@ -1,0 +1,32 @@
+@import "compass"
+@import "susy"
+@import "breakpoint"
+@import "partials/base"
+@include global-reset
+
+*
+  @include box-sizing('border-box')
+
+#main, #header
+  @include container
+
+#content
+  @include span-columns(8, 12)
+
+#sidebar-first
+  @include span-columns(4 omega, 12)
+
+#navigation
+  clear: both
+  li
+    display: block
+    @include breakpoint($nav-inline)
+      display: inline-block
+  @include breakpoint($nav-inline-large)
+    @include span-columns(12 omega, 12)
+
+body
+  margin: 0
+  font: 13px / 1.5em "Trebuchet MS", Verdana, Helvetica, sans-serif
+  color: #111
+  background: #E6FCF7
