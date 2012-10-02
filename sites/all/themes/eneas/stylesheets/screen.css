@@ -71,12 +71,19 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* line 11, ../sass/screen.sass */
+.tab {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
+
+/* line 14, ../sass/screen.sass */
 body {
   color: #111111;
   background: #e6fcf7;
 }
 
-/* line 15, ../sass/screen.sass */
+/* line 18, ../sass/screen.sass */
 #page-wrapper {
   font: 15px/1.7em "Trebuchet MS", Verdana, Helvetica, sans-serif;
   *zoom: 1;
@@ -110,19 +117,19 @@ body {
   clear: both;
 }
 @media (min-width: 49em) {
-  /* line 15, ../sass/screen.sass */
+  /* line 18, ../sass/screen.sass */
   #page-wrapper {
     max-width: 49em;
   }
 }
 @media (min-width: 69em) {
-  /* line 15, ../sass/screen.sass */
+  /* line 18, ../sass/screen.sass */
   #page-wrapper {
     max-width: 69em;
   }
 }
 
-/* line 22, ../sass/screen.sass */
+/* line 25, ../sass/screen.sass */
 #navigation {
   padding: 10px 8px;
   clear: both;
@@ -132,18 +139,18 @@ body {
   color: white;
   font-weight: bold;
 }
-/* line 25, ../sass/screen.sass */
+/* line 28, ../sass/screen.sass */
 #navigation li {
   padding: 0 0.5em;
   display: block;
 }
-/* line 33, ../sass/screen.sass */
+/* line 36, ../sass/screen.sass */
 #navigation a:hover, #navigation a:visited, #navigation a:active, #navigation a:link {
   color: white;
   text-decoration: underline;
 }
 
-/* line 38, ../sass/screen.sass */
+/* line 41, ../sass/screen.sass */
 #header #site-name {
   font-family: "Fredoka One";
   text-shadow: black 0.1em 0.1em 0.2em;
@@ -151,14 +158,14 @@ body {
   margin: 32px 0;
   font-weight: 300;
 }
-/* line 43, ../sass/screen.sass */
+/* line 46, ../sass/screen.sass */
 #header #site-name a {
   color: white;
   text-decoration: none;
 }
 
 @media (min-width: 49em) {
-  /* line 49, ../sass/screen.sass */
+  /* line 52, ../sass/screen.sass */
   #page-wrapper {
     background: white url(../images/henric-bg.jpg) left -50px repeat-x;
     font: 13px/1.5em "Trebuchet MS", Verdana, Helvetica, sans-serif;
@@ -178,31 +185,31 @@ body {
   -webkit-background-clip: content-box;
   -moz-background-clip: content-box;
   background-clip: content-box;
-  /* line 53, ../sass/screen.sass */
+  /* line 56, ../sass/screen.sass */
   #main {
     width: 100%;
     float: right;
     margin-right: 0;
   }
-  /* line 55, ../sass/screen.sass */
+  /* line 58, ../sass/screen.sass */
   #main #content {
     width: 69.38776%;
     float: left;
     margin-right: 2.04082%;
   }
-  /* line 57, ../sass/screen.sass */
+  /* line 60, ../sass/screen.sass */
   #main #sidebar-first {
     width: 28.57143%;
     float: right;
     margin-right: 0;
   }
 
-  /* line 59, ../sass/screen.sass */
+  /* line 62, ../sass/screen.sass */
   #navigation li {
     display: inline-block;
   }
 
-  /* line 61, ../sass/screen.sass */
+  /* line 64, ../sass/screen.sass */
   #header #site-name {
     font-size: 2.6em;
     margin: 48px 0;
@@ -223,26 +230,26 @@ body {
   -webkit-background-clip: content-box;
   -moz-background-clip: content-box;
   background-clip: content-box;
-  /* line 67, ../sass/screen.sass */
+  /* line 70, ../sass/screen.sass */
   #main {
     width: 100%;
     float: right;
     margin-right: 0;
   }
-  /* line 69, ../sass/screen.sass */
+  /* line 72, ../sass/screen.sass */
   #main #content {
     width: 71.01449%;
     float: left;
     margin-right: 1.44928%;
   }
-  /* line 71, ../sass/screen.sass */
+  /* line 74, ../sass/screen.sass */
   #main #sidebar-first {
     width: 27.53623%;
     float: right;
     margin-right: 0;
   }
 }
-/* line 74, ../sass/screen.sass */
+/* line 77, ../sass/screen.sass */
 .sidebar .block {
   border: 1px solid #999999;
   padding: 6px;
@@ -254,11 +261,11 @@ body {
   -moz-box-shadow: #cccccc 1px 1px 6px;
   box-shadow: #cccccc 1px 1px 6px;
 }
-/* line 80, ../sass/screen.sass */
+/* line 83, ../sass/screen.sass */
 .sidebar .block .content {
   padding: 0 10px 10px 10px;
 }
-/* line 82, ../sass/screen.sass */
+/* line 85, ../sass/screen.sass */
 .sidebar .block h3, .sidebar .block h2, .sidebar .block .content-title {
   font-size: 1.3em;
   margin: 0 -6px 6px -6px;
@@ -266,7 +273,7 @@ body {
   border-bottom: 1px solid #009470;
 }
 
-/* line 89, ../sass/screen.sass */
+/* line 92, ../sass/screen.sass */
 #main #content {
   border: 1px solid #999999;
   -webkit-box-shadow: #cccccc 1px 1px 6px;
@@ -279,26 +286,26 @@ body {
   margin: 12px 0 12px 0;
 }
 
-/* line 98, ../sass/screen.sass */
+/* line 101, ../sass/screen.sass */
 a:link, a:visited {
   color: black;
 }
-/* line 100, ../sass/screen.sass */
+/* line 103, ../sass/screen.sass */
 a:active {
   color: #990000;
 }
-/* line 102, ../sass/screen.sass */
+/* line 105, ../sass/screen.sass */
 a:hover {
   color: #333333;
 }
 
 /* Titles. */
-/* line 107, ../sass/screen.sass */
+/* line 110, ../sass/screen.sass */
 h1, h2, .content-title, h3, h4, h5, h6 {
   line-height: 1.3em;
 }
 
-/* line 110, ../sass/screen.sass */
+/* line 113, ../sass/screen.sass */
 h1 {
   font-size: 1.8em;
   font-weight: 600;
@@ -306,7 +313,7 @@ h1 {
   margin: 0;
 }
 
-/* line 116, ../sass/screen.sass */
+/* line 119, ../sass/screen.sass */
 h2, .content-title {
   font-size: 1.5em;
   font-weight: 300;
@@ -314,13 +321,13 @@ h2, .content-title {
   color: #009470;
 }
 
-/* line 125, ../sass/screen.sass */
+/* line 128, ../sass/screen.sass */
 h3 {
   font-size: 1.2em;
   margin-bottom: 1em;
 }
 
-/* line 129, ../sass/screen.sass */
+/* line 132, ../sass/screen.sass */
 h4 {
   font-size: 1.1em;
   margin-bottom: 0.8em;
@@ -328,39 +335,39 @@ h4 {
   font-style: oblique;
 }
 
-/* line 135, ../sass/screen.sass */
+/* line 138, ../sass/screen.sass */
 h5 {
   font-size: 1em;
   font-weight: 600;
   margin-bottom: 0;
 }
 
-/* line 140, ../sass/screen.sass */
+/* line 143, ../sass/screen.sass */
 h6 {
   font-size: 1em;
   font-style: oblique;
 }
 
 /* Paragraph styles. */
-/* line 145, ../sass/screen.sass */
+/* line 148, ../sass/screen.sass */
 p {
   margin: 0 0 1em 0;
 }
 
-/* line 148, ../sass/screen.sass */
+/* line 151, ../sass/screen.sass */
 .book-navigation {
   margin: 10px;
 }
-/* line 150, ../sass/screen.sass */
+/* line 153, ../sass/screen.sass */
 .book-navigation .menu {
   margin: 20px 0;
 }
-/* line 152, ../sass/screen.sass */
+/* line 155, ../sass/screen.sass */
 .book-navigation .page-links {
   padding: 10px;
 }
 
-/* line 155, ../sass/screen.sass */
+/* line 158, ../sass/screen.sass */
 hr {
   color: #009470;
   background-color: #009470;
@@ -372,26 +379,26 @@ hr {
   border: 0;
 }
 
-/* line 163, ../sass/screen.sass */
+/* line 166, ../sass/screen.sass */
 blockquote {
   margin: 1em 3em;
   padding: 0.5em 1em;
   border-left: 5px solid #fce27c;
   background-color: #f6ebc1;
 }
-/* line 168, ../sass/screen.sass */
+/* line 171, ../sass/screen.sass */
 blockquote p {
   margin: 0;
 }
 
-/* line 171, ../sass/screen.sass */
+/* line 174, ../sass/screen.sass */
 input.form-text, input.form-submit {
   font-size: 100%;
   font-weight: bold;
   padding: 4px;
 }
 
-/* line 176, ../sass/screen.sass */
+/* line 179, ../sass/screen.sass */
 input.form-submit {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -403,7 +410,7 @@ input.form-submit {
   border: 2px solid black;
 }
 
-/* line 183, ../sass/screen.sass */
+/* line 186, ../sass/screen.sass */
 .hide, #skip-link {
   display: none;
 }
