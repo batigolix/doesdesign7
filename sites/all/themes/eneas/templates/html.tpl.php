@@ -35,12 +35,15 @@
 ?><?php print $doctype; ?>
 <html lang="<?php print $language->language; ?>" dir="<?php print $language->dir; ?>" <?php print $rdf->version . $rdf->namespaces; ?>>
 <head<?php print $rdf->profile; ?>>
+<meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
 
   <?php print $head; ?>
   <title><?php print $head_title; ?></title>
   <?php print $styles; ?>
   <?php print $scripts; ?>
   <?php if (!empty($html5shim)) { print $html5shim; } ?>
+  
+  
 </head>
 <body class="<?php print $classes; ?>" <?php print $attributes;?>>
 
