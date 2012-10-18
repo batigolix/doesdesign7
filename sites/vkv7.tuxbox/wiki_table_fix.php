@@ -8,9 +8,14 @@
 $server = "localhost";
 //$login = "boris";
 //$password = "themancomesaround";
-$login = "root";
-$password = "root";
-$database = "vkv7";
+$login = "doesborg_boris";
+$password = "19aardbei71";
+
+
+//$login = "root";
+//$password = "root";
+$database = "doesborg_vkv7";
+//$database = "vkv7";
 $prefix = '';
 //$really_update = FALSE; # Set this to TRUE to actually run this Drupal 6-to-7 conversion
 $really_update = TRUE; # Set this to TRUE to actually run this Drupal 6-to-7 conversion
