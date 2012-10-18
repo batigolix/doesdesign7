@@ -483,3 +483,22 @@ input.form-submit {
 .hide, #skip-link {
   display: none;
 }
+
+/* line 214, ../sass/screen.sass */
+dl {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* line 218, ../sass/screen.sass */
+dt, dd {
+  float: left;
+  width: 50%;
+  border-bottom: 1px #dddddd solid;
+  padding: 0.5em 0;
+}
+
+/* line 224, ../sass/screen.sass */
+dd {
+  font-style: oblique;
+}
