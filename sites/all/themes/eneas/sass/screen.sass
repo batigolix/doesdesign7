@@ -2,7 +2,6 @@
 @import "susy"
 @import "breakpoint"
 @import "partials/base"
-@import "partials/base"
 @include global-reset
 
 *
@@ -17,7 +16,7 @@ body
 
 #page-wrapper
   font: 15px / 1.7em "Trebuchet MS", Verdana, Helvetica, sans-serif
-  @include container($total-columns, $break-1, $break-2)
+  @include container($total-columns, $break-1, $break-2, $break-3)
   @include susy-grid-background
   border: 2px solid #333
   background: white url(../images/henric-bg-small.jpg) left -50px repeat-x
@@ -42,7 +41,7 @@ body
     font-family: 'Fredoka One'
     text-shadow: black 0.1em 0.1em 0.2em
     font-size: 2em
-    margin: 32px 0
+    margin: 70px 0 20px 0
     a
       color: #FFF
       text-decoration: none
@@ -71,28 +70,41 @@ body
     display: block
   #page-wrapper
     background: white url(../images/henric-bg.jpg) left -50px repeat-x
-    font: 13px / 1.5em "Trebuchet MS", Verdana, Helvetica, sans-serif
+    font: 14px / 1.6em "Trebuchet MS", Verdana, Helvetica, sans-serif
   @include susy-grid-background
   #main
     @include span-columns($break-1 omega)
     #content 
       @include span-columns(7, $break-1)
     #sidebar-first
-      @include span-columns(3 omega, $break-1)
+      @include span-columns(2 omega, $break-1)
+      overflow: hidden
   #navigation li
     display: inline-block
   #header #site-name
     font-size: 2.6em
     margin: 61px 0
 
-@include at-breakpoint($break-2) // 14 cols
+@include at-breakpoint($break-2) // 13 cols
+  #page-wrapper
+    background: white url(../images/henric-bg.jpg) left -50px repeat-x
+    font: 13px / 1.5em "Trebuchet MS", Verdana, Helvetica, sans-serif
   @include susy-grid-background
   #main
     @include span-columns($break-2 omega)
     #content 
-      @include span-columns(10, $break-2)
+      @include span-columns(9, $break-2)
     #sidebar-first
-      @include span-columns(4 omega, $break-2)
+      @include span-columns(3 omega, $break-2)
+
+@include at-breakpoint($break-3)
+  @include susy-grid-background
+  #main
+    @include span-columns($break-3 omega)
+    #content 
+      @include span-columns(11, $break-3)
+    #sidebar-first
+      @include span-columns(4 omega, $break-3)
 
 #main #content
   border: 1px solid #999
