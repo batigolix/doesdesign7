@@ -1,25 +1,21 @@
 <div id="page-wrapper"><div id="page">
 
-  <header id="header" role="banner"><div class="section clearfix">
+  <header id="header" role="banner" class="clearfix">
 
     <?php if ($logo): ?>
+    <div id="logo">
       <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home" id="logo">
         <img src="<?php print $logo; ?>" alt="<?php print t('Home'); ?>" />
       </a>
+    </div>  
     <?php endif; ?>
 
     <?php if ($site_name || $site_slogan): ?>
       <div id="name-and-slogan">
         <?php if ($site_name): ?>
-          <?php if ($title): ?>
             <div id="site-name"><strong>
               <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home"><span><?php print $site_name; ?></span></a>
             </strong></div>
-          <?php else: /* Use h1 when the content title is empty */ ?>
-            <h1 id="site-name">
-              <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" rel="home"><span><?php print $site_name; ?></span></a>
-            </h1>
-          <?php endif; ?>
         <?php endif; ?>
 
         <?php if ($site_slogan): ?>
@@ -28,15 +24,19 @@
       </div> <!-- /#name-and-slogan -->
     <?php endif; ?>
 
-    <?php print render($page['header']); ?>
+    <?php if ($page['header']): ?>
+    <div id="header-block">
+      <?php print render($page['header']); ?>
+    </div>  
+    <?php endif; ?>
 
     <?php if ($main_menu): ?>
       <p id="skip-link"><em><a href="#navigation">Skip to Navigation</a></em> &darr;</p>
     <?php endif; ?>
 
-  </div></header> <!-- /.section, /#header -->
+  </header> <!-- /.section, /#header -->
 
-  <div id="main-wrapper"><div id="main" class="clearfix<?php if ($main_menu) { print ' with-navigation'; } ?>">
+  <div id="main-wrapper" class="clearfix"><div id="main" class="clearfix<?php if ($main_menu) { print ' with-navigation'; } ?>">
 
     <?php if ($main_menu): ?>
       <nav id="navigation" role="navigation"><div class="section">
@@ -82,7 +82,7 @@
     <?php endif; ?>
 
   </div></div> <!-- /#main, /#main-wrapper -->
-  <footer id="footer" role="contentinfo"><div class="section">
+  <footer id="footer" role="contentinfo" class="clearfix"><div class="section">
     <?php print render($page['footer']); ?>
   </div></footer> <!-- /.section, /#footer -->
 

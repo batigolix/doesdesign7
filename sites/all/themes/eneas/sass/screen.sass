@@ -1,8 +1,10 @@
 @import "compass"
+@import "blueprint"
 @import "susy"
 @import "breakpoint"
 @import "partials/base"
 @include global-reset
+@include blueprint
 
 *
   @include box-sizing('border-box')
@@ -13,13 +15,13 @@
 body
   color: #111
   background: #E6FCF7
-
+  
 #page-wrapper
-  font: 15px / 1.7em "Trebuchet MS", Verdana, Helvetica, sans-serif
   @include container($total-columns, $break-1, $break-2, $break-3)
   @include susy-grid-background
   border: 2px solid #333
-  background: white url(../images/henric-bg-small.jpg) left -50px repeat-x
+  background: white url(../images/henric-bg-small.jpg) left top repeat-x
+  font-size: 1em
 
 #navigation
   padding: 10px 8px
@@ -37,16 +39,38 @@ body
       text-decoration: underline
 
 #header 
-  #site-name 
-    font-family: 'Fredoka One'
-    text-shadow: black 0.1em 0.1em 0.2em
-    font-size: 2em
-    margin: 70px 0 20px 0
-    a
-      color: #FFF
-      text-decoration: none
-    font-weight: 300
+  #name-and-slogan
+    padding: 12px
+    #site-name 
+      font-family: 'Fredoka One'
+      text-shadow: black 0.1em 0.1em 0.2em
+      font-size: 1.7em
+      a
+        color: #FFF
+        text-decoration: none
+      font-weight: 100
+    #site-slogan
+      text-shadow: black 0.1em 0.1em 0.2em
+      font-size: 1.2em
+      color: yellow
+      margin: 0 0 40px 0
+  #header-block
+    padding: 12px
+    #search-block-form #edit-submit
+      margin: 6px 0
 
+#footer
+  background: $green
+  padding: 12px
+  margin: 0 0 12px 0
+  @include opacity(0.8)
+  .content p
+    color: #FFF
+    text-align: center
+  h2
+    text-align: center
+    color: #000  
+    
 .sidebar .block 
   border: 1px solid #999
   padding: 6px
@@ -59,19 +83,27 @@ body
     font-size: 1.3em
     margin: 0 -6px 6px -6px
     padding: 6px
-    border-bottom: 1px solid #009470
+    border-bottom: 1px solid $green
   @include box-shadow(#CCC 1px 1px 6px)
 
 #block-book-navigation
   display: none
 
-@include at-breakpoint($break-1) // 10 cols
+@include at-breakpoint($break-1)
   #block-book-navigation
     display: block
   #page-wrapper
     background: white url(../images/henric-bg.jpg) left -50px repeat-x
-    font: 14px / 1.6em "Trebuchet MS", Verdana, Helvetica, sans-serif
+    font: 14px / 1.6em
   @include susy-grid-background
+  #header
+    @include span-columns($break-1 omega)
+    #name-and-slogan
+      #site-name
+        font-size: 2.3em
+      #site-slogan
+        margin: 0 0 80px 0
+    #header-block
   #main
     @include span-columns($break-1 omega)
     #content 
@@ -81,15 +113,20 @@ body
       overflow: hidden
   #navigation li
     display: inline-block
-  #header #site-name
-    font-size: 2.6em
-    margin: 61px 0
 
 @include at-breakpoint($break-2) // 13 cols
   #page-wrapper
     background: white url(../images/henric-bg.jpg) left -50px repeat-x
-    font: 13px / 1.5em "Trebuchet MS", Verdana, Helvetica, sans-serif
+    font: 13px / 1.5em
   @include susy-grid-background
+  #header
+    @include span-columns($break-2 omega)
+    #name-and-slogan
+      @include span-columns(9, $break-2)
+      #site-name
+        font-size: 2.3em
+    #header-block
+      @include span-columns(3 omega, $break-2)
   #main
     @include span-columns($break-2 omega)
     #content 
@@ -99,6 +136,14 @@ body
 
 @include at-breakpoint($break-3)
   @include susy-grid-background
+  #header
+    @include span-columns($break-3 omega)
+    #name-and-slogan
+      @include span-columns(11, $break-3)
+      #site-name
+        font-size: 3em
+    #header-block
+      @include span-columns(4 omega, $break-3)
   #main
     @include span-columns($break-3 omega)
     #content 
@@ -133,16 +178,16 @@ h1
   padding: 0 0 0.5em
   margin: 0
   font-family: 'Fredoka One'
-  color: #009470
+  color: $green
 //  @include text-shadow(rgba(black, 0.5) -1px -1px 0)
 
 /* //  @include text-shadow(rgba(black, 1) -1px -1px 0, rgba(black, 1) 1px -1px 0, rgba(black, 1) -1px 1px 0, rgba(black, 1) 1px 1px 0) */
 
 h2
   font-size: 1.5em
-  font-weight: 300
+  font-weight: bold
   margin-bottom: 0.75em
-  color: #009470
+  color: $green
 
 .content-title
   @extend h2
@@ -177,9 +222,13 @@ p
   .page-links
     padding: 10px
 
+ul.menu, ul.links
+  margin: 0
+  padding-left: 0
+
 hr
-  color: #009470
-  background-color: #009470
+  color: $green
+  background-color: $green
   height: 1px
   @include box-shadow(#333 1px 1px 2px)
   margin: 10px 0
@@ -204,7 +253,7 @@ input.form-text
 input.form-submit
   @extend input.form-text
   @include border-radius()
-  background: #009470
+  background: $green
   color: #FFF
   border: 2px solid black
 

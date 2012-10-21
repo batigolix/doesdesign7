@@ -43,7 +43,6 @@
   <?php print $scripts; ?>
   <?php if (!empty($html5shim)) { print $html5shim; } ?>
   
-  
 </head>
 <body class="<?php print $classes; ?>" <?php print $attributes;?>>
 
