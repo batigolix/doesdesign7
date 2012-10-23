@@ -29,26 +29,23 @@ features[] = favicon
 features[] = main_menu
 features[] = secondary_menu
 
-stylesheets[all][] = css-smart-grid/css/bootstrap.css
-stylesheets[all][] = css-smart-grid/css/smart-grid.min.css
-stylesheets[all][] = css/style.css
+;stylesheets[all][] = css-smart-grid/css/bootstrap.css
+;stylesheets[all][] = css-smart-grid/css/smart-grid.min.css
+stylesheets[all][] = css/screen.css
+;stylesheets[all][] = css/style.css
 stylesheets[print][] = css/print.css
-scripts[] = css-smart-grid/js/modernizr.js
+stylesheets[all][] = css/ie.css
+stylesheets[all][] = css/tabs.css
+
+;scripts[] = css-smart-grid/js/modernizr.js
 scripts[] = js/scripts.js
 
-; Compass Support
-; http://drupal.org/project/compass
-compass[status] = 1
-compass[sass_dir] = sass
-compass[css_dir] = css
-
-settings[basic_tabs] = 1
-settings[basic_breadcrumb_separator] = »
-settings[wireframe_mode] = 0
 settings[clear_registry] = 0
-; Information added by drupal.org packaging script on 2012-04-11
-version = "7.x-2.1"
-core = "7.x"
-project = "basic"
-datestamp = "1334122542"
+settings[breadcrumb_display]   = yes
+settings[breadcrumb_separator] = ' › '
+settings[breadcrumb_home]      = 1
+settings[breadcrumb_trailing]  = 0
+settings[breadcrumb_title]     = 0
+settings[shoami_shim]           = 1
 
+fonts[google_fonts_api][] = "Gentium Book Basic&subset=latin#regular"

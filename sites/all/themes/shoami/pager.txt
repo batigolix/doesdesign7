@@ -1,0 +1,38 @@
+.pager li
+  border: 0
+  margin: 0
+  padding: 0
+  font-size: 11px
+  list-style: none
+
+.pager li, .pager a
+  border: solid 1px #DEDEDE
+  margin-right: 2px
+
+.item-list .pager 
+  .pager-next, .pager-last, .pager-first, .pager-previous
+    color: #888888
+    display: block
+    float: left
+    font-weight: bold
+    padding: 3px 4px
+    a
+      font-weight: bold
+      border: solid 1px #FFFFFF
+
+.pager .active
+  color: #000000
+  font-weight: bold
+  display: block
+  float: left
+  padding: 4px 6px
+
+.pager a:link, .pager a:visited
+  color: #0033CC
+  display: block
+  float: left
+  padding: 3px 6px
+  text-decoration: none
+
+.pager a:hover
+  text-decoration: none

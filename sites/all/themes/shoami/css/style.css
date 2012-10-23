@@ -1,341 +1,141 @@
 /* List styles. */
+/* line 2, ../sass/style.sass */
 ul, ol {
   margin-left: 0;
-  padding-left: 2em; }
+  padding-left: 2em;
+}
 
 /* Table styles. */
+/* line 7, ../sass/style.sass */
 table {
-  width: 99%; }
+  width: 99%;
+}
 
+/* line 12, ../sass/style.sass */
 tr.even td,
 tr.odd td {
-  padding: 10px 5px; }
+  padding: 10px 5px;
+}
 
+/* line 15, ../sass/style.sass */
 tr.odd {
-  background-color: white; }
+  background-color: white;
+}
 
 /* Code. */
+/* line 19, ../sass/style.sass */
 pre, code, tt {
   font: 1em "andale mono", "lucida console", monospace;
-  line-height: 1.5; }
+  line-height: 1.5;
+}
 
+/* line 23, ../sass/style.sass */
 pre {
   background-color: #efefef;
   display: block;
   padding: 5px;
   margin: 5px 0;
-  border: 1px solid #aaaaaa; }
+  border: 1px solid #aaaaaa;
+}
 
 /* List styles. */
+/* line 31, ../sass/style.sass */
 ul {
-  list-style-type: disc; }
-  ul ul {
-    list-style-type: circle; }
-    ul ul ul {
-      list-style-type: square; }
-      ul ul ul ul {
-        list-style-type: circle; }
+  list-style-type: disc;
+}
+/* line 33, ../sass/style.sass */
+ul ul {
+  list-style-type: circle;
+}
+/* line 35, ../sass/style.sass */
+ul ul ul {
+  list-style-type: square;
+}
+/* line 37, ../sass/style.sass */
+ul ul ul ul {
+  list-style-type: circle;
+}
 
+/* line 40, ../sass/style.sass */
 ol {
-  list-style-type: decimal; }
-  ol ol {
-    list-style-type: lower-alpha; }
-    ol ol ol {
-      list-style-type: decimal; }
+  list-style-type: decimal;
+}
+/* line 42, ../sass/style.sass */
+ol ol {
+  list-style-type: lower-alpha;
+}
+/* line 44, ../sass/style.sass */
+ol ol ol {
+  list-style-type: decimal;
+}
 
 /* Abbreviation. */
+/* line 48, ../sass/style.sass */
 abbr {
   border-bottom: 1px dotted #666666;
   cursor: help;
-  white-space: nowrap; }
+  white-space: nowrap;
+}
 
 /* UI improvments. */
+/* line 54, ../sass/style.sass */
 #edit-title {
   font-size: 24px;
-  width: 99%; }
+  width: 99%;
+}
 
+/* line 58, ../sass/style.sass */
 #system-themes-form img {
-  width: 100px; }
+  width: 100px;
+}
 
+/* line 61, ../sass/style.sass */
 .form-item .description {
   font-style: italic;
   line-height: 1.2em;
   font-size: 0.8em;
   margin-top: 5px;
-  color: #777777; }
+  color: #777777;
+}
 
+/* line 68, ../sass/style.sass */
 #edit-delete {
-  color: #cc0000; }
+  color: #cc0000;
+}
 
 /* Console, style from slate theme. */
+/* line 72, ../sass/style.sass */
 div.messages {
   padding: 9px;
   margin: 1em 0;
   color: #003366;
   background: #bbddff;
-  border: 1px solid #aaccee; }
+  border: 1px solid #aaccee;
+}
 
+/* line 79, ../sass/style.sass */
 div.warning {
   color: #884400;
   background: #ffee66;
-  border-color: #eedd55; }
+  border-color: #eedd55;
+}
 
+/* line 84, ../sass/style.sass */
 div.error {
   color: white;
   background: #ee6633;
-  border-color: #dd5522; }
+  border-color: #dd5522;
+}
 
+/* line 89, ../sass/style.sass */
 div.status {
   color: #336600;
   background: #ccff88;
-  border-color: #bbee77; }
+  border-color: #bbee77;
+}
 
-/* custom style boris   */
-h1, h2, h3, h4, h5, h6 {
-  font-family: "Gentium Basic", Georgia, serif, cursive;
-  font-weight: bold;
-  font-weight: 700;
-  line-height: 1.3em;
-  -moz-text-shadow: 0 1px 1px white;
-  -webkit-text-shadow: 0 1px 1px white;
-  -o-text-shadow: 0 1px 1px white;
-  text-shadow: 0 1px 1px white;
-  color: #ad771a; }
-  h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
-    font-weight: bold;
-    font-weight: 700;
-    text-decoration: underline; }
-
-#content-header h1 {
-  margin-bottom: 0; }
-
-a:hover, a:active, a:link, a:visited {
-  color: #635753; }
-
-#site-name {
-  padding: 0;
-  margin: 7px 0 0 0;
-  -moz-text-shadow: 0 4px 4px black;
-  -webkit-text-shadow: 0 4px 4px black;
-  -o-text-shadow: 0 4px 4px black;
-  text-shadow: 0 4px 4px black; }
-  #site-name a:hover, #site-name a:active, #site-name a:link, #site-name a:visited {
-    text-decoration: none;
-    color: #ebe5d0;
-    font-family: "Gentium Basic", Georgia, serif, cursive;
-    font-weight: bold;
-    font-weight: 100;
-    font-size: 3.6em;
-    font-style: italic;
-    line-height: 1.3em;
-    letter-spacing: 0.15em; }
-
-#site-slogan {
-  font-family: "Gentium Basic", Georgia, serif, cursive;
-  font-weight: bold;
-  font-weight: 100;
-  font-size: 1.5em;
-  color: white;
-  letter-spacing: 0.39em;
-  -moz-text-shadow: 0 2px 2px black;
-  -webkit-text-shadow: 0 2px 2px black;
-  -o-text-shadow: 0 2px 2px black;
-  text-shadow: 0 2px 2px black; }
-
-#skip {
-  display: none; }
-
-.page-taxonomy .views-field-field-image,
-.node-type-object .field-type-image .field-item {
-  display: inline; }
-  .page-taxonomy .views-field-field-image img,
-  .node-type-object .field-type-image .field-item img {
-    border: 2px #eeeeee solid;
-    padding: 2px;
-    -moz-box-shadow: 1px 1px 3px #bbbbbb;
-    -webkit-box-shadow: 1px 1px 3px #bbbbbb;
-    box-shadow: 1px 1px 3px #bbbbbb;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color')";
-    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color');
-    border-radius: 2px 2px 2px 2px;
-    -moz-border-radius: 2px 2px 2px 2px;
-    -webkit-border-top-left-radius: 2px;
-    -webkit-border-top-right-radius: 2px;
-    -webkit-border-bottom-left-radius: 2px;
-    -webkit-border-bottom-right-radius: 2px; }
-
-.grid-4 .col-1, .grid-4 .col-2, .grid-4 .col-3, .grid-4 .col-4 {
-  width: 143px;
-  float: left;
-  display: inline;
-  margin: 0 4px 0 0; }
-
-.page-taxonomy .view-categoriebeschrijvingen .views-field-description p {
-  font-size: 1.5em;
-  font-style: oblique; }
-
-.view-taxonomy-term-2 .views-field, .view-taxonomy-term .views-field {
-  margin-bottom: 7px; }
-  .view-taxonomy-term-2 .views-field .views-field-image, .view-taxonomy-term .views-field .views-field-image {
-    top: 0px; }
-  .view-taxonomy-term-2 .views-field .views-field-title, .view-taxonomy-term .views-field .views-field-title {
-    top: 20px; }
-  .view-taxonomy-term-2 .views-field h2, .view-taxonomy-term .views-field h2 {
-    font-size: 1.4em;
-    line-height: 1.2em; }
-  .view-taxonomy-term-2 .views-field a, .view-taxonomy-term .views-field a {
-    text-decoration: none; }
-    .view-taxonomy-term-2 .views-field a .views-field-body, .view-taxonomy-term .views-field a .views-field-body {
-      top: 60px; }
-
-.item-list ul.pager {
-  background: black;
-  background: rgba(0, 0, 0, 0.1); }
-  .item-list ul.pager li {
-    margin: 0 0 1.3em 1.3em;
-    padding: 0; }
-
-#block-system-main-menu .menu {
-  margin: 0;
-  padding: 0; }
-  #block-system-main-menu .menu li {
-    float: left;
-    font-size: 1.2em;
-    list-style: none;
-    background: #d3cdc8 url(../images/menubalk.png);
-    -moz-border-radius: 75px/67px;
-    -webkit-border-radius: 75px/67px;
-    border-radius: 75px/67px;
-    padding: 6px 6px 10px 8px;
-    margin: 0 6px 6px 0;
-    -moz-box-shadow: 1px 1px 1px #cccccc;
-    -webkit-box-shadow: 1px 1px 1px #cccccc;
-    box-shadow: 1px 1px 1px #cccccc;
-    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color')";
-    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=90, Color='$color'); }
-    #block-system-main-menu .menu li:hover {
-      color: #333333; }
-    #block-system-main-menu .menu li a {
-      text-decoration: none;
-      color: white;
-      padding: 6px;
-      font-family: "Gentium Basic", Georgia, serif, cursive;
-      font-weight: bold;
-      font-weight: 700;
-      -moz-text-shadow: 0 1px 1px black;
-      -webkit-text-shadow: 0 1px 1px black;
-      -o-text-shadow: 0 1px 1px black;
-      text-shadow: 0 1px 1px black; }
-
-.view-toon-termen-soorten-objecten .views-row {
-  font-size: 1.2em;
-  line-height: 1.3em;
-  padding: 10px 0; }
-
-.block div.views-row {
-  border-bottom: 1px dotted #999999;
-  padding: 8px 0; }
-.block div.views-row-last {
-  border-bottom: none; }
-.block .content h3 {
-  font-size: 1.2em; }
-
-#content-area .field-name-taxonomy-vocabulary-6, #content-area .field-name-field-gewicht, #content-area .field-name-field-prijs, #content-area .field-name-taxonomy-vocabulary-7 {
-  border-bottom: 1px dotted #999999; }
-#content-area .field-name-taxonomy-vocabulary-6, #content-area .field-name-field-gewicht, #content-area .field-name-field-prijs, #content-area .field-name-taxonomy-vocabulary-7 {
-  line-height: 1.3em;
-  padding: 0 0 10px 0;
-  margin: 10px 0 0 0; }
-#content-area .field-name-body {
-  font-size: 1.2em;
-  margin: 10px 0; }
-
-.view-news .views-field-timestamp, .view-doesdesign-op-het-web .views-field-timestamp {
-  font-style: oblique; }
-
-body {
-  background: url(../images/achtergrond.jpg) no-repeat fixed center center;
-  background-size: 100% 100%;
-  padding: 20px 0; }
-
-#block-block-6 {
-  background: url(../images/fff-50.png);
-  border: 1px dotted #999999;
-  padding: 6px;
-  margin-bottom: 6p; }
-  #block-block-6 .content div {
-    margin-bottom: 6px; }
-
+/* line 94, ../sass/style.sass */
 #page {
-  font-size: 0.9em;
   line-height: 1.3em;
-  padding: 0; }
-
-#content_top, #main, #footer {
-  border-left: 3px solid #635753;
-  border-right: 3px solid #635753;
-  background: url(../images/bg-body.jpg); }
-  #content_top .block, #content_top #content-header, #main .block, #main #content-header, #footer .block, #footer #content-header {
-    padding: 15px 15px 0 15px; }
-
-.container .columns {
-  margin-left: 14px; }
-
-#content_top {
-  border-top: 3px solid #635753; }
-
-#footer {
-  border-bottom: 3px solid #635753; }
-  #footer p {
-    font-size: 0.8em; }
-
-h2.block-title {
-  font-size: 1.4em; }
-
-.view-sieraden .slide {
-  position: relative;
-  float: left; }
-  .view-sieraden .slide img {
-    border: 3px #b37649 solid; }
-  .view-sieraden .slide .text {
-    position: absolute;
-    top: 236px;
-    left: 10px;
-    color: white;
-    padding: 10px; }
-    .view-sieraden .slide .text .title {
-      font-family: "Gentium Basic", Georgia, serif, cursive;
-      font-weight: 700;
-      font-size: 1.7em;
-      background: black;
-      background: rgba(0, 0, 0, 0.7);
-      max-width: 600px;
-      overflow: hidden;
-      padding: 10px; }
-      .view-sieraden .slide .text .title a:hover, .view-sieraden .slide .text .title a:active, .view-sieraden .slide .text .title a:link, .view-sieraden .slide .text .title a:visited {
-        color: #b37649;
-        text-decoration: none; }
-    .view-sieraden .slide .text p.body {
-      background: black;
-      background: rgba(0, 0, 0, 0.7);
-      max-width: 480px;
-      height: 68px;
-      padding: 10px;
-      margin-top: 5px;
-      overflow: hidden; }
-
-@media all and (max-width: 800px) {
-  #block-views-sieraden-block_1 {
-    display: none; } }
-#block-gtranslate-gtranslate h2 {
-  display: inline;
-  float: left;
-  margin: 0 10px 0 0; }
-
-.front #content-header {
-  display: none; }
-.front #block-views-sieraden-block_1 {
-  padding-top: 0; }
-
-.node label {
-  font-weight: bold; }
+  padding: 0;
+}

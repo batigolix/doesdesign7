@@ -59,7 +59,7 @@ while ($row = mysql_fetch_assoc($result))
     $body = preg_replace('/\!(\<a)(.*)\\r/', '<h3>${1}${2}</h3>',$body);
     $body = preg_replace('/\!(\<str)(.*)\\r/', '<h3>${1}${2}</h3>',$body);
 */
-    $body = preg_replace('/\|(.*?)\|(.*?)\\r\\n/', '<dt>${1}</dt><dd>${2}</dd>',$body);
+    $body = preg_replace('/\|(.*?)\|(.*?)\\r\\n/', '<div class=""><dt>${1}</dt><dd>${2}</dd>',$body);
 
 
 

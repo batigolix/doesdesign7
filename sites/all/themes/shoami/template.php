@@ -1,82 +1,66 @@
 <?php
 
 /**
- * Here we override the default HTML output of drupal.
- * refer to http://drupal.org/node/550722
+ * @file
+ * Contains theme override functions and preprocess functions for the shoami theme.
  */
- 
-// Auto-rebuild the theme registry during theme development.
-if (theme_get_setting('clear_registry')) {
-  // Rebuild .info data.
-  system_rebuild_theme_data();
-  // Rebuild theme registry.
-  drupal_theme_rebuild();
-}
-// Add Zen Tabs styles
-//if (theme_get_setting('basic_tabs')) {
-//  drupal_add_css( drupal_get_path('theme', 'basic') .'/css/tabs.css');
-//}
 
-function basic_preprocess_page(&$vars, $hook) {
-  if (isset($vars['node_title'])) {
-    $vars['title'] = $vars['node_title'];
-  }
-  // Adding a class to #page in wireframe mode
-  if (theme_get_setting('wireframe_mode')) {
-    $vars['classes_array'][] = 'wireframe-mode';
-  }
-  // Adding classes wether #navigation is here or not
-  if (!empty($vars['main_menu']) or !empty($vars['sub_menu'])) {
-    $vars['classes_array'][] = 'with-navigation';
-  }
-  if (!empty($vars['secondary_menu'])) {
-    $vars['classes_array'][] = 'with-subnav';
-  }
-
-  // Add first/last classes to node listings about to be rendered.
-  if (isset($vars['page']['content']['system_main']['nodes'])) {
-    // All nids about to be loaded (without the #sorted attribute).
-    $nids = element_children($vars['page']['content']['system_main']['nodes']);
-    // Only add first/last classes if there is more than 1 node being rendered.
-    if (count($nids) > 1) {
-      $first_nid = reset($nids);
-      $last_nid = end($nids);
-      $first_node = $vars['page']['content']['system_main']['nodes'][$first_nid]['#node'];
-      $first_node->classes_array = array('first');
-      $last_node = $vars['page']['content']['system_main']['nodes'][$last_nid]['#node'];
-      $last_node->classes_array = array('last');
-    }
-  }
+/**
+ * Changes the default meta content-type tag to the shorter HTML5 version
+ */
+function shoami_html_head_alter(&$head_elements) {
+  $head_elements['system_meta_content_type']['#attributes'] = array(
+    'charset' => 'utf-8'
+  );
 }
 
-function basic_preprocess_node(&$vars) {
-  // Add a striping class.
-  $vars['classes_array'][] = 'node-' . $vars['zebra'];
-
-  // Merge first/last class (from basic_preprocess_page) into classes array of current node object.
-  $node = $vars['node'];
-  if (!empty($node->classes_array)) {
-    $vars['classes_array'] = array_merge($vars['classes_array'], $node->classes_array);
-  }
+/**
+ * Changes the search form to use the HTML5 "search" input attribute
+ */
+function shoami_preprocess_search_block_form(&$vars) {
+  $vars['search_form'] = str_replace('type="text"', 'type="search"', $vars['search_form']);
 }
 
-function basic_preprocess_block(&$vars, $hook) {
-  // Add a striping class.
-  $vars['classes_array'][] = 'block-' . $vars['block_zebra'];
+/**
+ * Uses RDFa attributes if the RDF module is enabled
+ * Lifted from Adaptivetheme for D7, full credit to Jeff Burnz
+ * ref: http://drupal.org/node/887600
+ */
+function shoami_preprocess_html(&$vars) {
+  // Ensure that the $vars['rdf'] variable is an object.
+  if (!isset($vars['rdf']) || !is_object($vars['rdf'])) {
+    $vars['rdf'] = new StdClass();
+  }
 
-  // Add first/last block classes
-  $first_last = "";
-  // If block id (count) is 1, it's first in region.
-  if ($vars['block_id'] == '1') {
-    $first_last = "first";
-    $vars['classes_array'][] = $first_last;
+  if (module_exists('rdf')) {
+    $vars['doctype'] = '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML+RDFa 1.1//EN">' . "\n";
+    $vars['rdf']->version = 'version="HTML+RDFa 1.1"';
+    $vars['rdf']->namespaces = $vars['rdf_namespaces'];
+    $vars['rdf']->profile = ' profile="' . $vars['grddl_profile'] . '"';
+  } else {
+    $vars['doctype'] = '<!DOCTYPE html>' . "\n";
+    $vars['rdf']->version = '';
+    $vars['rdf']->namespaces = '';
+    $vars['rdf']->profile = '';
   }
-  // Count amount of blocks about to be rendered in that region.
-  $block_count = count(block_list($vars['elements']['#block']->region));
-  if ($vars['block_id'] == $block_count) {
-    $first_last = "last";
-    $vars['classes_array'][] = $first_last;
-  }
+  
+
+ // use the $html5shiv variable in their html.tpl.php
+  $element = array(  
+    'element' => array(
+    '#tag' => 'script',
+    '#value' => '',
+    '#attributes' => array(
+      'src' => '//html5shiv.googlecode.com/svn/trunk/html5.js',
+     ),
+   ),
+ );
+
+ $shimset = theme_get_setting('shoami_shim');
+ $script = theme('html_tag', $element);
+ //If the theme setting for adding the html5shim is checked, set the variable.
+ if ($shimset == 1) { $vars['html5shim'] = "\n<!--[if lt IE 9]>\n" . $script . "<![endif]-->\n"; }
+
 }
 
 /**
@@ -87,44 +71,36 @@ function basic_preprocess_block(&$vars, $hook) {
  * @return
  *   A string containing the breadcrumb output.
  */
-function basic_breadcrumb($variables) {
-  $breadcrumb = $variables['breadcrumb'];
+function shoami_breadcrumb($vars) {
+  $breadcrumb = $vars['breadcrumb'];
   // Determine if we are to display the breadcrumb.
-  $show_breadcrumb = theme_get_setting('basic_breadcrumb');
-  if ($show_breadcrumb == 'yes' || $show_breadcrumb == 'admin' && arg(0) == 'admin') {
+  $show_breadcrumb = theme_get_setting('breadcrumb_display');
+  if ($show_breadcrumb == 'yes') {
 
     // Optionally get rid of the homepage link.
-    $show_breadcrumb_home = theme_get_setting('basic_breadcrumb_home');
+    $show_breadcrumb_home = theme_get_setting('breadcrumb_home');
     if (!$show_breadcrumb_home) {
       array_shift($breadcrumb);
     }
 
     // Return the breadcrumb with separators.
     if (!empty($breadcrumb)) {
-      $breadcrumb_separator = theme_get_setting('basic_breadcrumb_separator');
+      $separator = filter_xss(theme_get_setting('breadcrumb_separator'));
       $trailing_separator = $title = '';
-      if (theme_get_setting('basic_breadcrumb_title')) {
-        $item = menu_get_item();
-        if (!empty($item['tab_parent'])) {
-          // If we are on a non-default tab, use the tab's title.
-          $title = check_plain($item['title']);
-        }
-        else {
-          $title = drupal_get_title();
-        }
-        if ($title) {
-          $trailing_separator = $breadcrumb_separator;
+
+      // Add the title and trailing separator
+      if (theme_get_setting('breadcrumb_title')) {
+        if ($title = drupal_get_title()) {
+          $trailing_separator = $separator;
         }
       }
-      elseif (theme_get_setting('basic_breadcrumb_trailing')) {
-        $trailing_separator = $breadcrumb_separator;
+      // Just add the trailing separator
+      elseif (theme_get_setting('breadcrumb_trailing')) {
+        $trailing_separator = $separator;
       }
 
-      // Provide a navigational heading to give context for breadcrumb links to
-      // screen-reader users. Make the heading invisible with .element-invisible.
-      $heading = '<h2 class="element-invisible">' . t('You are here') . '</h2>';
-
-      return $heading . '<div class="breadcrumb">' . implode($breadcrumb_separator, $breadcrumb) . $trailing_separator . $title . '</div>';
+      // Assemble the breadcrumb
+      return implode($separator, $breadcrumb) . $trailing_separator . $title;
     }
   }
   // Otherwise, return an empty string.
@@ -132,62 +108,9 @@ function basic_breadcrumb($variables) {
 }
 
 /**
- * Converts a string to a suitable html ID attribute.
- *
- * http://www.w3.org/TR/html4/struct/global.html#h-7.5.2 specifies what makes a
- * valid ID attribute in HTML. This function:
- *
- * - Ensure an ID starts with an alpha character by optionally adding an 'n'.
- * - Replaces any character except A-Z, numbers, and underscores with dashes.
- * - Converts entire string to lowercase.
- *
- * @param $string
- * 	The string
- * @return
- * 	The converted string
- */	
-function basic_id_safe($string) {
-  // Replace with dashes anything that isn't A-Z, numbers, dashes, or underscores.
-  $string = strtolower(preg_replace('/[^a-zA-Z0-9_-]+/', '-', $string));
-  // If the first character is not a-z, add 'n' in front.
-  if (!ctype_lower($string{0})) { // Don't use ctype_alpha since its locale aware.
-    $string = 'id'. $string;
-  }
-  return $string;
-}
-
-/**
- * Generate the HTML output for a menu link and submenu.
- *
- * @param $variables
- *  An associative array containing:
- *   - element: Structured array data for a menu link.
- *
- * @return
- *  A themed HTML string.
- *
- * @ingroup themeable
- * 
- */
-function basic_menu_link(array $variables) {
-  $element = $variables['element'];
-  $sub_menu = '';
-
-  if ($element['#below']) {
-    $sub_menu = drupal_render($element['#below']);
-  }
-  $output = l($element['#title'], $element['#href'], $element['#localized_options']);
-  // Adding a class depending on the TITLE of the link (not constant)
-  $element['#attributes']['class'][] = basic_id_safe($element['#title']);
-  // Adding a class depending on the ID of the link (constant)
-  $element['#attributes']['class'][] = 'mid-' . $element['#original_link']['mlid'];
-  return '<li' . drupal_attributes($element['#attributes']) . '>' . $output . $sub_menu . "</li>\n";
-}
-
-/**
  * Override or insert variables into theme_menu_local_task().
  */
-function basic_preprocess_menu_local_task(&$variables) {
+function shoami_preprocess_menu_local_task(&$variables) {
   $link =& $variables['element']['#link'];
 
   // If the link does not contain HTML already, check_plain() it now.
@@ -202,7 +125,7 @@ function basic_preprocess_menu_local_task(&$variables) {
 /**
  * Duplicate of theme_menu_local_tasks() but adds clearfix to tabs.
  */
-function basic_menu_local_tasks(&$variables) {  
+function shoami_menu_local_tasks(&$variables) {  
   $output = '';
 
   if (!empty($variables['primary'])) {
