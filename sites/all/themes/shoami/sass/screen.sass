@@ -114,7 +114,11 @@ h5
     #sidebar
       @include span-columns(5 omega, $break-1)
   #content-bot-row
-    @include span-columns($break-1 omega)
+    @include span-columns(10 omega)
+    #content-bot-row-1
+      @include span-columns(5, 10)
+    #content-bot-row-2
+      @include span-columns(5 omega, 10)
   #footer
     @include span-columns($break-1 omega)
 
@@ -184,8 +188,7 @@ a
   &:hover, &:active, &:link, &:visited
     color: $dark_grey
 
-
-#skip
+#skip, .hidden
   display: none
  
 .page-taxonomy .views-field-field-image,
@@ -196,13 +199,15 @@ a
     padding: 2px
     @include box-shadow(#BBB 1px 1px 3px)
     @include border-radius(2px)
-    
-.grid-4 
-  .col-1, .col-2, .col-3, .col-4
-    width: 143px
-    float: left
-    display: inline
-    margin: 0 4px 0 0
+.page-taxonomy
+  .view-taxonomy-term
+    .views-row
+      width: 139px
+      float: left
+      display: inline
+      margin: 0 4px 0 0
+      height: 360px
+      overflow: hidden
 
 .page-taxonomy
   .view-categoriebeschrijvingen
@@ -279,18 +284,21 @@ a
   .views-field-timestamp
     font-style: oblique
 
-// common aspects of content regions
-#content-top, #content, #content-bot-row, #footer
+#content-top, #content, #footer
   border-left: 3px solid $dark_grey
   border-right: 3px solid $dark_grey
   background: url(../images/bg-body.jpg)
   padding: 15px
   @include box-shadow(#333 2px 10px 8px)
+  p
+    font-size: 1.2em
 
 // individual aspects of content regions
 #content-top
   border-top: 3px solid $dark_grey
-    
+  p
+    font-size: 1.2em
+
 #footer
   border-bottom: 3px solid $dark_grey
   margin: 0 0 60px 0
@@ -305,6 +313,7 @@ h2.block-title
   .slide
     img
       border: 3px $light_brown solid
+      width: 100%
     position: relative
     float: left
     .text
@@ -348,5 +357,24 @@ h2.block-title
     padding-top: 0      
     
 .node
-  label
+  label, .label
     font-weight: bold
+
+.item-list .pager
+  margin: 12px 0
+  text-align: left
+  padding-top: 12px
+  li
+    border: solid 1px $dark_yellow
+    margin: 0 3px
+    padding: 2px 6px
+    a
+      &:hover, &:active, &:link, &:visited
+        color: $dark_yellow
+        text-decoration: none
+  .pager-next, .pager-last
+    border: 0
+    font-weight: bold
+  .pager-current
+    background: $dark_yellow
+    color: #FFF

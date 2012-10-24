@@ -29,15 +29,11 @@ features[] = favicon
 features[] = main_menu
 features[] = secondary_menu
 
-;stylesheets[all][] = css-smart-grid/css/bootstrap.css
-;stylesheets[all][] = css-smart-grid/css/smart-grid.min.css
 stylesheets[all][] = css/screen.css
-;stylesheets[all][] = css/style.css
 stylesheets[print][] = css/print.css
 stylesheets[all][] = css/ie.css
 stylesheets[all][] = css/tabs.css
 
-;scripts[] = css-smart-grid/js/modernizr.js
 scripts[] = js/scripts.js
 
 settings[clear_registry] = 0

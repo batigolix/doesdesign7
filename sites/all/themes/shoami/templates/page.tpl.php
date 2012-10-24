@@ -40,13 +40,7 @@
             <?php if ($action_links): ?><ul class="action-links"><?php print render($action_links); ?></ul><?php endif; ?>
         <?php endif; ?>
           <?php print render($page['content']) ?>
-        </div><!-- end content-area -->
-    <?php if ($page['sidebar']): ?>
-      <aside id="sidebar" role="complementary">
-        <?php print render($page['sidebar']); ?>
-      </aside>
-    <?php endif; ?> <!-- /sidebar-first -->
-    </div><!-- end content -->
+
 
   <!-- bunch of pseudo regions for the homepage. prevent using panels n shite -->
 <div id="content-bot-row">
@@ -61,6 +55,16 @@
       </div>
     <?php endif; ?>
 </div><!-- end content bot row 2 -->
+
+
+        </div><!-- end content-area -->
+    <?php if ($page['sidebar']): ?>
+      <aside id="sidebar" role="complementary">
+        <?php print render($page['sidebar']); ?>
+      </aside>
+    <?php endif; ?> <!-- /sidebar-first -->
+    </div><!-- end content -->
+
 
 
   <?php if ($page['footer']): ?>
