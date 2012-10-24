@@ -1498,19 +1498,19 @@ h5 {
   }
 
   /* line 116, ../sass/screen.sass */
-  #content-bot-row {
+  #content-bot-rowgit push origin m {
     width: 66.10169%;
     float: right;
     margin-right: 0;
   }
   /* line 118, ../sass/screen.sass */
-  #content-bot-row #content-bot-row-1 {
+  #content-bot-rowgit push origin m #content-bot-row-1 {
     width: 48.71795%;
     float: left;
     margin-right: 2.5641%;
   }
   /* line 120, ../sass/screen.sass */
-  #content-bot-row #content-bot-row-2 {
+  #content-bot-rowgit push origin m #content-bot-row-2 {
     width: 48.71795%;
     float: right;
     margin-right: 0;
@@ -1869,9 +1869,8 @@ h2.block-title {
 /* line 314, ../sass/screen.sass */
 .view-sieraden .slide img {
   border: 3px #b37649 solid;
-  width: 100%;
 }
-/* line 319, ../sass/screen.sass */
+/* line 318, ../sass/screen.sass */
 .view-sieraden .slide .text {
   position: absolute;
   top: 236px;
@@ -1879,7 +1878,7 @@ h2.block-title {
   color: white;
   padding: 10px;
 }
-/* line 325, ../sass/screen.sass */
+/* line 324, ../sass/screen.sass */
 .view-sieraden .slide .text .title {
   font-family: "Gentium Basic", Georgia, serif, cursive;
   font-weight: 700;
@@ -1890,12 +1889,12 @@ h2.block-title {
   overflow: hidden;
   padding: 10px;
 }
-/* line 335, ../sass/screen.sass */
+/* line 334, ../sass/screen.sass */
 .view-sieraden .slide .text .title a:hover, .view-sieraden .slide .text .title a:active, .view-sieraden .slide .text .title a:link, .view-sieraden .slide .text .title a:visited {
   color: #b37649;
   text-decoration: none;
 }
-/* line 338, ../sass/screen.sass */
+/* line 337, ../sass/screen.sass */
 .view-sieraden .slide .text p.body {
   background: black;
   background: rgba(0, 0, 0, 0.7);
@@ -1906,50 +1905,50 @@ h2.block-title {
   overflow: hidden;
 }
 
-/* line 348, ../sass/screen.sass */
+/* line 347, ../sass/screen.sass */
 #block-gtranslate-gtranslate h2 {
   display: inline;
   float: left;
   margin: 0 10px 0 0;
 }
 
-/* line 354, ../sass/screen.sass */
+/* line 353, ../sass/screen.sass */
 .front #content-header {
   display: none;
 }
-/* line 356, ../sass/screen.sass */
+/* line 355, ../sass/screen.sass */
 .front #block-views-sieraden-block_1 {
   padding-top: 0;
 }
 
-/* line 360, ../sass/screen.sass */
+/* line 359, ../sass/screen.sass */
 .node label, .node .label {
   font-weight: bold;
 }
 
-/* line 363, ../sass/screen.sass */
+/* line 362, ../sass/screen.sass */
 .item-list .pager {
   margin: 12px 0;
   text-align: left;
   padding-top: 12px;
 }
-/* line 367, ../sass/screen.sass */
+/* line 366, ../sass/screen.sass */
 .item-list .pager li {
   border: solid 1px #ad771a;
   margin: 0 3px;
   padding: 2px 6px;
 }
-/* line 372, ../sass/screen.sass */
+/* line 371, ../sass/screen.sass */
 .item-list .pager li a:hover, .item-list .pager li a:active, .item-list .pager li a:link, .item-list .pager li a:visited {
   color: #ad771a;
   text-decoration: none;
 }
-/* line 375, ../sass/screen.sass */
+/* line 374, ../sass/screen.sass */
 .item-list .pager .pager-next, .item-list .pager .pager-last {
   border: 0;
   font-weight: bold;
 }
-/* line 378, ../sass/screen.sass */
+/* line 377, ../sass/screen.sass */
 .item-list .pager .pager-current {
   background: #ad771a;
   color: white;
