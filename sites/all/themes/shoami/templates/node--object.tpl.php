@@ -1,4 +1,4 @@
-<?php kpr($content); ?>
+<?php // kpr($content); ?>
 
 <div id="node-<?php print $node->nid; ?>" class="<?php print $classes; ?>" itemscope itemtype="http://schema.org/Product">
   <span class="hidden" <?php print $title_attributes; ?> itemprop="name">
