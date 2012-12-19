@@ -3,6 +3,7 @@ CONTENTS OF THIS FILE
 ---------------------
 
  * About Drupal
+ * Yeh, how about that
  * Configuration and features
  * Appearance
  * Developing for Drupal
@@ -86,3 +87,5 @@ More about developing:
    http://drupal.org/best-practices
  * Refer to the API documentation:
    http://api.drupal.org/api/drupal/7
+   
+Crazy stuff, I suppose   
