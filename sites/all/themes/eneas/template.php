@@ -27,6 +27,15 @@ function eneas_preprocess_search_block_form(&$vars) {
  * ref: http://drupal.org/node/887600
  */
 function eneas_preprocess_html(&$vars) {
+  drupal_add_css(drupal_get_path('theme', 'eneas') . '/stylesheets/ie.css', array(
+    'group' => CSS_THEME,
+    'browsers' => array(
+      'IE' => 'lte IE 9',
+      '!IE' => FALSE
+      ),
+    'preprocess' => FALSE
+  ));
+
   // Ensure that the $vars['rdf'] variable is an object.
   if (!isset($vars['rdf']) || !is_object($vars['rdf'])) {
     $vars['rdf'] = new StdClass();
@@ -143,3 +152,4 @@ function eneas_menu_local_tasks(&$variables) {
 
   return $output;
 }
+
