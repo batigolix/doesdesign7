@@ -3,3 +3,10 @@
   background: #333333;
   color: white;
 }
+
+/* line 5, ../sass/ie.sass */
+#page-wrapper {
+  width: 800px;
+  max-width: 800px;
+  min-width: 800px;
+}

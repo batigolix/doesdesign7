@@ -34,7 +34,7 @@ settings[eneas_shim]           = 1
 
 stylesheets[screen][] = stylesheets/screen.css
 stylesheets[print][] = stylesheets/print.css
-stylesheets[all][] = stylesheets/ie.css
+;stylesheets[all][] = stylesheets/ie.css
 stylesheets[all][] = stylesheets/tabs.css
 
 fonts[google_fonts_api][] = "Fredoka One&subset=latin#regular"

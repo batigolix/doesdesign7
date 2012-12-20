@@ -42,6 +42,10 @@
   <?php print $styles; ?>
   <?php print $scripts; ?>
   <?php if (!empty($html5shim)) { print $html5shim; } ?>
+
+<!--[if lt IE 9]>
+  <link type="text/css" rel="stylesheet" media="all" href="/sites/all/themes/eneas/stylesheets/ie.css" />
+<![endif]-->
   
 </head>
 <body class="<?php print $classes; ?>" <?php print $attributes;?>>
