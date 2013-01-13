@@ -11,7 +11,7 @@
  
 function svv_tools_img_assist_fix() { 
  
-$really_update = TRUE; # Set this to TRUE to actually run this Drupal 6-to-7 conversion
+$really_update = FALSE; # Set this to TRUE to actually run this Drupal 6-to-7 conversion
 //$really_update = TRUE; # Set this to TRUE to actually run this Drupal 6-to-7 conversion
 
   $query = db_select('field_data_body', 'bod');
@@ -69,6 +69,8 @@ foreach ($data as $row)
         
         dsm($nid);
 		dsm($title);
+		dsm('h' . $width);
+		dsm('w' . s		$height);
 
 
   $query = db_select('image', 'img');
@@ -109,7 +111,7 @@ foreach ($data as $row)
 	$orig = node_load($row['entity_id']); // load original'
 	$node=$orig;
 	//dsm($body);
-$node->body[$node->language][0]['value'] = $body; // Do some changes
+$node->body	[$node->language][0]['value'] = $body; // Do some changes
 
 dpm($node);
 

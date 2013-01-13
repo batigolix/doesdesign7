@@ -154,15 +154,6 @@ function svv_tools_preprocess_node(&$vars) {
  */
 
 function svv_tools_menu() {
-  $items['admin/config/system/svv'] = array(
-    'title' => 'Frontpage',
-    'description' => 'Frontpage',
-    'page callback' => 'svv_tools_frontpage',
-    'type' => MENU_CALLBACK,
-    'access callback' => 'is_string',
-    'access arguments' => array('string'),
-  );
-
   $items['admin/config/system/svv_tools'] = array(
     'title' => 'SVV tools',
     'description' => 'SVV tools.',
@@ -177,13 +168,6 @@ function svv_tools_menu() {
 	'page callback' => 'svv_tools_img_assist_fix',
 	'file' => 'svv_tools_img_assist_fix.inc',
     'page arguments' => array(),
-    'access arguments' => array('administer site configuration'),
-  );
-  $items['admin/config/system/svv_tools/rsync-settings'] = array(
-    'title' => 'Synchronization settings',
-    'description' => 'Synchronization settings',
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('tilt_rsync_settings_form'),
     'access arguments' => array('administer site configuration'),
   );
   return $items;
