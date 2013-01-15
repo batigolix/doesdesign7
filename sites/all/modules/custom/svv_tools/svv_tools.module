@@ -3,6 +3,10 @@
 define('REALLYUPDATE', TRUE);
 //define('REALLYUPDATE', FALSE);
 
+function svv_tools_init() {
+  drupal_add_css(drupal_get_path('module', 'svv_tools') . '/css/svv_tools.css');
+}
+
 
 function svv_tools_form_alter(&$form, &$form_state, $form_id) {
   // todo clean up node form nicely
