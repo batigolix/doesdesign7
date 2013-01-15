@@ -1,7 +1,12 @@
 X - update field_data_body set body_summary = NULL;
 X - update field_data_body set body_format = 3;
+X - 
+///update field_data_body set body_value = replace (body_value,'\" ','"');
+//	update field_data_body set body_value = replace (body_value,'\"','"');
+ update node set language = 'und';
+X - enable some modules	
 
-X - enable some modules
+drush @svv7.kempes en wysiwyg l10n_update 
 
 - pull in fresh nl strings		
 
@@ -10,6 +15,7 @@ X - delete content type story
 
 X - disabnle the summmaruy on body field
 
+clean up images
 
 X - node convert page to book
 

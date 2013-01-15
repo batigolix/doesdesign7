@@ -1,5 +1,9 @@
 <?php
 
+define('REALLYUPDATE', TRUE);
+//define('REALLYUPDATE', FALSE);
+
+
 function svv_tools_form_alter(&$form, &$form_state, $form_id) {
   // todo clean up node form nicely
   //  dsm($form);
@@ -170,6 +174,21 @@ function svv_tools_menu() {
     'page arguments' => array(),
     'access arguments' => array('administer site configuration'),
   );
+  $items['admin/config/system/svv_tools/wiki_fix'] = array(
+    'title' => 'Wiki fix',
+    'description' => '',
+	'page callback' => 'svv_tools_wiki_fix',
+	'file' => 'svv_tools_wiki_fix.inc',
+    'page arguments' => array(),
+    'access arguments' => array('administer site configuration'),
+  );
+  $items['admin/config/system/svv_tools/fix_rest'] = array(
+    'title' => 'Fix rest issues',
+    'description' => '',
+	'page callback' => 'svv_tools_fix_rest',
+    'page arguments' => array(),
+    'access arguments' => array('administer site configuration'),
+  );
   return $items;
 }
 
@@ -229,4 +248,24 @@ function svv_tools_field_extra_fields() {
       'weight' => 10,
     ),
   );  return $extra;
+}
+
+function svv_tools_fix_rest() {
+  $query = db_update('field_data_body')
+    ->fields(array(
+	  'body_summary' => NULL,
+  ));
+  if (REALLYUPDATE) $results = $query->execute();
+    drupal_set_message($debug_mode = TRUE ? $query->__toString() : 'f');
+
+  $query = db_update('field_data_body')
+    ->fields(array(
+	  'body_format' => '3',
+  ));
+    
+  if (REALLYUPDATE) $results = $query->execute();
+    drupal_set_message($debug_mode = TRUE ? $query->__toString() : 'f');
+    
+    
+  return 'Fix rest';
 }

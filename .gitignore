@@ -7,3 +7,4 @@ sites/*/private
 sites/*/.sass-cache
 sites/all/themes/shoami/.sass-cache/
 sites/all/themes/*/.sass-cache/
+nbproject

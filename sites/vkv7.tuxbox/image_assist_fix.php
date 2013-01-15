@@ -46,7 +46,7 @@ while ($row = mysql_fetch_assoc($result))
     // echo "\n###############################################################################\n";
 
     $pattern = "/\[img_assist(?:\\\\|\\\]|[^\]])*\]/"; # See http://rubular.com/r/gQs5HjGLok
-    preg_match($pattern, $tmp, $matches, PREG_OFFSET_CAPTURE); # NB: The PREG_OFFSET_CAPTURE gives us the offset_in_tmp variable.
+        preg_match($pattern, $tmp, $matches, PREG_OFFSET_CAPTURE); # NB: The PREG_OFFSET_CAPTURE gives us the offset_in_tmp variable.
 
     foreach ($matches as $image_marker) {
         list($img, $offset_in_tmp) = $image_marker;
