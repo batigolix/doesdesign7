@@ -1,10 +1,12 @@
 <?php
 function svv_tools_wiki_fix() {
+//  $really_update=FALSE;
   $really_update=TRUE;
   $query = db_select('field_data_body', 'bod');
   $query->addField('bod', 'body_value', 'body_value');
   $query->addField('bod', 'entity_id', 'entity_id');
-//  $query->condition('body_value', '%[img_assist%', 'LIKE');
+//  $query->condition('body_value', '%!!%', 'LIKE');
+//  $query->range(0, 10);
   $results = $query->execute();
   drupal_set_message($debug_mode = TRUE ? $query->__toString() : 'f');
    $data = array();
@@ -17,6 +19,7 @@ function svv_tools_wiki_fix() {
   }
   $count=0;
   foreach($data as $row) { 
+    dpm($row);
     $count++;
     $body = $row['body_value'];
 	dsm($body);
@@ -41,9 +44,8 @@ function svv_tools_wiki_fix() {
  	  $orig = node_load($row['entity_id']); // load original'
 	  $node=$orig;	
 	  //dsm($body);
-      $node->body	[$node->language][0]['value'] = $body; // Do some changes
-//      $node->body	['und'][0]['value'] = $body; // Do some changes
-//      $node->body	['nl'][0]['value'] = $body; // Do some changes
+//      $node->body[$node->language][0]['value'] = $body; // Do some changes
+      $node->body['und'][0]['value'] = $body; // Do some changes
       dpm($node);
       node_save($node); // save your changes
 	}

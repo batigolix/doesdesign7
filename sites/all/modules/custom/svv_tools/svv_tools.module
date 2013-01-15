@@ -265,7 +265,16 @@ function svv_tools_fix_rest() {
     
   if (REALLYUPDATE) $results = $query->execute();
     drupal_set_message($debug_mode = TRUE ? $query->__toString() : 'f');
+  
+    //  update node set language = 'und';
+
+  $query = db_update('node')
+    ->fields(array(
+	  'language' => 'und',
+  ));
     
+  if (REALLYUPDATE) $results = $query->execute();
+    drupal_set_message($debug_mode = TRUE ? $query->__toString() : 'f');
     
   return 'Fix rest';
 }

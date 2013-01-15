@@ -81,7 +81,7 @@ $really_update = TRUE; # Set this to TRUE to actually run this Drupal 6-to-7 con
         $img_path = $result->filepath;
         
         $image2 = image_get_info($result->filepath);
-        dpm($image2); 
+        //dpm($image2); 
         
         if (!empty($image['align'])) {
           $align2 = "float: {$image['align']};";
@@ -103,9 +103,9 @@ $really_update = TRUE; # Set this to TRUE to actually run this Drupal 6-to-7 con
     if ($really_update) {
       $orig = node_load($row['entity_id']); // load original'
       $node = $orig;
-      //dsm($body);
+      dsm($body);
       $node->body[$node->language][0]['value'] = $body; // Do some changes
-      //dpm($node);
+      dpm($node);
       node_save($node); // save your changes
     }
   }
