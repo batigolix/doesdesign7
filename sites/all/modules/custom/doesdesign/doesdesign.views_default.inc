@@ -1053,6 +1053,78 @@ function doesdesign_views_default_views() {
   $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Items per pagina';
   $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
   $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'nid' => 'nid',
+    'title' => 'title',
+    'term_node_tid' => 'term_node_tid',
+    'field_prijs' => 'field_prijs',
+    'term_node_tid_1' => 'term_node_tid_1',
+    'term_node_tid_2' => 'term_node_tid_2',
+    'edit_node' => 'edit_node',
+    'status' => 'status',
+    'changed' => 'changed',
+  );
+  $handler->display->display_options['style_options']['default'] = 'changed';
+  $handler->display->display_options['style_options']['info'] = array(
+    'nid' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'title' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'term_node_tid' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_prijs' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'term_node_tid_1' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'term_node_tid_2' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'edit_node' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'status' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'changed' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'desc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  $handler->display->display_options['style_options']['override'] = 1;
+  $handler->display->display_options['style_options']['sticky'] = 0;
+  $handler->display->display_options['style_options']['empty_table'] = 0;
   /* Veld: Inhoud: Nid */
   $handler->display->display_options['fields']['nid']['id'] = 'nid';
   $handler->display->display_options['fields']['nid']['table'] = 'node';
@@ -1080,22 +1152,31 @@ function doesdesign_views_default_views() {
   $handler->display->display_options['fields']['title']['id'] = 'title';
   $handler->display->display_options['fields']['title']['table'] = 'node';
   $handler->display->display_options['fields']['title']['field'] = 'title';
-  $handler->display->display_options['fields']['title']['label'] = '';
+  $handler->display->display_options['fields']['title']['label'] = 'Naam';
   $handler->display->display_options['fields']['title']['alter']['alter_text'] = 0;
   $handler->display->display_options['fields']['title']['alter']['make_link'] = 0;
   $handler->display->display_options['fields']['title']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['title']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['title']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['title']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['title']['alter']['nl2br'] = 0;
   $handler->display->display_options['fields']['title']['alter']['word_boundary'] = 0;
   $handler->display->display_options['fields']['title']['alter']['ellipsis'] = 0;
+  $handler->display->display_options['fields']['title']['alter']['more_link'] = 0;
   $handler->display->display_options['fields']['title']['alter']['strip_tags'] = 0;
   $handler->display->display_options['fields']['title']['alter']['trim'] = 0;
   $handler->display->display_options['fields']['title']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['title']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['title']['element_default_classes'] = 1;
   $handler->display->display_options['fields']['title']['hide_empty'] = 0;
   $handler->display->display_options['fields']['title']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['title']['hide_alter_empty'] = 1;
   $handler->display->display_options['fields']['title']['link_to_node'] = 1;
   /* Veld: Inhoud: All taxonomy terms */
   $handler->display->display_options['fields']['term_node_tid']['id'] = 'term_node_tid';
   $handler->display->display_options['fields']['term_node_tid']['table'] = 'node';
   $handler->display->display_options['fields']['term_node_tid']['field'] = 'term_node_tid';
+  $handler->display->display_options['fields']['term_node_tid']['label'] = 'Type';
   $handler->display->display_options['fields']['term_node_tid']['alter']['alter_text'] = 0;
   $handler->display->display_options['fields']['term_node_tid']['alter']['make_link'] = 0;
   $handler->display->display_options['fields']['term_node_tid']['alter']['absolute'] = 0;
@@ -1115,11 +1196,11 @@ function doesdesign_views_default_views() {
   $handler->display->display_options['fields']['term_node_tid']['empty_zero'] = 0;
   $handler->display->display_options['fields']['term_node_tid']['hide_alter_empty'] = 1;
   $handler->display->display_options['fields']['term_node_tid']['link_to_taxonomy'] = 1;
-  $handler->display->display_options['fields']['term_node_tid']['limit'] = 0;
+  $handler->display->display_options['fields']['term_node_tid']['limit'] = 1;
   $handler->display->display_options['fields']['term_node_tid']['vocabularies'] = array(
+    'vocabulary_7' => 'vocabulary_7',
     'vocabulary_8' => 0,
     'vocabulary_6' => 0,
-    'vocabulary_7' => 0,
   );
   /* Veld: Inhoud: Prijs */
   $handler->display->display_options['fields']['field_prijs']['id'] = 'field_prijs';
@@ -1150,6 +1231,66 @@ function doesdesign_views_default_views() {
     'prefix_suffix' => 1,
   );
   $handler->display->display_options['fields']['field_prijs']['field_api_classes'] = 0;
+  /* Veld: Inhoud: All taxonomy terms */
+  $handler->display->display_options['fields']['term_node_tid_1']['id'] = 'term_node_tid_1';
+  $handler->display->display_options['fields']['term_node_tid_1']['table'] = 'node';
+  $handler->display->display_options['fields']['term_node_tid_1']['field'] = 'term_node_tid';
+  $handler->display->display_options['fields']['term_node_tid_1']['label'] = 'Materiaal';
+  $handler->display->display_options['fields']['term_node_tid_1']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['term_node_tid_1']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['term_node_tid_1']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['term_node_tid_1']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['term_node_tid_1']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['term_node_tid_1']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['term_node_tid_1']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['term_node_tid_1']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['term_node_tid_1']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['term_node_tid_1']['alter']['more_link'] = 0;
+  $handler->display->display_options['fields']['term_node_tid_1']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['term_node_tid_1']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['term_node_tid_1']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['term_node_tid_1']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['term_node_tid_1']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['term_node_tid_1']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['term_node_tid_1']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['term_node_tid_1']['hide_alter_empty'] = 1;
+  $handler->display->display_options['fields']['term_node_tid_1']['link_to_taxonomy'] = 1;
+  $handler->display->display_options['fields']['term_node_tid_1']['limit'] = 1;
+  $handler->display->display_options['fields']['term_node_tid_1']['vocabularies'] = array(
+    'vocabulary_6' => 'vocabulary_6',
+    'vocabulary_8' => 0,
+    'vocabulary_7' => 0,
+  );
+  /* Veld: Inhoud: All taxonomy terms */
+  $handler->display->display_options['fields']['term_node_tid_2']['id'] = 'term_node_tid_2';
+  $handler->display->display_options['fields']['term_node_tid_2']['table'] = 'node';
+  $handler->display->display_options['fields']['term_node_tid_2']['field'] = 'term_node_tid';
+  $handler->display->display_options['fields']['term_node_tid_2']['label'] = 'Jaar';
+  $handler->display->display_options['fields']['term_node_tid_2']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['term_node_tid_2']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['term_node_tid_2']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['term_node_tid_2']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['term_node_tid_2']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['term_node_tid_2']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['term_node_tid_2']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['term_node_tid_2']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['term_node_tid_2']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['term_node_tid_2']['alter']['more_link'] = 0;
+  $handler->display->display_options['fields']['term_node_tid_2']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['term_node_tid_2']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['term_node_tid_2']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['term_node_tid_2']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['term_node_tid_2']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['term_node_tid_2']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['term_node_tid_2']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['term_node_tid_2']['hide_alter_empty'] = 1;
+  $handler->display->display_options['fields']['term_node_tid_2']['link_to_taxonomy'] = 1;
+  $handler->display->display_options['fields']['term_node_tid_2']['limit'] = 1;
+  $handler->display->display_options['fields']['term_node_tid_2']['vocabularies'] = array(
+    'vocabulary_8' => 'vocabulary_8',
+    'vocabulary_6' => 0,
+    'vocabulary_7' => 0,
+  );
   /* Veld: Inhoud: Link bewerken */
   $handler->display->display_options['fields']['edit_node']['id'] = 'edit_node';
   $handler->display->display_options['fields']['edit_node']['table'] = 'views_entity_node';
@@ -1171,18 +1312,58 @@ function doesdesign_views_default_views() {
   $handler->display->display_options['fields']['edit_node']['hide_empty'] = 0;
   $handler->display->display_options['fields']['edit_node']['empty_zero'] = 0;
   $handler->display->display_options['fields']['edit_node']['hide_alter_empty'] = 1;
+  /* Veld: Inhoud: Gepubliceerd */
+  $handler->display->display_options['fields']['status']['id'] = 'status';
+  $handler->display->display_options['fields']['status']['table'] = 'node';
+  $handler->display->display_options['fields']['status']['field'] = 'status';
+  $handler->display->display_options['fields']['status']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['status']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['status']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['status']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['status']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['status']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['status']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['status']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['status']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['status']['alter']['more_link'] = 0;
+  $handler->display->display_options['fields']['status']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['status']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['status']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['status']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['status']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['status']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['status']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['status']['hide_alter_empty'] = 1;
+  $handler->display->display_options['fields']['status']['not'] = 0;
+  /* Veld: Inhoud: Datum bijgewerkt */
+  $handler->display->display_options['fields']['changed']['id'] = 'changed';
+  $handler->display->display_options['fields']['changed']['table'] = 'node';
+  $handler->display->display_options['fields']['changed']['field'] = 'changed';
+  $handler->display->display_options['fields']['changed']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['changed']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['changed']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['changed']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['changed']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['changed']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['changed']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['changed']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['changed']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['changed']['alter']['more_link'] = 0;
+  $handler->display->display_options['fields']['changed']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['changed']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['changed']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['changed']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['changed']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['changed']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['changed']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['changed']['hide_alter_empty'] = 1;
+  $handler->display->display_options['fields']['changed']['date_format'] = 'custom';
+  $handler->display->display_options['fields']['changed']['custom_date_format'] = 'd/m/Y';
   /* Sorteercriterium: Inhoud: Post date */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'node';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
-  /* Filter criterion: Inhoud: Gepubliceerd */
-  $handler->display->display_options['filters']['status']['id'] = 'status';
-  $handler->display->display_options['filters']['status']['table'] = 'node';
-  $handler->display->display_options['filters']['status']['field'] = 'status';
-  $handler->display->display_options['filters']['status']['value'] = 1;
-  $handler->display->display_options['filters']['status']['group'] = 1;
-  $handler->display->display_options['filters']['status']['expose']['operator'] = FALSE;
   /* Filter criterion: Inhoud: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'node';
@@ -1190,10 +1371,25 @@ function doesdesign_views_default_views() {
   $handler->display->display_options['filters']['type']['value'] = array(
     'object' => 'object',
   );
+  $handler->display->display_options['filters']['type']['group'] = 1;
+  /* Filter criterion: Inhoud: Has taxonomy term */
+  $handler->display->display_options['filters']['tid']['id'] = 'tid';
+  $handler->display->display_options['filters']['tid']['table'] = 'taxonomy_index';
+  $handler->display->display_options['filters']['tid']['field'] = 'tid';
+  $handler->display->display_options['filters']['tid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['tid']['expose']['operator_id'] = 'tid_op';
+  $handler->display->display_options['filters']['tid']['expose']['label'] = 'Has taxonomy term';
+  $handler->display->display_options['filters']['tid']['expose']['operator'] = 'tid_op';
+  $handler->display->display_options['filters']['tid']['expose']['identifier'] = 'tid';
+  $handler->display->display_options['filters']['tid']['expose']['multiple'] = 1;
+  $handler->display->display_options['filters']['tid']['expose']['reduce'] = 0;
+  $handler->display->display_options['filters']['tid']['reduce_duplicates'] = 0;
+  $handler->display->display_options['filters']['tid']['vocabulary'] = 'vocabulary_7';
+  $handler->display->display_options['filters']['tid']['error_message'] = 1;
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
-  $handler->display->display_options['path'] = 'sieraden-overzicht';
+  $handler->display->display_options['path'] = 'admin/sieraden-overzicht';
   $translatables['sieraden_overzicht'] = array(
     t('Master'),
     t('Sieraden overzicht'),
@@ -1207,9 +1403,15 @@ function doesdesign_views_default_views() {
     t('- Alle -'),
     t('Offset'),
     t('Nid'),
-    t('All taxonomy terms'),
+    t('Naam'),
+    t('Type'),
     t('Prijs'),
+    t('Materiaal'),
+    t('Jaar'),
     t('Link bewerken'),
+    t('Gepubliceerd'),
+    t('Datum bijgewerkt'),
+    t('Has taxonomy term'),
     t('Page'),
   );
   $export['sieraden_overzicht'] = $view;
