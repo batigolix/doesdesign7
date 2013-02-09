@@ -89,122 +89,6 @@ function doesdesign_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-object-field_article_number'.
-  $fields['node-object-field_article_number'] = array(
-    'field_config' => array(
-      'active' => '1',
-      'cardinality' => '1',
-      'deleted' => '0',
-      'entity_types' => array(),
-      'field_name' => 'field_article_number',
-      'foreign keys' => array(
-        'format' => array(
-          'columns' => array(
-            'format' => 'format',
-          ),
-          'table' => 'filter_format',
-        ),
-      ),
-      'indexes' => array(
-        'format' => array(
-          0 => 'format',
-        ),
-      ),
-      'locked' => '0',
-      'module' => 'text',
-      'settings' => array(
-        'allowed_values' => '',
-        'allowed_values_php' => '',
-        'max_length' => 255,
-        'text_processing' => '0',
-      ),
-      'translatable' => '0',
-      'type' => 'text',
-      'type_name' => 'page',
-    ),
-    'field_instance' => array(
-      'bundle' => 'object',
-      'default_value' => array(
-        0 => array(
-          'value' => '',
-          '_error_element' => 'default_value_widget][field_article_number][0][value',
-        ),
-      ),
-      'deleted' => '0',
-      'description' => '',
-      'display' => array(
-        'default' => array(
-          'label' => 'above',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => '7',
-        ),
-        'full' => array(
-          'label' => 'above',
-          'module' => 'text',
-          'settings' => array(),
-          'type' => 'text_default',
-          'weight' => '8',
-        ),
-        'rss' => array(
-          'label' => 'above',
-          'module' => 'text',
-          'settings' => array(),
-          'type' => 'text_default',
-          'weight' => '8',
-        ),
-        'search_index' => array(
-          'label' => 'above',
-          'module' => 'text',
-          'settings' => array(),
-          'type' => 'text_default',
-          'weight' => '8',
-        ),
-        'search_result' => array(
-          'label' => 'above',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => '7',
-        ),
-        'teaser' => array(
-          'label' => 'above',
-          'module' => 'text',
-          'settings' => array(),
-          'type' => 'text_default',
-          'weight' => '8',
-        ),
-        'token' => array(
-          'label' => 'above',
-          'module' => 'text',
-          'settings' => array(),
-          'type' => 'text_default',
-          'weight' => '8',
-        ),
-      ),
-      'entity_type' => 'node',
-      'field_name' => 'field_article_number',
-      'label' => 'Article number',
-      'required' => FALSE,
-      'settings' => array(
-        'text_processing' => '0',
-        'user_register_form' => FALSE,
-      ),
-      'weight' => '8',
-      'widget' => array(
-        'active' => '0',
-        'module' => 'text',
-        'settings' => array(
-          'default_value_php' => NULL,
-          'rows' => 5,
-          'size' => '60',
-        ),
-        'type' => 'text_textfield',
-        'weight' => '7',
-      ),
-      'widget_type' => 'text_textfield',
-    ),
-  );
-
   // Exported field: 'node-object-field_gewicht'.
   $fields['node-object-field_gewicht'] = array(
     'field_config' => array(
@@ -438,6 +322,7 @@ function doesdesign_field_default_fields() {
       'required' => 0,
       'settings' => array(
         'alt_field' => 0,
+        'default_image' => 0,
         'file_directory' => '',
         'file_extensions' => 'png gif jpg jpeg',
         'max_filesize' => '',
@@ -617,7 +502,7 @@ function doesdesign_field_default_fields() {
           'label' => 'above',
           'module' => 'taxonomy',
           'settings' => array(),
-          'type' => 'taxonomy_term_reference_plain',
+          'type' => 'taxonomy_term_reference_link',
           'weight' => '2',
         ),
         'search_index' => array(
@@ -776,9 +661,10 @@ function doesdesign_field_default_fields() {
       'display' => array(
         'default' => array(
           'label' => 'above',
+          'module' => 'taxonomy',
           'settings' => array(),
-          'type' => 'hidden',
-          'weight' => '6',
+          'type' => 'taxonomy_term_reference_link',
+          'weight' => '7',
         ),
         'search_index' => array(
           'label' => 'above',
@@ -803,7 +689,7 @@ function doesdesign_field_default_fields() {
       ),
       'entity_type' => 'node',
       'field_name' => 'taxonomy_vocabulary_8',
-      'label' => 'Jaar',
+      'label' => 'Gemaakt in',
       'required' => 0,
       'settings' => array(
         'user_register_form' => FALSE,
@@ -1186,6 +1072,7 @@ function doesdesign_field_default_fields() {
       'required' => 0,
       'settings' => array(
         'alt_field' => 0,
+        'default_image' => 0,
         'file_directory' => '',
         'file_extensions' => 'png gif jpg jpeg',
         'max_filesize' => '',
@@ -1226,15 +1113,14 @@ function doesdesign_field_default_fields() {
   // Translatables
   // Included for use with string extractors like potx.
   t('Afbeelding');
-  t('Article number');
   t('Beschrijving');
   t('Body');
   t('Categorie');
   t('De prijzen op deze website zijn indicatief en hangen af van o.a. de goudprijs en uw wensen. <a href="/prijzen">Lees verder</a>');
   t('File attachments');
+  t('Gemaakt in');
   t('Gewicht');
   t('If you want to add a static page, like a contact page or an about page, use a page.');
-  t('Jaar');
   t('Materialen');
   t('Materialen waarmee het sieraad gemaakt is');
   t('Prijs');
