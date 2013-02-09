@@ -5,7 +5,9 @@
     <a href="<?php print $node_url; ?>"><?php print $title; ?></a>
   </span>
   <?php print render($content['field_image']); ?>
-  <div itemprop="description">
+  <div class="data-list">
+  
+  <div class="field" itemprop="description">
     <?php print $body['0']['safe_value']; ?>
   </div>
   <?php print render($content['taxonomy_vocabulary_6']); ?>
@@ -16,5 +18,12 @@
   </div>
   <?php print render($content['field_gewicht']); ?>
   <?php print render($content['taxonomy_vocabulary_7']); ?>
+  <?php print render($content['taxonomy_vocabulary_8']); ?>
+  <div class="field field-name-field-article_number">
+    <div class="field-label">Artikelnummer:</div> 
+    <div><?php print render($article_number); ?></div>
+  </div>
   <?php print render($content['adhesive_tape_contact_subject']); ?>
 </div> <!-- /node--object.tpl.php--> 
+</div> <!-- /node--object.tpl.php--> 
+

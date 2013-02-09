@@ -143,3 +143,8 @@ function shoami_menu_local_tasks(&$variables) {
 
   return $output;
 }
+
+function shoami_preprocess_node(&$variables) {
+  //dpm($variables);
+  $variables['article_number'] = $variables['nid'];
+}
