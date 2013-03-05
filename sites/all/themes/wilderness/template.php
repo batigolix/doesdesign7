@@ -179,4 +179,7 @@ function wilderness_img_assist_page($content, $attributes = NULL) {
   return $output;
 }
 function wilderness_preprocess_page(&$variables) {
+  $variables['theme_path'] = drupal_get_path('theme','wilderness');
 }
+
+

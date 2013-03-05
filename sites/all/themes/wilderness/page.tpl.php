@@ -15,19 +15,8 @@
         <div class="Sheet-body">
           <div class="Header">
             <div class="logo">
-              <?php if ($logo): ?>
                 <div id="logo">
-                  <a href="<?php print check_url($front_page); ?>" title="<?php echo t('Home'); ?>"><img src="<?php echo $logo; ?>" alt="<?php echo t('Home'); ?>" /></a>
-                </div>
-              <?php endif; ?>
-              
-              <?php if ($site_name) : ?>
-                <h1 class="site-name"><?php print $site_name; ?></h1>
-              <?php endif; ?>
-              <?php if ($site_slogan) : ?>
-                <div class="site-slogan"><?php print $site_slogan; ?></div>
-              <?php endif; ?>
-              
+                  <a href="<?php print check_url($front_page); ?>" title="<?php print $site_name; ?>"><img src="/<?php print $theme_path; ?>/images/logo-veldeke.png" alt="Logo <?php print $site_name; ?>" title="<?php print $site_name; ?>" /></a></div>
             </div>
 	    </div>
           <?php if (!empty($page['navigation'])): ?>
