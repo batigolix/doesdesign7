@@ -1501,3 +1501,13 @@ h1.site-name {
   font-size: 1.4em;
   color: grey;
 }
+
+dt {
+  float: left;  
+  width: 40%;
+}
+
+dd, dt {
+  border-top: #ccc solid 1px;
+  padding: 3px 0;
+}
