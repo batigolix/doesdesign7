@@ -3,18 +3,18 @@
 function adhesive_tape_form_alter(&$form, &$form_state, $form_id) {
   // todo clean up node form nicely
   //  dsm($form);
-    unset($form['print']);
+  unset($form['print']);
 
   // set some stuff on all node editing forms
-  if (isset($form['#node_edit_form']) && $form['#node_edit_form']==TRUE) {
+  if (isset($form['#node_edit_form']) && $form['#node_edit_form'] == TRUE) {
 //    unset ($form['revision_information']); // and this one is the "Revision information" one
     // unset ($form['options']['sticky']);
-  }  
+  }
   switch ($form_id) {
     case 'page_node_form':
       // no promote
-      unset ($form['options']['promote']);
-    break;
+      unset($form['options']['promote']);
+      break;
     case 'object_node_form':
       //kpr($form);
       // move spotlight checkbox to publishing options
@@ -27,54 +27,52 @@ function adhesive_tape_form_alter(&$form, &$form_state, $form_id) {
       $form['#validate'][] = 'adhesive_tape_validate_node_form';
       // $form['options']['field_in_the_spotlight'] = $form['field_in_the_spotlight'];
       $form['meta_info'] = array(
-        '#type' => 'fieldset',
-        '#title' => t('Meta informatie'),
-        '#description' => t('Prijs, materiaal, categorie, etc'),
-        '#collapsible' => TRUE,
-        '#collapsed' => TRUE,
-        '#group' => 'additional_settings',
+          '#type' => 'fieldset',
+          '#title' => t('Meta informatie'),
+          '#description' => t('Prijs, materiaal, categorie, etc'),
+          '#collapsible' => TRUE,
+          '#collapsed' => TRUE,
+          '#group' => 'additional_settings',
       );
       $form['meta_info']['field_prijs'] = $form['field_prijs'];
-      unset ($form['field_prijs']);
+      unset($form['field_prijs']);
       $form['meta_info']['field_gewicht'] = $form['field_gewicht'];
-      unset ($form['field_gewicht']);
+      unset($form['field_gewicht']);
       $form['meta_info']['field_article_number'] = $form['field_article_number'];
-      unset ($form['field_article_number']);
+      unset($form['field_article_number']);
       $form['meta_info']['taxonomy_vocabulary_8'] = $form['taxonomy_vocabulary_8'];
-      unset ($form['taxonomy_vocabulary_8']);
+      unset($form['taxonomy_vocabulary_8']);
       $form['meta_info']['taxonomy_vocabulary_7'] = $form['taxonomy_vocabulary_7'];
-      unset ($form['taxonomy_vocabulary_7']);
+      unset($form['taxonomy_vocabulary_7']);
       $form['meta_info']['taxonomy_vocabulary_6'] = $form['taxonomy_vocabulary_6'];
-      unset ($form['taxonomy_vocabulary_6']);
+      unset($form['taxonomy_vocabulary_6']);
 
       // taxo terms: 8 = jaar, 7 = cat, 6 = materiaal
-
-      
       // order fields within met info
       $form['meta_info']['taxonomy_vocabulary_6']['#weight'] = -4;
       $form['meta_info']['taxonomy_vocabulary_7']['#weight'] = -5;
       $form['meta_info']['taxonomy_vocabulary_8']['#weight'] = 99;
       $form['meta_info']['field_article_number']['#weight'] = 100;
-      
+
       // order of verti tabs
       $form['options']['#weight'] = 5; // this one is the vertical tab named "Publishing options"
       $form['meta_info']['#weight'] = 0; // this one is the vertical tab named "Publishing options"
       $form['path']['#weight'] = 10; // this one is the vertical tab named "Publishing options"
 
-    break;
+      break;
     case 'slideshow_item_node_form':
       $form['#validate'][] = 'adhesive_tape_validate_node_form';
       $form['title']['#description'] = 'Maximum number of characters: 25';
-    break;
+      break;
     case 'webform_client_form_37':
-  // todo get dynamic email adres
-  /*      kpr($form['submitted']);
-      $node = menu_get_object(); 
-      $email = $node->field_email['und']['0']['value'];
-      // $form['submitted']['recipient']['#value'] = $email;
-      $form['submitted']['recipient']['#value'] = $email;
-  */
-    break;
+      // todo get dynamic email adres
+      /*      kpr($form['submitted']);
+        $node = menu_get_object();
+        $email = $node->field_email['und']['0']['value'];
+        // $form['submitted']['recipient']['#value'] = $email;
+        $form['submitted']['recipient']['#value'] = $email;
+       */
+      break;
   }
   $form['#after_build'][] = 'adhesive_tape_after_build';
 }
@@ -90,51 +88,50 @@ function adhesive_tape_after_build($form) {
     $form['domain']['#title'] = 'Portal & language';
     unset($form['language']);
   }
-/*  switch ($form['type']['#value']) {
+  /*  switch ($form['type']['#value']) {
     case 'article':
-//      $form['options']['spot'] = $form['field_in_the_spotlight'];
-//      unset($form['field_in_the_spotlight']);
+    //      $form['options']['spot'] = $form['field_in_the_spotlight'];
+    //      unset($form['field_in_the_spotlight']);
     break;
-  }
-*/
+    }
+   */
   return $form;
 }
 
 /**
  * restrict length of introduction text area.
  */
-
 function adhesive_tape_validate_node_form($form, &$form_state) {
   switch ($form['form_id']['#value']) {
-	  // todo set max chars
+    // todo set max chars
     case 'article_node_form':
       $intro_length = strlen($form_state['values']['field_summary']['und']['0']['value']);
       if ($intro_length > 250000) {
         form_set_error('', t('The field <strong>introduction</strong> may not contain more than 250 characters. It is currently @num characters long.', array('@num' => $intro_length)));
       }
-    break;
+      break;
   }
-}  
+}
 
 /*
  * add the media plugin for ckeditor (not in use)
  */
 
 function adhesive_tape_wysiwyg_plugin($editor, $version) {
-   switch ($editor) {
+  switch ($editor) {
     case 'ckeditor':
       return array(
-/*        'youtube' => array(
-          'buttons' => array('youtube' => t('Youtube')),
-          'load' => TRUE,
-          'internal' => TRUE,
-        ),
-*/ 
-        'MediaEmbed' => array(
-          'buttons' => array('MediaEmbed' => t('MediaEmbed')),
-          'load' => TRUE,
-          'internal' => TRUE,
-        ),
+          /*        'youtube' => array(
+            'buttons' => array('youtube' => t('Youtube')),
+            'load' => TRUE,
+            'internal' => TRUE,
+            ),
+           */
+          'MediaEmbed' => array(
+              'buttons' => array('MediaEmbed' => t('MediaEmbed')),
+              'load' => TRUE,
+              'internal' => TRUE,
+          ),
       );
   }
 }
@@ -152,28 +149,25 @@ function adhesive_tape_preprocess_node(&$vars) {
 /**
  * Implements hook_menu().
  */
-
 function adhesive_tape_menu() {
   $items['xfrontpage'] = array(
-    'title' => 'Frontpage',
-    'description' => 'Frontpage',
-    'page callback' => 'adhesive_tape_frontpage',
-    'type' => MENU_CALLBACK,
-    'access callback' => 'is_string',
-    'access arguments' => array('string'),
+      'title' => 'Frontpage',
+      'description' => 'Frontpage',
+      'page callback' => 'adhesive_tape_frontpage',
+      'type' => MENU_CALLBACK,
+      'access callback' => 'is_string',
+      'access arguments' => array('string'),
   );
   return $items;
 }
 
 /**
-* Display empty frontpage wo title
-**/
-
+ * Display empty frontpage wo title
+ * */
 function adhesive_tape_frontpage() {
   drupal_set_title('');
   return '';
 }
-
 
 /**
  * Implements hook_node_view().
@@ -184,20 +178,20 @@ function adhesive_tape_node_view($node, $view_mode, $langcode) {
   switch ($node->type) {
     case 'object':
       $node->content['adhesive_tape_contact_subject'] = array(
-        '#type' => 'item',
-        '#title' => t('Contact: '),
-        '#markup' => l(
-          t('Ask a question about this object'),'contact',array(
-            'attributes' => array(
-            'class' => 'nice-link'
-            ),
-            'query' => array(
-              'subject' => $node->title
-            )
+          '#type' => 'item',
+          '#title' => t('Contact: '),
+          '#markup' => l(
+                  t('Ask a question about this object'), 'contact', array(
+              'attributes' => array(
+                  'class' => 'nice-link'
+              ),
+              'query' => array(
+                  'subject' => $node->title . ' - ' . $node->nid
+              )
+                  )
           )
-        )
       );
-    break;
+      break;
   }
 }
 
@@ -211,14 +205,15 @@ function adhesive_tape_field_extra_fields() {
   // entity type, bundle and then either 'display' or 'form'.
   // In this case, we apply to 'page' nodes, when we display them.
   $extra['node']['object']['display'] = array(
-    // The keys here must correspond to the keys of the items
-    // that we add in our hook_node_view() or similar function.
-    // Prefix it with our module name to ensure it doesn't clash
-    // with anything from other modules.
-    'adhesive_tape_contact_subject' => array(
-      'label' => t('Custom link to contact form that sends subject along'),
-      'description' => t('Custom link to contact form that sends subject along, added in adhesive_tape_node_view().'),
-      'weight' => 10,
-    ),
-  );  return $extra;
+      // The keys here must correspond to the keys of the items
+      // that we add in our hook_node_view() or similar function.
+      // Prefix it with our module name to ensure it doesn't clash
+      // with anything from other modules.
+      'adhesive_tape_contact_subject' => array(
+          'label' => t('Custom link to contact form that sends subject along'),
+          'description' => t('Custom link to contact form that sends subject along, added in adhesive_tape_node_view().'),
+          'weight' => 10,
+      ),
+  );
+  return $extra;
 }

@@ -22,7 +22,7 @@ body
   background-size: 100% 100%
 
 #page
-  @include container($total-columns, $break-1, $break-2)
+  @include container($total-columns, $break-1, $break-2, $break-3)
 
 #logo
   img
@@ -38,6 +38,10 @@ h4
   font-size: 1.2em
 h5
   font-size: 1em
+
+/*hide some crap that is too hard to make responsive*/
+.view-sieraden, #content-top-2
+  display: none
 
 #header
   #header-block
@@ -73,6 +77,8 @@ h5
       @include text-shadow(#000 2px 2px 2px)
 
 @include at-breakpoint($break-1)
+  .view-sieraden
+    display: block
   h1
     font-size: 2em
   h2
@@ -83,7 +89,7 @@ h5
   #header
     @include span-columns($break-1 omega)
     #logo
-      @include span-columns(3, $break-1)
+      @include span-columns(4, $break-1)
       margin: 0
       img
         width: 90px
@@ -95,24 +101,26 @@ h5
           &:hover, &:active, &:link, &:visited
             font-size: 3.2em
       #site-slogan
-        font-size: 1.25em
+        font-size: 1.1em
     #header-block
+      img
+        display: none
       margin: 0
-      @include span-columns(5 omega, $break-1)
+      @include span-columns(6 omega, $break-1)
   #content-top
     @include span-columns($break-1 omega)
     #content-top-1
-      @include span-columns(10, $break-1)
+      @include span-columns(18, $break-1)
       li
         float: left
     #content-top-2
-      @include span-columns(5 omega, $break-1)
+      display: none
   #content
     @include span-columns($break-1 omega)
     #content-area
-      @include span-columns(10, $break-1)
+      @include span-columns(18, $break-1)
     #sidebar
-      @include span-columns(5 omega, $break-1)
+      @include span-columns(18, $break-1)
   #content-bot-rowgit push origin m
     @include span-columns(10 omega)
     #content-bot-row-1
@@ -133,38 +141,87 @@ h5
   #header
     @include span-columns($break-2 omega)
     #logo
-      @include span-columns(4, $break-2)
+      @include span-columns(5, $break-2)
       margin: 0
       img
         width: 120px
     #site-name-and-slogan
       margin: 0
-      @include span-columns(9, $break-2)
+      @include span-columns(10, $break-2)
       #site-name
         a
           &:hover, &:active, &:link, &:visited
-            font-size: 3.7em
+            font-size: 3.5em
       #site-slogan
-        font-size: 1.5em
+        font-size: 1.4em
     #header-block
       margin: 0
-      @include span-columns(7 omega, $break-2)
+      @include span-columns(9 omega, $break-2)
   #content-top
     @include span-columns($break-2 omega)
     #content-top-1
-      @include span-columns(13, $break-2)
+      @include span-columns(18, $break-2)
+      li
+        font-size: 1.2em
     #content-top-2
-      @include span-columns(7 omega, $break-2)
+      @include span-columns(6 omega, $break-2)
   #content
     @include span-columns($break-2 omega)
     #content-area
-      @include span-columns(13, $break-2)
+      @include span-columns(18, $break-2)
     #sidebar
-      @include span-columns(7 omega, $break-2)
+      @include span-columns(6 omega, $break-2)
   #content-bot-row
     @include span-columns($break-2 omega)
   #footer
     @include span-columns($break-2 omega)
+
+@include at-breakpoint($break-3)
+  h1
+    font-size: 2.6em
+  h2
+    font-size: 2.1em
+  h3
+    font-size: 1.9em
+  @include susy-grid-background
+  #header
+    @include span-columns($break-3 omega)
+    #logo
+      @include span-columns(6, $break-3)
+      margin: 0
+      img
+        width: 120px
+    #site-name-and-slogan
+      margin: 0
+      @include span-columns(12, $break-3)
+      #site-name
+        a
+          &:hover, &:active, &:link, &:visited
+            font-size: 4.5em
+      #site-slogan
+        font-size: 1.8em
+    #header-block
+      margin: 0
+      @include span-columns(10 omega, $break-3)
+  #content-top
+    @include span-columns($break-3 omega)
+    #content-top-1
+      @include span-columns(18, $break-3)
+      li
+        font-size: 1.3em
+    #content-top-2
+      @include span-columns(10 omega, $break-3)
+  #content
+    @include span-columns($break-3 omega)
+    #content-area
+      @include span-columns(18, $break-3)
+    #sidebar
+      @include span-columns(10 omega, $break-3)
+  #content-bot-row
+    @include span-columns($break-3 omega)
+  #footer
+    @include span-columns($break-3 omega)
+
 
 #sidebar
   .block
@@ -307,7 +364,7 @@ a
     font-size: 0.9em    
   
 h2.block-title
-  font-size: 1.4em  
+  font-size: 1.6em  
   
 // the slideshow
 .view-sieraden
