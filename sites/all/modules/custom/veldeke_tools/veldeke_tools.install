@@ -1,0 +1,127 @@
+<?php
+
+/**
+ * @file
+ * Install, update, and uninstall functions for the veldeke tools module.
+ */
+
+/**
+ * Implements hook_install().
+ *
+function veldeke_tools_install() {
+//  // Set the weight of the forum.module to 1 so it is loaded after the taxonomy.module.
+  db_update('system')
+    ->fields(array('weight' => 1))
+    ->condition('name', 'veldeke_tools')
+    ->execute();
+//  // Forum topics are published by default, but do not have any other default
+//  // options set (for example, they are not promoted to the front page).
+//  variable_set('node_options_forum', array('status'));
+}
+
+
+/**
+ * Implements hook_uninstall().
+ *
+function veldeke_tools_uninstall() {
+  // Load the dependent Taxonomy module, in case it has been disabled.
+  drupal_load('module', 'taxonomy');
+  field_delete_field('page_type');
+  // Purge field data now to allow taxonomy module to be uninstalled
+  // if this is the only field remaining.
+  field_purge_batch(10);
+}
+
+/**
+ * Implements hook_schema().
+ *
+function veldeke_tools_schema() {
+  //
+}
+
+/**
+ * Implements hook_schema().
+ *
+ * Defines the database tables used by this module.
+ * Remember that the easiest way to create the code for hook_schema is with
+ * the @link http://drupal.org/project/schema schema module @endlink
+ *
+ * @see hook_schema()
+ * @ingroup slots
+ */
+
+function veldeke_tools_schema() {
+  $schema['veldeke_dictionary'] = array(
+    'description' => 'Stores nl and li terms in a table for retrieval in Drupal',
+    'fields' => array(
+      'dtid' => array(
+        'type' => 'int',
+        'not null' => TRUE,
+        'description' => 'Id of the dictionary term',
+      ),
+      'nl_term' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'description' => 'Dutch term',
+      ),
+      'li_term' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'description' => 'Limburgish term',
+      ),
+      'misc' => array(
+        'type' => 'text',
+        'size' => 'small',
+        'description' => 'Misc',
+      ),
+      'updated' => array(
+        'type' => 'varchar',
+        'length' => 255,
+      ),
+    ),
+    'primary key' => array('dtid'),
+    'indexes' => array(
+      'nl_term' => array('nl_term'),
+      'li_term' => array('li_term'),
+    ),
+  );
+  return $schema;
+}
+
+/**
+ * Implementation of hook_update_N()
+ * A first character columns
+ */
+function veldeke_tools_update_7100() {
+  $nl_letter = array(
+        'type' => 'varchar',
+        'length' => 255,
+      'description' => "First char of NL term",
+  );
+  db_add_field('veldeke_dictionary', 'nl_letter', $nl_letter);
+  db_add_index('veldeke_dictionary', 'nl_letter', array('nl_letter'));
+  
+  $li_letter = array(
+        'type' => 'varchar',
+        'length' => 255,
+      'description' => "First char of LI term",
+  );
+  db_add_field('veldeke_dictionary', 'li_letter', $li_letter);
+  db_add_index('veldeke_dictionary', 'li_letter', array('li_letter'));
+  
+}
+
+/**
+ * Implementation of hook_update_N()
+ * Add maximum per group field
+ *
+function recreatex_activities_update_7200() {
+  $max_per_group = array(
+      'type' => 'int',
+      'default' => '0',
+      'description' => "Maximum per group (if applies : capacity_check = Groups)",
+  );
+  db_add_field('slots', 'maximum_per_group', $max_per_group);
+}
+ * */

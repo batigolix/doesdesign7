@@ -1,0 +1,1102 @@
+<?php
+
+require_once 'veldeke_tools.theme.inc';
+
+/**
+ * @file
+ * Main bootstrap file of the veldeke_tools module.
+ */
+
+/**
+ * Implements hook_menu().
+ *
+ */
+function veldeke_tools_menu() {
+  $menu = array();
+  $menu['test'] = array(
+      'title' => 'Test',
+      'description' => '',
+      'page callback' => 'veldeke_tools_test',
+      'access arguments' => array('access content'),
+      'file' => 'veldeke_tools.pages.inc',
+      'type' => MENU_NORMAL_ITEM,
+      'weight' => 0,
+  );
+
+  $menu['project'] = array(
+      'title' => 'Project',
+      'description' => 'Information about the project',
+      'page callback' => 'veldeke_tools_composition',
+      'page arguments' => array('Project'),
+      'access arguments' => array('access content'),
+      'file' => 'veldeke_tools.pages.inc',
+      'type' => MENU_NORMAL_ITEM,
+      'weight' => 0,
+  );
+
+  $menu['maison_veldeke'] = array(
+      'title' => 'Maison veldeke',
+      'description' => 'Information about Maison veldeke',
+      'page callback' => 'veldeke_tools_composition',
+      'page arguments' => array('Maison veldeke'),
+      'access arguments' => array('access content'),
+      'file' => 'veldeke_tools.pages.inc',
+      'type' => MENU_NORMAL_ITEM,
+      'weight' => 0,
+  );
+
+  $menu['building'] = array(
+      'title' => 'Buidling',
+      'description' => 'View building with clickable floors',
+      'page callback' => 'veldeke_tools_building',
+      'access arguments' => array('access content'),
+      'file' => 'veldeke_tools.pages.inc',
+      'type' => MENU_NORMAL_ITEM,
+      'weight' => 0,
+  );
+
+  $menu['terms/%/%'] = array(
+      'title' => 'Terms',
+      'description' => 'View terms',
+      'page callback' => 'veldeke_tools_terms',
+      'page arguments' => array(1,2),
+      'access arguments' => array('access content'),
+      'file' => 'veldeke_tools.pages.inc',
+      'type' => MENU_NORMAL_ITEM,
+      'weight' => 0,
+  );
+
+  $menu['properties'] = array(
+      'title' => 'Properties',
+      'description' => 'View list of properties',
+      'page callback' => 'veldeke_tools_properties_page',
+      'access arguments' => array('access content'),
+      'file' => 'veldeke_tools.pages.inc',
+      'type' => MENU_NORMAL_ITEM,
+      'weight' => 0,
+  );
+
+  $menu['property/%'] = array(
+      'title' => 'Property',
+      'description' => 'View property detail page',
+      'page callback' => 'veldeke_tools_property_detail_page',
+      'page arguments' => array(1),
+      'access arguments' => array('access content'),
+      'file' => 'veldeke_tools.pages.inc',
+      'type' => MENU_NORMAL_ITEM,
+      'weight' => 0,
+  );
+
+  $menu['contact'] = array(
+      'title' => 'Contact',
+      'description' => 'Contact us',
+      'page callback' => 'veldeke_tools_contact_page',
+      'access arguments' => array('access content'),
+      'file' => 'veldeke_tools.pages.inc',
+      'type' => MENU_NORMAL_ITEM,
+      'weight' => 0,
+  );
+
+  $menu['admin/config/system/veldeke_tools'] = array(
+      'title' => 'veldeke tools',
+      'description' => 'Collection of nifty tools for veldeke project',
+      'page callback' => 'system_admin_menu_block_page',
+      'access arguments' => array('administer site configuration'),
+      'file' => 'system.admin.inc',
+      'file path' => drupal_get_path('module', 'system'),
+      'weight' => '0',
+  );
+  $menu['admin/config/system/veldeke_tools/settings'] = array(
+      'title' => 'veldeke tools settings',
+      'description' => 'Configuration for veldeke tools',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('veldeke_settings'),
+      'access arguments' => array('administer site configuration'),
+      'file' => 'veldeke_tools.forms.inc',
+  );
+  $menu['admin/config/system/veldeke_tools/import_dictionary'] = array(
+      'title' => 'Import dictionary',
+      'description' => 'Import dictionary with NL en LI terms',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('veldeke_tools_import_dictionary_form'),
+      'access arguments' => array('administer veldeke'),
+//      'type' => MENU_CALLBACK,
+      'file' => 'veldeke_tools.forms.inc',
+  );
+
+  $menu['admin/config/system/veldeke_tools/test'] = array(
+      'title' => 'Test',
+      'description' => '',
+      'page callback' => 'veldeke_tools_test',
+      'file' => 'veldeke_tools.pages.inc',
+      'type' => MENU_NORMAL_ITEM,
+      'weight' => 0,
+      'access arguments' => array('administer site configuration'),
+  );
+
+  $menu['admin/config/system/veldeke_tools/upload_csv'] = array(
+      'title' => 'Upload csv with properties',
+      'description' => 'Upload csv with properties and replace the current csv',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('veldeke_tools_upload_csv_form'),
+      'access arguments' => array('administer content'),
+      'file' => 'veldeke_tools.forms.inc',
+  );
+
+  return $menu;
+}
+
+/**
+ * Implements hook_permission()
+ */
+function veldeke_tools_permission() {
+  return array(
+      'administer veldeke' => array(
+          'title' => t('Administer Veldeke'),
+          'description' => t('Do some configuration for Veldeke'),
+      ),
+  );
+}
+
+/**
+ * Returns entity id from term with rx id
+ * maps drupal entities with external data (e.g. from csv)
+ * code slightly hackish. only works with text field etc
+ */
+function veldeke_tools_entid_from_code($code, $bundle, $field_name) {
+  $query = db_select('field_data_' . $field_name, 'fdfc');
+  $query->condition('fdfc.bundle', $bundle);
+  $query->condition('fdfc.field_' . $field_name . '_value', $code);
+  $query->addField('fdfc', 'entity_id', 'entid');
+  $results = $query->execute();
+  return $results->fetchField();
+}
+
+/**
+ * Returns a entity id based on field value
+ * only for text fields!
+ * will probably fail miserably when field value is not unique or field type is
+ * not text
+ */
+function veldeke_tools_get_entity_id_from_field_value($value, $field_name, $bundle) {
+  $query = db_select('field_data_' . $field_name, 'fd');
+  $query->condition('fd.bundle', $bundle);
+  $query->condition('fd.' . $field_name . '_value', $value);
+  $query->addField('fd', 'entity_id', 'eid');
+  $result = $query->execute();
+  return $result->fetchField();
+}
+
+function veldeke_tools_page_node_form_validate($form, &$form_state) {
+
+  // check uniqueness of the page code
+  $page_code = $form_state['values']['field_page_code'][LANGUAGE_NONE][0]['value'];
+  $existid = veldeke_tools_get_entity_id_from_field_value($page_code, 'field_page_code', 'page');
+  if ($existid && $existid != $form_state['node']->nid) {
+    form_set_error('unique_page_code', 'The page code must be unique. Content with this page code already exists.');
+  }
+}
+
+function veldeke_tools_form_page_node_form_alter(&$form, &$form_state, $form_id) {
+  $form['#validate'][] = 'veldeke_tools_page_node_form_validate';
+}
+
+/* function MYMODULE_form_article_node_form_alter(&$form, &$form_state, $form_id) {
+  if (empty($form['nid']['#value'])) {
+  $form['#validate'][] = 'MYMODULE_article_node_form_validate';
+  }
+  }
+
+  function MYMODULE_article_node_form_validate($form, &$form_state) {
+  global $user;
+
+  // See if this user has already created a piece of content of this type.
+  $args = array(':uid' => $user->uid, ':type' => 'article');
+  $count = db_query('SELECT COUNT(nid) FROM {node} WHERE uid = :uid AND type = :type', $args)->fetchField();
+
+  // If they have, check for another node created by the user with the same field value
+  if ($count > 0) {
+  $query = new EntityFieldQuery;
+  $query->entityCondition('entity_type')
+  ->entityCondition('bundle', 'article')
+  ->propertyCondition('uid', $user->uid)
+  ->fieldCondition('field_some_field', 'value', $form_state['values']['field_some_field'][LANGUAGE_NONE][0]['value']);
+
+  $results = $query->execute();
+
+  // If we have a result, invalidate the form.
+  if (!empty($results['node'])) {
+  form_set_error('field_some_field', t('Error message here'));
+  }
+  }
+  } */
+
+function _fetch_nodes_by_field($condition) {
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+          ->entityCondition('bundle', $condition['bundle'])
+          ->propertyCondition('status', 1)
+          ->range(0, 10)
+          ->addTag('sort_by_weight')
+          ->fieldCondition($condition['field'], $condition['column'], $condition['value'])
+//          ->fieldOrderBy('weight_weight', 'fid', 'DESC') // dusnt work with weight module. only w real fields
+//          ->addMetaData('account', user_load(1)); // Run the query as user 1.
+  ;
+  $result = $query->execute();
+  if (isset($result['node'])) {
+    $nids = array_keys($result['node']);
+    $nodes = entity_load('node', $nids);
+    return $nodes;
+  }
+}
+
+/**
+ * implements hook query alter to allow ordering by weight
+ * @param QueryAlterableInterface $query
+ */
+function veldeke_tools_query_sort_by_weight_alter(QueryAlterableInterface $query) {
+  $query->join('weight_weights', 'w', 'node.nid = w.entity_id');
+  $query->fields('w', array('weight'));
+  $query->orderBy('w.weight', 'ASC');
+  // var_dump($query->getOrderBy());
+}
+
+/**
+ * Implements hook entity info alter
+ * Mainly used for adding view modes (extra teasers n stuff)
+ */
+function veldeke_tools_entity_info_alter(&$entity_info) {
+  $entity_info['node']['view modes']['jumbo_teaser'] = array(
+      'label' => t('Jumbo teaser'),
+      'custom settings' => TRUE,
+  );
+}
+
+/*
+ * Implements preprocess node
+ */
+
+function veldeke_tools_preprocess_node(&$vars) {
+  if ($vars['view_mode'] == 'jumbo_teaser') {
+    $vars['theme_hook_suggestions'][] = 'node__' . $vars['type'] . '__jumbo_teaser';
+  }
+  if (isset($vars['class'])) {
+    $vars['classes_array'] = array_merge($vars['classes_array'], $vars['class']);
+  }
+}
+
+/*
+ * Turns string into a user- and machine-friendly short text used in 
+ * among others in a URL to identify and describe a resource
+ */
+
+function veldeke_tools_slugify($string) {
+  return strtolower(preg_replace('/[^a-zA-Z0-9-]+/', '-', check_plain($string)));
+}
+
+/**
+ * Retrieves term object by term name
+ * @param type $term_name
+ * @param type $machine_name
+ * @return type
+ */
+function veldeke_tools_get_term($term_name, $machine_name) {
+  $terms = taxonomy_get_term_by_name($term_name, $machine_name);
+  $term = reset($terms); // flatten results because we can only use single result
+  return $term;
+}
+
+/*  $query = db_select('node', 'n');
+  $query->condition('n.type', 'project');
+  $query->condition('n.status', '1');
+  $query->join('field_data_field_project_creation_date', 'fdfpcd', 'fdfpcd.entity_id = n.nid');
+  $query->orderBy('fdfpcd.field_project_creation_date_value', 'ASC');
+  $query->addField('n', 'nid');
+  if (variable_get('debug_mode') == 1) {
+  dpm((string) $query);
+  dpm($query->arguments());
+  }
+  $results = $query->execute();
+  $projects = array();
+  foreach ($results as $result) {
+  $projects[] = $result->nid;
+  }
+  if (variable_get('debug_mode') == 1) {
+  dpm($projects);
+  }
+  if (!empty($projects)) {
+  return $projects;
+  } else {
+  drupal_set_message(t('No projects were found.'));
+  }
+ */
+
+/**
+ * Implements hook block info
+ * Defines custom blocks
+ */
+function veldeke_tools_block_info() {
+  $blocks['site_menu'] = array(
+      'info' => t('veldeke tools: Site menu'),
+      'cache' => DRUPAL_CACHE_GLOBAL,
+  );
+  $blocks['banner_narrow'] = array(
+      'info' => t('veldeke tools: Banner narrow'),
+      'cache' => DRUPAL_CACHE_GLOBAL,
+  );
+  $blocks['banner_large'] = array(
+      'info' => t('veldeke tools: Banner large'),
+      'cache' => DRUPAL_CACHE_GLOBAL,
+  );
+  $blocks['contact_concise'] = array(
+      'info' => t('veldeke tools: Concise contact details'),
+      'cache' => DRUPAL_CACHE_GLOBAL,
+  );
+  $blocks['contact_medium'] = array(
+      'info' => t('veldeke tools: Medium contact details'),
+      'cache' => DRUPAL_CACHE_GLOBAL,
+  );
+  $blocks['contact_complete'] = array(
+      'info' => t('veldeke tools: Complete contact details'),
+      'cache' => DRUPAL_CACHE_GLOBAL,
+  );
+  $blocks['biltxtilt'] = array(
+      'info' => t('veldeke tools: Bilt by Tilt'),
+      'cache' => DRUPAL_CACHE_GLOBAL,
+  );
+  $blocks['logo'] = array(
+      'info' => t('veldeke tools: Logo'),
+      'cache' => DRUPAL_CACHE_GLOBAL,
+  );
+  return $blocks;
+}
+
+/**
+ * Defines title and content of custom blocks
+ * Defines which function is called for block. Functions can be found in
+ * carcan_awar_blocks.inc
+ */
+function veldeke_tools_block_view($delta = '') {
+  $blocks = array();
+  switch ($delta) {
+    case 'site_menu':
+      $blocks['content'] = veldeke_tools_site_menu();
+      break;
+    case 'banner_narrow':
+      $blocks['content'] = veldeke_tools_banner('narrow');
+      break;
+    case 'banner_large':
+      $blocks['content'] = veldeke_tools_banner('large');
+      break;
+    case 'contact_concise':
+      $vars = _contact_data();
+      $vars['mode'] = 'concise';
+      $blocks['content'] = theme('contact_details', $vars);
+      break;
+    case 'contact_medium':
+      $vars = _contact_data();
+      $vars['mode'] = 'medium';
+      $blocks['content'] = theme('contact_details', $vars);
+      break;
+    case 'contact_complete':
+      $vars = _contact_data();
+      $vars['mode'] = 'compact';
+      $blocks['content'] = theme('contact_details', $vars);
+      break;
+    case 'biltxtilt':
+      $blocks['content'] = '<p>' . t('Site by <a href="@url" title="Innovative Communication Bureau">Tilt Factory</a>', array('@url' => 'http://www.tiltfactory.com')) . '</p>';
+      break;
+    case 'logo':
+      $img_path = drupal_get_path('module', 'veldeke_tools') . '/images/logo/';
+      $logo = theme_image(array('path' => $img_path . 'logo-maison-veldeke-white.png', 'alt' => t('Maison Legrand'), 'attributes' => array('class' => 'logo')));
+      $blocks['content'] = "<figure>" . l($logo, '', array('html' => true)) . "</figure>";
+      break;
+  }
+  return $blocks;
+}
+
+/*
+ * Implements preproces_block
+ * Adds humane block classes
+ */
+
+function veldeke_tools_preprocess_block(&$vars, $hook) {
+  //lets look for unique block in a region $region-$blockcreator-$delta
+  $block = $vars['elements']['#block']->module . '-' . $vars['elements']['#block']->delta;
+  //dsm($block);
+  switch ($block) {
+    case 'veldeke_tools-biltxtilt':
+      $vars['classes_array'][] = 'biltxtilt';
+      break;
+    case 'veldeke_tools-banner_narrow':
+      $vars['classes_array'][] = 'banner-narrow';
+      break;
+    case 'veldeke_tools-banner_large':
+      $vars['classes_array'][] = 'banner-large';
+      break;
+    case 'veldeke_tools-contact_concise':
+      $vars['classes_array'][] = 'contact-concise';
+      break;
+    case 'veldeke_tools-contact_medium':
+      $vars['classes_array'][] = 'contact-medium';
+      break;
+    case 'veldeke_tools-contact_complete':
+      $vars['classes_array'][] = 'contact-complete';
+      break;
+    case 'veldeke_tools-site_menu':
+      $vars['classes_array'][] = 'site-menu';
+      break;
+    case 'veldeke_tools-logo':
+      $vars['classes_array'][] = 'logo';
+      break;
+    default:
+      break;
+  }
+}
+
+/**
+ * Returns html for custom main menu
+ * @return string
+ */
+function veldeke_tools_site_menu() {
+  $floors = array(
+      array('data' => l(t('Ground floor'), 'floor/ground_floor')),
+      array('data' => l(t('First floor'), 'floor/first_floor')),
+      array('data' => l(t('Second floor'), 'floor/second_floor')),
+      array('data' => l(t('Third floor'), 'floor/ground_floor')),
+      array('data' => l(t('Appartment list'), 'properties')),
+  );
+  $vars['items'] = array(
+      array(
+          'data' => l(t('Home'), 'homepage'),
+          'children' => array(),
+      ),
+      array(
+          'data' => l(t('Project'), 'project'),
+          'children' => array(),
+      ),
+      array(
+          'data' => l(t('Maison veldeke'), 'maison_legrand'),
+          'children' => array(),
+      ),
+      array(
+          'data' => l(t('Appartments'), 'building'),
+          'class' => array('expanded'),
+          'children' => $floors,
+      ),
+      array(
+          'data' => l(t('Contact'), 'contact'),
+          'children' => array(),
+      ),
+  );
+  return theme('site_menu', $vars);
+}
+
+/**
+ * Returns html for narrow banner
+ * @return string
+ */
+function veldeke_tools_banner($size = 'narrow') {
+  $output = '';
+  $folder = drupal_get_path('module', 'veldeke_tools') . '/images/banner/' . $size . '/';
+  $path = realpath($folder);
+  $files = array_diff(scandir($path), array('..', '.'));
+  if (isset($files)) {
+    $rand = array_rand($files, 1); // picks random index
+    $banner = theme_image(array(
+        'path' => $folder . $files[$rand],
+        'alt' => 'Maison veldeke ' . t('banner'),
+        'title' => 'Maison veldeke ' . t('banner'),
+        'attributes' => array(
+            'class' => 'banner',
+            ))
+    );
+    $output .= $banner;
+  } else {
+    drupal_set_message('No banners found in folder @folder', array('@folder' => $folder));
+  }
+  return $output;
+}
+
+/**
+ * Returns contact data. // todo store in settings form
+ * @return string
+ */
+function _contact_data() {
+  $img_path = drupal_get_path('module', 'veldeke_tools') . '/images/logo/';
+  $logo = theme_image(array(
+      'path' => $img_path . 'logo-immo-jb.png',
+      'alt' => 'Immobilière Jacques Bonnivers ' . t('logo'),
+      'title' => 'Immobilière Jacques Bonnivers ' . t('logo'),
+      'attributes' => array(
+          'class' => 'logo',
+          )));
+  $continfo = array(
+      'name' => 'Maison veldeke',
+      'address' => t('Avenue Sergent Vrithoff 141'),
+      'country' => t('Belgium'),
+      'zip' => '5000',
+      'city' => t('Namur'),
+      'phone' => '+32(0)81/74.86.12',
+      'phone_label' => t('Tel'),
+      'mail' => 'maisonveldeke@eiffagebenelux.com',
+      'mail_alt' => 'info@maisonveldeke.be',
+      'mail_label' => t('Mail'),
+      'fax_label' => t('Fax'),
+      'fax' => '+32(0)2 726.38.12',
+      'logo' => $logo,
+  );
+  return $continfo;
+}
+
+/*
+ * Obfruscratilizes an email addresss
+ * Thank you http://www.maurits.vdschee.nl/php_hide_email/
+ */
+
+function veldeke_tools_hide_email($email) {
+  $character_set = '+-.0123456789@ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz';
+  $key = str_shuffle($character_set);
+  $cipher_text = '';
+  $id = 'e' . rand(1, 999999999);
+  for ($i = 0; $i < strlen($email); $i+=1)
+    $cipher_text.= $key[strpos($character_set, $email[$i])]; $script = 'var a="' . $key . '";var b=a.split("").sort().join("");var c="' . $cipher_text . '";var d="";';
+  $script.= 'for(var e=0;e<c.length;e++)d+=b.charAt(a.indexOf(c.charAt(e)));';
+  $script.= 'document.getElementById("' . $id . '").innerHTML="<a href=\\"mailto:"+d+"\\">"+d+"</a>"';
+  $script = "eval(\"" . str_replace(array("\\", '"'), array("\\\\", '\"'), $script) . "\")";
+  $script = '<script type="text/javascript">/*<![CDATA[*/' . $script . '/*]]>*/</script>';
+  return '<span id="' . $id . '">[javascript protected email address]</span>' . $script;
+}
+
+function veldeke_tools_ordinal($number) {
+  $ends = array('th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th');
+  if (($number % 100) >= 11 && ($number % 100) <= 13)
+    $abbreviation = $number . 'th';
+  else
+    $abbreviation = $number . $ends[$number % 10];
+  return $abbreviation;
+}
+
+function veldeke_tools_create_contact_form() {
+  $contact_form_exists = true;
+  while ($contact_form_exists) {
+    $alias = "contact_form";
+    $path = drupal_lookup_path("source", $alias);
+    $node = menu_get_object("node", 1, $path);
+    if (isset($node)) {
+      node_delete($node->nid);
+    } else {
+      $contact_form_exists = false;
+    }
+  }
+  if ($contact_form_exists == false) {
+    $node = new stdClass();
+    $node->type = 'webform';
+    node_object_prepare($node);
+    $node->title = 'Contact us';
+    $node->language = LANGUAGE_NONE;
+    $node->body[LANGUAGE_NONE][0]['value'] = '';
+    $node->body[LANGUAGE_NONE][0]['format'] = 'full_html';
+    $node->uid = 1;
+    $node->promote = 0;
+    $node->comment = 0;
+    $node->path['alias'] = 'contact_form';
+    // Create the webform components.
+    $components = array(
+        array(
+            'name' => 'Nom',
+            'form_key' => 'name',
+            'type' => 'textfield',
+            'mandatory' => 1,
+            'weight' => 5,
+            'pid' => 0,
+            'extra' => array(
+                'title_display' => 'inline',
+                'private' => 0,
+            ),
+        ),
+        array(
+            'name' => 'Téléphone',
+            'form_key' => 'phone',
+            'type' => 'textfield',
+            'mandatory' => 1,
+            'weight' => 10,
+            'pid' => 0,
+            'extra' => array(
+                'title_display' => 'inline',
+                'private' => 0,
+            ),
+        ),
+        array(
+            'name' => 'E-mail',
+            'form_key' => 'email',
+            'type' => 'email',
+            'mandatory' => 1,
+            'weight' => 25,
+            'pid' => 0,
+            'extra' => array(
+                'title_display' => 'inline',
+                'private' => 0,
+            ),
+        ),
+        array(
+            'name' => 'Objet',
+            'form_key' => 'subject',
+            'type' => 'textfield',
+            'mandatory' => 0,
+            'weight' => 15,
+            'pid' => 0,
+            'extra' => array(
+                'title_display' => 'inline',
+                'private' => 0,
+            ),
+        ),
+        array(
+            'name' => 'Question ou remarque',
+            'form_key' => 'question',
+            'type' => 'textarea',
+            'mandatory' => 1,
+            'weight' => 35,
+            'pid' => 0,
+            'extra' => array(
+                'title_display' => 'inline',
+                'private' => 0,
+            ),
+        ),
+        array(
+            'name' => 'Mandatory Fields',
+            'form_key' => 'mandatory_fields',
+            'type' => 'markup',
+            'mandatory' => 0,
+            'weight' => 40,
+            'pid' => 0,
+            'value' => '<p>Fields with * are mandatory</p>',
+            'extra' => array(
+                'title_display' => 'inline',
+                'private' => 0,
+                'format' => 'full_html',
+            ),
+        ),
+    );
+// Setup notification email.
+    $emails = array(
+        array(
+            'email' => 'boris@tiltfactory.com',
+            'subject' => 'default',
+            'from_name' => 'default',
+            'from_address' => 'default',
+            'template' => 'default',
+            'excluded_components' => array(),
+        ),
+    );
+// Attach the webform to the node.
+    $node->webform = array(
+        'confirmation' => '',
+        'confirmation_format' => NULL,
+        'redirect_url' => '<confirmation>',
+        'status' => '1',
+        'block' => '0',
+        'teaser' => '0',
+        'allow_draft' => '0',
+        'auto_save' => '0',
+        'submit_notice' => '1',
+        'submit_text' => '',
+        'submit_limit' => '-1', // User can submit more than once.
+        'submit_interval' => '-1',
+        'total_submit_limit' => '-1',
+        'total_submit_interval' => '-1',
+        'record_exists' => TRUE,
+        'roles' => array(
+            0 => '1', // Anonymous user can submit this webform.
+        ),
+        'emails' => $emails,
+        'components' => $components,
+    );
+// Save the node.
+    node_save($node);
+  }
+  return 'built contact form';
+}
+
+function veldeke_tools_create_contact_form_confirm($form, &$form_state) {
+
+  if (module_exists('webform')) {
+
+
+    return confirm_form(
+                    $form, t('Are you sure you want to create the contact form?'), isset($_GET['destination']) ? $_GET['destination'] : "contact", t('This action will delete the exisiting contact form and all the data submitted in the contact form by the visitors.'), t('Create'), t('I changed my mind')
+    );
+  } else {
+    drupal_set_message('Cannot create contact form because the module webform is not enabled', 'error');
+    $form2 = array();
+    $form2[] = array(
+        '#markup' => l('Enable Webform on Modules page', 'admin/modules', array('query' => array('destination' => 'admin/config/system/veldeke_tools/create_contact_form'))),
+    );
+    return $form2;
+  }
+}
+
+function veldeke_tools_create_contact_form_confirm_submit($form, &$form_state) {
+  $form_values = $form_state['values'];
+  if ($form_state['values']['confirm']) {
+    veldeke_tools_create_contact_form();
+    drupal_set_message(t('Contact form has been successfully created.'));
+  }
+  drupal_goto("contact");
+}
+
+function veldeke_tools_create_taxonomy_confirm($form, &$form_state) {
+  return confirm_form(
+                  $form, t('Are you sure you want to create the taxonomies?'), isset($_GET['destination']) ? $_GET['destination'] : "contact", t('This action will delete the exisiting taxonomies including all the custom made taxonomy terms.'), t('Create'), t('I changed my mind')
+  );
+}
+
+function veldeke_tools_create_taxonomy_confirm_submit($form, &$form_state) {
+  $form_values = $form_state['values'];
+  if ($form_state['values']['confirm']) {
+    veldeke_tools_create_taxonomy();
+    drupal_set_message(t('Taxonomies have been successfully created.'));
+  }
+  drupal_goto("contact");
+}
+
+/**
+ * Returns data for the exposition table
+ * TODO: at some point in future: replace w user manageable data
+ * TODO: add real data
+ * @return array
+ */
+function _get_properties() {
+  $file = drupal_get_path('module', 'veldeke_tools') . '/data/properties.csv';
+  $real = realpath($file);
+  $data = _csv_to_array($real, ';');
+  return $data;
+}
+
+/**
+ * Returns data for the exposition table
+ * TODO: at some point in future: replace w user manageable data
+ * TODO: add real data
+ * @return array
+ */
+function veldeke_tools_fetch_data($csv_file) {
+  $data = _csv_to_array($csv_file, ',');
+  return $data;
+}
+
+/**
+ * Filters array by value on column
+ * Poor man's WHERE column IS value ;)
+ */
+function _filter_table_array($table_data, $column, $value, $operator = '==') {
+  $data = array();
+  foreach ($table_data as $row) {
+    switch ($operator) {
+      case '>=' :
+        if ($row[$column] >= $value) {
+          $data[] = $row;
+        }
+        break;
+      case '<=' :
+        if ($row[$column] <= $value) {
+          $data[] = $row;
+        }
+        break;
+      default: // ==
+        if ($row[$column] == $value) {
+          $data[] = $row;
+        }
+        break;
+    }
+  }
+  return $data;
+}
+
+/**
+ * Returns custom sorted array
+ * @param type $data
+ * @param type $order
+ * @param type $sort_type
+ * @return type
+ *
+ * http://stackoverflow.com/questions/15476085/how-to-sort-array-in-descending-order-based-on-a-specific-value
+ */
+function _sort_table_array($data, $order, $sort_type) {
+  $arr = $data;
+  $sort = array();
+  foreach ($arr as $k => $v) {
+    $sort[$order][$k] = $v[$order];
+  }
+  $sort_type = ($sort_type == 'asc') ? SORT_ASC : SORT_DESC;
+  array_multisort($sort[$order], $sort_type, $arr);
+  return $arr;
+}
+
+/**
+ * Open csv file and returns data as an array
+ * @link http://gist.github.com/385876
+ */
+function _csv_to_array($filename = '', $delimiter = ',') {
+  $data = array();
+
+  // return data as asscoiative array
+//  $rows = array_map('str_getcsv', file($filename));
+//$header = array_shift($rows);
+//$data = array();
+//foreach ($rows as $row) {
+//  $data[] = array_combine($header, $row);
+//}
+  // return data indexed
+  if (($handle = fopen($filename, 'r')) !== FALSE) {
+    while (($row = fgetcsv($handle, 1000, $delimiter)) !== FALSE) {
+      $data[] = $row;
+    }
+    fclose($handle);
+  }
+  return $data;
+}
+
+/**
+ * Returns html for symbols list (legend) . Used on property detail page
+ */
+function veldeke_tools_symbols() {
+  $output = '';
+  $type = 'ul';
+  $attributes = array(
+      'class' => 'symbols',
+  );
+  $symbols = array(
+      array(
+          'label' => t('Tiles'),
+          'description' => t('Floor has tiles'),
+          'class' => 'tiles',
+      ),
+      array(
+          'label' => t('Parquet'),
+          'description' => t('Floor has parquet'),
+          'class' => 'parquet',
+      ),
+      array(
+          'label' => t('Architectural concrete'),
+          'description' => t('Floor has architectural concrete'),
+          'class' => 'concrete',
+      ),
+      array(
+          'label' => t('Studded wood'),
+          'description' => t('Floor has wood that is studded'),
+          'class' => 'wood',
+      ),
+      array(
+          'label' => t('Stone'),
+          'description' => t('Floor has stones'),
+          'class' => 'stone',
+      ),
+      array(
+          'label' => t('Isolation'),
+          'description' => t('Area is isolated'),
+          'class' => 'isolation',
+      ),
+      array(
+          'label' => t('Turning window'),
+          'description' => t('Window can turn'),
+          'class' => 'turnw',
+      ),
+      array(
+          'label' => t('Fixed window'),
+          'description' => t('Window is fixed'),
+          'class' => 'fixw',
+      ),
+  );
+  $items = array();
+  foreach ($symbols as $symbol) {
+    $key = "<span class='key'>{$symbol['label']}</span>";
+    $items[] = array(
+        'data' => $key . '' . $symbol['label'],
+        'class' => array($symbol['class'], 'label'),
+    );
+  }
+  $output .= theme('item_list', array('items' => $items, 'title' => '', 'type' => $type, 'attributes' => $attributes));
+  return $output;
+}
+
+/*
+ * Creates terms. Disabled. Is useful for other projects
+ * Disabled, but useful in early process of development
+ */
+
+function veldeke_tools_create_taxonomy() {
+  // define the vocabularies
+  $define_vocs = array(
+      array(
+          'name' => t('Page type'),
+          'machine_name' => 'page_type',
+          'descr' => '',
+          'weight' => -2,
+      ),
+  );
+  // create  or update vocabs
+  foreach ($define_vocs as $define_voc) {
+    $exist_voc = taxonomy_vocabulary_machine_name_load($define_voc['machine_name']);
+    $save_voc = (object) 'Vocabulary';
+    if (isset($exist_voc)) {
+      $save_voc->vid = $exist_voc->vid; // take exisiting vid
+    }
+    $save_voc->name = $define_voc['name'];
+    $save_voc->machine_name = $define_voc['machine_name'];
+    $save_voc->description = $define_voc['descr'];
+    $save_voc->hierarchy = 1;
+    $save_voc->module = 'veldeke_tools';
+    $save_voc->weight = $define_voc['weight'];
+    taxonomy_vocabulary_save($save_voc);
+  }
+  // define terms
+  $define_terms = array(
+      array(
+          'machname' => 'page_type',
+          'items' => array(
+              array('name' => t('Project'), 'description' => '', 'weight' => '-8'),
+              array('name' => t('Maison veldeke'), 'description' => '', 'weight' => '-4'),
+          ),
+      ),
+  );
+  // create or update terms
+  foreach ($define_terms as $define_term) {
+    $vocab = taxonomy_vocabulary_machine_name_load($define_term['machname']);
+    foreach ($define_term['items'] as $item) {
+      $save_term = (object) 'Term';
+      $query = new EntityFieldQuery;
+      $result = $query
+              ->entityCondition('entity_type', 'taxonomy_term')
+              ->propertyCondition('name', $item['name'])
+              ->propertyCondition('vid', $vocab->vid)
+              ->execute();
+      if (isset($result['taxonomy_term'])) {
+        foreach ($result['taxonomy_term'] as $t) {
+          $save_term->tid = $t->tid;
+        }
+      }
+      $save_term->name = $item['name'];
+      $save_term->description = $item['description'];
+      $weight = (isset($item['weight']) ? $item['weight'] : 0);
+      $save_term->weight = $weight;
+      $save_term->vid = $vocab->vid;
+      taxonomy_term_save($save_term);
+    }
+  }
+  drupal_set_message('Create taxonomy');
+}
+
+/**
+ * Returns html for building navigation
+ */
+function veldeke_tools_building_nav() {
+  $title = NULL;
+  $type = 'ul';
+  $attributes = array(
+      'class' => 'building_nav clearfix',
+  );
+  $current_path = explode('/', current_path());
+  $classz = ($current_path[0] == 'floor' ? 'active' : '');
+  $links = array(
+      array(
+          'name' => t('Choose per floor'),
+          'url' => 'building',
+          'class' => $classz,
+      ),
+      array(
+          'name' => t('Appartment list'),
+          'url' => 'properties',
+          'class' => '',
+      ),
+  );
+  $items = array();
+  foreach ($links as $link) {
+    $items[] = array(
+        'data' => l($link['name'], $link['url'], array('attributes' => array('class' => array($link['class'])))),
+        'class' => array(),
+    );
+  }
+  return theme('item_list', array('items' => $items, 'title' => $title, 'type' => $type, 'attributes' => $attributes));
+}
+
+/**
+ * Batch operation: associate audio tiles to each song node.
+ */
+function veldeke_tools_import_dictionary() {
+  $num_deleted = db_delete('veldeke_dictionary')
+          ->execute();
+  drupal_set_message($num_deleted . ' terms deleted');
+  $csv_file = 'https://docs.google.com/spreadsheet/pub?key=0AgLDdff6gGPwdHJBOXJoU3FEMERzUDZ4Wk96WU1OOEE&single=true&gid=0&output=csv';
+  $terms = veldeke_tools_fetch_data($csv_file);
+  unset($terms[0]); // header csv
+  foreach ($terms as $term) {
+    $operations[] = array('veldeke_tools_import_dictionary_term', array($term));
+  }
+  $batch = array(
+      'operations' => $operations,
+      'finished' => 'veldeke_tools_import_dictionary_finished',
+  );
+  return $batch;
+}
+
+function veldeke_tools_import_dictionary_term($term, &$context) {
+  $context['results'][] = $term[0] . ' : ' . check_plain($term[2]);
+  $context['message'] = t('Importing "@title"', array('@title' => $term[2]));
+  try {
+    db_insert('veldeke_dictionary')
+            ->fields(array(
+                'updated' => check_plain($term[1]),
+                'dtid' => $term[0],
+                'nl_term' => check_plain($term[2]),
+                'li_term' => check_plain($term[3]),
+                'misc' => check_plain($term[4]),
+                'nl_letter' => strtolower($term[2][0]),
+                'li_letter' => strtolower($term[3][0]),
+            ))
+            ->execute();
+    drupal_set_message($term[2] . ' imported');
+  } catch (Exception $e) {
+    watchdog('recreatex', 'Problem import %e', array('%e' => $e), WATCHDOG_ERROR);
+  }
+  $output = 'importing ditionary';
+  return $output;
+}
+
+function veldeke_tools_import_dictionary_finished($success, $results, $operations) {
+  if ($success) {
+    drupal_set_message(t('@count terms imported.', array('@count' => count($results))));
+  } else {
+    $error_operation = reset($operations);
+    drupal_set_message(t('An error occurred while processing @operation with arguments : @args', array('@operation' => $error_operation[0], '@args' => print_r($error_operation[0], TRUE))));
+  }
+}
+
+function veldeke_tools_fetch_terms($lang,$letter) {
+  $query = db_select('veldeke_dictionary', 'vd');
+  $query->fields('vd', array('nl_term', 'li_term')); //SELECT the fields from node
+//->fields('u', array('name'))//SELECT the fields from user
+//->orderBy('created', 'DESC')//ORDER BY created
+//->range(0, 2); //LIMIT to 2 records
+  
+  if($lang=='li') {
+  $query->condition('vd.li_letter', $letter);
+  }
+  else {
+      $query->condition('vd.nl_letter', $letter);
+  }
+  
+  $result = $query->execute();
+  $results = $query->execute();
+  if (variable_get('debug_mode') == 1) {
+    dpm((string) $query);
+    dpm($query->arguments());
+  }
+  $data = array();
+  foreach ($results as $result) {
+    $data[] = array(
+        'term' => $lang == 'li' ? $result->li_term : $result->nl_term,
+        'definitions' => $lang == 'li' ? $result->nl_term : $result->li_term,
+    );
+  }
+  return $data;
+}

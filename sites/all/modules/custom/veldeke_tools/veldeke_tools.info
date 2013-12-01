@@ -1,0 +1,9 @@
+name = Veldeke Tools
+description = Custom code for Veldeke Krink Venlo project
+core = 7.x
+;dependencies[] = libraries
+;dependencies[] = menu
+;dependencies[] = taxonomy
+;dependencies[] = webform
+;dependencies[] = path
+;dependencies[] = weight
