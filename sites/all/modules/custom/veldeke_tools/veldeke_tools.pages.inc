@@ -420,6 +420,17 @@ function veldeke_tools_building() {
  */
 function veldeke_tools_terms($lang='nl',$letter='a') {
   $output = '';
+    $type = 'ul';
+  $attributes = array(
+      'class' => 'symbols',
+  );
+
+  $items = array();
+  foreach (range('A', 'Z') as $char) {
+  $items[] = array('data' => l($char, 'terms/'.$lang.'/'.$char));
+  }
+  $output .= theme('item_list', array('items' => $items, 'title' => 'Browse', 'type' => $type, 'attributes' => $attributes));
+
   $terms = veldeke_tools_fetch_terms($lang,$letter);
   $alfa = array_shift(array_values($terms));
   $omega = end($terms);
