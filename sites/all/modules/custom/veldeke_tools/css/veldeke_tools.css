@@ -1,0 +1,26 @@
+/* 
+    Document   : veldeke_tools.css
+    Created on : 3-dec-2013, 23:23:04
+    Author     : anne
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+
+.page-terms .lang-nav li,
+.page-terms .az-browser {
+clear: both;
+}
+
+.page-terms .lang-nav li,
+.page-terms .az-browser li {
+  background-image: none;
+  display: inline;
+  list-style-type: none;
+  padding: 0.2em;
+}
+
+.page-terms .lang-nav li a,
+.page-terms .az-browser li a {
+  padding: 0.3em;
+}
