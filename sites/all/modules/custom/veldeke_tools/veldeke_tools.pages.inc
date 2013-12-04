@@ -419,12 +419,14 @@ function veldeke_tools_building() {
  * 
  */
 function veldeke_tools_terms($lang='nl',$letter='a') {
+  $path = drupal_get_path('module','veldeke_tools');
+  drupal_add_css($path.'/css/veldeke_tools.css');
   $output = '';
-    $type = 'ul';
+  $output .= veldeke_tools_lang_nav($letter);
+  $type = 'ul';
   $attributes = array(
-      'class' => 'symbols',
+      'class' => 'az-browser',
   );
-
   $items = array();
   foreach (range('A', 'Z') as $char) {
   $items[] = array('data' => l($char, 'terms/'.$lang.'/'.$char));

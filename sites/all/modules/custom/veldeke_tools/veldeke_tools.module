@@ -34,15 +34,10 @@ function veldeke_tools_menu() {
       'weight' => 0,
   );
 
-  $menu['maison_veldeke'] = array(
-      'title' => 'Maison veldeke',
-      'description' => 'Information about Maison veldeke',
-      'page callback' => 'veldeke_tools_composition',
-      'page arguments' => array('Maison veldeke'),
+  $menu['veldeke_tools/search_terms_autocomplete_callback'] = array(
+    'page callback' => 'veldeke_tools_search_terms_autocomplete_callback',
+    'type' => MENU_CALLBACK,
       'access arguments' => array('access content'),
-      'file' => 'veldeke_tools.pages.inc',
-      'type' => MENU_NORMAL_ITEM,
-      'weight' => 0,
   );
 
   $menu['building'] = array(
@@ -59,7 +54,7 @@ function veldeke_tools_menu() {
       'title' => 'Terms',
       'description' => 'View terms',
       'page callback' => 'veldeke_tools_terms',
-      'page arguments' => array(1,2),
+      'page arguments' => array(1, 2),
       'access arguments' => array('access content'),
       'file' => 'veldeke_tools.pages.inc',
       'type' => MENU_NORMAL_ITEM,
@@ -145,6 +140,33 @@ function veldeke_tools_menu() {
 
   return $menu;
 }
+
+//
+function veldeke_tools_search_terms_autocomplete_callback($string = "") {
+  $matches = array();
+  if ($string) {
+    
+    
+    $or = db_or();
+$or->condition('nl_term', db_like($string) . '%', 'LIKE');
+$or->condition('li_term', db_like($string) . '%', 'LIKE');
+    
+    $result = db_select('veldeke_dictionary')
+      ->fields('veldeke_dictionary', array('nl_term', 'li_term'))
+      ->condition($or)
+      ->range(0, 10)
+      ->execute();
+    foreach ($result as $term) {
+      // In the simplest case (see user_autocomplete), the key and the value are the same. Here we'll display the
+      // uid along with the username in the dropdown.
+      $matches[$term->nl_term] = check_plain($term->nl_term) . " " . $term->li_term;
+    }
+  }
+
+  drupal_json_output($matches);
+}
+//SELECT title FROM pages WHERE my_col LIKE %$param1% OR another_col LIKE %$param2%;
+//SELECT title FROM pages WHERE my_col LIKE %$param1% OR another_col LIKE %$param2%;
 
 /**
  * Implements hook_permission()
@@ -336,8 +358,8 @@ function veldeke_tools_get_term($term_name, $machine_name) {
  * Defines custom blocks
  */
 function veldeke_tools_block_info() {
-  $blocks['site_menu'] = array(
-      'info' => t('veldeke tools: Site menu'),
+  $blocks['search_terms'] = array(
+      'info' => t('veldeke tools: search terms'),
       'cache' => DRUPAL_CACHE_GLOBAL,
   );
   $blocks['banner_narrow'] = array(
@@ -379,8 +401,8 @@ function veldeke_tools_block_info() {
 function veldeke_tools_block_view($delta = '') {
   $blocks = array();
   switch ($delta) {
-    case 'site_menu':
-      $blocks['content'] = veldeke_tools_site_menu();
+    case 'search_terms':
+      $blocks['content'] = drupal_get_form('veldeke_tools_search_terms_form');
       break;
     case 'banner_narrow':
       $blocks['content'] = veldeke_tools_banner('narrow');
@@ -987,36 +1009,12 @@ function veldeke_tools_create_taxonomy() {
 }
 
 /**
- * Returns html for building navigation
+ * Returns html for lang navigation
  */
-function veldeke_tools_building_nav() {
-  $title = NULL;
-  $type = 'ul';
-  $attributes = array(
-      'class' => 'building_nav clearfix',
-  );
-  $current_path = explode('/', current_path());
-  $classz = ($current_path[0] == 'floor' ? 'active' : '');
-  $links = array(
-      array(
-          'name' => t('Choose per floor'),
-          'url' => 'building',
-          'class' => $classz,
-      ),
-      array(
-          'name' => t('Appartment list'),
-          'url' => 'properties',
-          'class' => '',
-      ),
-  );
-  $items = array();
-  foreach ($links as $link) {
-    $items[] = array(
-        'data' => l($link['name'], $link['url'], array('attributes' => array('class' => array($link['class'])))),
-        'class' => array(),
-    );
-  }
-  return theme('item_list', array('items' => $items, 'title' => $title, 'type' => $type, 'attributes' => $attributes));
+function veldeke_tools_lang_nav($letter = 'a') {
+  $items[] = array('data' => l('Nederlands', 'terms/nl/' . $letter));
+  $items[] = array('data' => l('Venloos', 'terms/li/' . $letter));
+  return theme('item_list', array('items' => $items, 'title' => NULL, 'type' => 'ul', 'attributes' => array('class' => 'lang-nav')));
 }
 
 /**
@@ -1071,20 +1069,19 @@ function veldeke_tools_import_dictionary_finished($success, $results, $operation
   }
 }
 
-function veldeke_tools_fetch_terms($lang,$letter) {
+function veldeke_tools_fetch_terms($lang, $letter) {
   $query = db_select('veldeke_dictionary', 'vd');
   $query->fields('vd', array('nl_term', 'li_term')); //SELECT the fields from node
 //->fields('u', array('name'))//SELECT the fields from user
 //->orderBy('created', 'DESC')//ORDER BY created
 //->range(0, 2); //LIMIT to 2 records
-  
-  if($lang=='li') {
-  $query->condition('vd.li_letter', $letter);
+
+  if ($lang == 'li') {
+    $query->condition('vd.li_letter', $letter);
+  } else {
+    $query->condition('vd.nl_letter', $letter);
   }
-  else {
-      $query->condition('vd.nl_letter', $letter);
-  }
-  
+
   $result = $query->execute();
   $results = $query->execute();
   if (variable_get('debug_mode') == 1) {
@@ -1099,4 +1096,16 @@ function veldeke_tools_fetch_terms($lang,$letter) {
     );
   }
   return $data;
+}
+
+function veldeke_tools_search_terms_form($form, &$form_state) {
+  $form['user'] = array(
+    '#type' => 'textfield',
+    '#size' => 12, 
+    '#title' => t('Choose'),
+    // The autocomplete path is provided in hook_menu in ajax_example.module.
+    '#autocomplete_path' => 'veldeke_tools/search_terms_autocomplete_callback',
+  );
+
+ return $form;
 }
