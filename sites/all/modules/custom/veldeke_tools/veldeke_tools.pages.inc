@@ -199,7 +199,7 @@ $output = '';
 //    
   $results = $query->execute();
   $num_rows = $query->countQuery()->execute()->fetchField();
-  dsm($num_rows);
+  drupal_set_message($num_rows);
 //
   foreach($results as $result) {
 //    dpm($result);
@@ -207,7 +207,6 @@ $output = '';
     
   }
 //
-  dsm( 'sumping');
   
   $output = preg_replace('/<h3>(.*?)<\/h3>/i', '', $output);
   $output = preg_replace('/<h2>(.*?)<\/h2>/i', '', $output);
