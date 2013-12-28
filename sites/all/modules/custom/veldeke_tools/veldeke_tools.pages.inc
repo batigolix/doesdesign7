@@ -183,128 +183,37 @@ function veldeke_tools_test() {
  * Returns contact page
  * @return string
  */
-function veldeke_tools_contact_page() {
-  $output = '';
+function veldeke_tools_export() {
+  
+$output = '';
 
-  // get contact details
-  $cont_vars = _contact_data();
-  $cont_vars['mode'] = 'large';
-  $cont_vars['info_label'] = t('Information documentation');
-
-  // get contact webform
-  $alias = "contact_form";
-  $path = drupal_lookup_path("source", $alias);
-  $node = menu_get_object("node", 1, $path);
-  $webform = 'webform_client_form_' . $node->nid;
-  $submission = (object) array();
-  $enabled = TRUE;
-  $preview = FALSE;
-  $contact_form = drupal_get_form($webform, $node, $submission, $enabled, $preview);
-
-  // prepare data for theme functions
-  $vars['contact_form'] = drupal_render($contact_form);
-  $vars['contact_details'] = theme('contact_details', $cont_vars);
-
-  // print & return page using theme_contact_page
-  $output = theme('contact_page', $vars);
-  return $output;
-}
-
-/**
- * Returns HTML for the expositions table
- * Soratble, pageable, filterable drupal table without db query
- * http://drupal.stackexchange.com/questions/14889/can-tablesort-be-used-without-a-query
- */
-function veldeke_tools_properties_page() {
-  include_once 'veldeke_tools.forms.inc';
-  $vars['building_nav'] = veldeke_tools_building_nav();
-
-  // fetch data
-  // csv structure #;Code;Code2;Type;Surf prop;Surf terr/balc;Surf gard;Bedrooms;Floor;Orientation;Cellar;Garage;price;Building;Status
-  $table_data = array();
-  $properties = _get_properties();
-  unset($properties[0]); // remove header
-  foreach ($properties as $property) {
-    $table_data[] = array(
-        'propid' => $property[0],
-        'code' => $property[1],
-        // 'code2' => $property[1],
-        'type' => $property[2],
-        'surface_property' => $property[3],
-        'surface_terrace' => $property[4],
-        // 'surface_garden' => $property[1],
-        'bedrooms' => $property[5],
-        'floor' => $property[6],
-        'orientation' => $property[7],
-        'cellar' => $property[8],
-        'garage' => $property[9],
-        // 'price' => $property[12],
-        // 'building' => $property[12],
-        'status' => $property[10],
-            // 'type' => $property[14],
-    );
+  $query = db_select('node', 'n');
+  $query->condition('n.status', 1);
+  $query->condition('n.type', 'book');
+  $query->condition('n.title', 'Waord met%', 'LIKE');
+  $query->addField('n', 'title');
+  $query->join('field_data_body', 'fdb', 'n.nid = fdb.entity_id');
+  $query->condition('fdb.bundle', 'book');
+  $query->addField('fdb', 'body_value', 'body');
+//  $query->range(0, 3);
+//    
+  $results = $query->execute();
+  $num_rows = $query->countQuery()->execute()->fetchField();
+  dsm($num_rows);
+//
+  foreach($results as $result) {
+//    dpm($result);
+    $output .= $result->body;
+    
   }
-
-  // if filter already set, filter the array
-  if (isset($_SESSION['form_values']['bedrooms']) && $_SESSION['form_values']['bedrooms'] < 998) {
-    $table_data = _filter_table_array($table_data, 'bedrooms', $_SESSION['form_values']['bedrooms'], '==');
-  }
-  if (isset($_SESSION['form_values']['surface']) && $_SESSION['form_values']['surface'] > 0) {
-    $table_data = _filter_table_array($table_data, 'surface_property', $_SESSION['form_values']['surface'], '>=');
-  }
-//  if (isset($_SESSION['form_values']['price']) && $_SESSION['form_values']['price'] != 0) {
-//    $table_data = _filter_table_array($table_data, 'price', $_SESSION['form_values']['price'], '<=');
-//  }
-  // headers array, sorting by default on country
-  $headers = array(
-      array('data' => t('Ref.')),
-      array('data' => t('Floor')),
-      array('data' => t('Bedroom(s)')),
-      array('data' => t('Property (m2)')),
-      array('data' => t('Terrace (m2)')),
-          //array('data' => t('Price(eur)')),
-  );
-
-  // getting the current sort and order parameters from the url
-  // $order = tablesort_get_order($headers);
-  // $sort = tablesort_get_sort($headers);
-  // sort the table data
-  // $table_data = _sort_table_array($table_data, $order['sql'], $sort);
-  // create the array with rows for theme table
-  $rows = array();
-  foreach ($table_data as $entry) {
-    //$price = ($entry['status'] == 'Sold' ? t('Sold') : number_format($entry['price'], 0, ',', '.'));
-    $rowclass = ($entry['status'] == 'Sold' ? 'sold' : 'not-sold');
-    $ref = ($entry['status'] == 'Sold' ? $entry['code'] : l($entry['code'], 'property/' . $entry['propid']));
-
-    $rows[] = array(
-        'data' => array(
-            array('data' => $ref),
-            array('data' => $entry['floor']),
-            array('data' => $entry['bedrooms']),
-            array('data' => $entry['surface_property']),
-            array('data' => $entry['surface_terrace']),
-        //array('data' => $price),
-        ),
-        'class' => array($rowclass),
-    );
-  }
-  /*  */
-
-  // add any attributes and send everything to theme table
-  $attributes = array('class' => array('property'));
-
-  // generate filter form
-  $filter = drupal_get_form('veldeke_tools_properties_filter_form');
-  $vars['filter'] = drupal_render($filter);
-
-  // generate table
-  $table = array('header' => $headers, 'attributes' => $attributes, 'rows' => $rows, 'sticky' => FALSE);
-  $vars['table'] = theme('table', $table);
-
-  // generate & return page
-  $output = theme('properties_page', $vars);
-  return $output;
+//
+  dsm( 'sumping');
+  
+  $output = preg_replace('/<h3>(.*?)<\/h3>/i', '', $output);
+  $output = preg_replace('/<h2>(.*?)<\/h2>/i', '', $output);
+  $output = preg_replace('/<dt>(.*?)<\/dt>(.*?)<dd>(.*?)<\/dd>/i', '$1;$3 <br/>', $output);
+  
+return $output;
 }
 
 /**

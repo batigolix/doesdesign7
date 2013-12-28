@@ -93,7 +93,7 @@ function veldeke_tools_menu() {
   );
 
   $menu['admin/config/system/veldeke_tools'] = array(
-      'title' => 'veldeke tools',
+      'title' => 'Veldeke tools',
       'description' => 'Collection of nifty tools for veldeke project',
       'page callback' => 'system_admin_menu_block_page',
       'access arguments' => array('administer site configuration'),
@@ -129,13 +129,11 @@ function veldeke_tools_menu() {
       'access arguments' => array('administer site configuration'),
   );
 
-  $menu['admin/config/system/veldeke_tools/upload_csv'] = array(
-      'title' => 'Upload csv with properties',
-      'description' => 'Upload csv with properties and replace the current csv',
-      'page callback' => 'drupal_get_form',
-      'page arguments' => array('veldeke_tools_upload_csv_form'),
+  $menu['admin/config/system/veldeke_tools/export'] = array(
+      'title' => 'Export bodies to csv-ish',
+      'page callback' => 'veldeke_tools_export',
       'access arguments' => array('administer content'),
-      'file' => 'veldeke_tools.forms.inc',
+      'file' => 'veldeke_tools.pages.inc',
   );
 
   return $menu;
