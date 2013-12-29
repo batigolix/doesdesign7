@@ -190,11 +190,13 @@ $output = '';
   $query = db_select('node', 'n');
   $query->condition('n.status', 1);
   $query->condition('n.type', 'book');
-  $query->condition('n.title', 'Waord met%', 'LIKE');
+  $query->condition('n.title', '%Waord met%', 'LIKE');
   $query->addField('n', 'title');
   $query->join('field_data_body', 'fdb', 'n.nid = fdb.entity_id');
   $query->condition('fdb.bundle', 'book');
   $query->addField('fdb', 'body_value', 'body');
+  $query->orderBy('n.title', 'ASC');
+
 //  $query->range(0, 3);
 //    
   $results = $query->execute();
@@ -207,7 +209,7 @@ $output = '';
     
   }
 //
-  
+  $output = preg_replace('/^\s+|\n|\r|\s+$/m', '', $output);
   $output = preg_replace('/<h3>(.*?)<\/h3>/i', '', $output);
   $output = preg_replace('/<h2>(.*?)<\/h2>/i', '', $output);
   $output = preg_replace('/<dt>(.*?)<\/dt>(.*?)<dd>(.*?)<\/dd>/i', '$1;$3 <br/>', $output);
