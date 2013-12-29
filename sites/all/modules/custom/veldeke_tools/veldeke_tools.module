@@ -132,7 +132,7 @@ function veldeke_tools_menu() {
   $menu['admin/config/system/veldeke_tools/export'] = array(
       'title' => 'Export bodies to csv-ish',
       'page callback' => 'veldeke_tools_export',
-      'access arguments' => array('administer content'),
+      'access arguments' => array('administer nodes'),
       'file' => 'veldeke_tools.pages.inc',
   );
 
