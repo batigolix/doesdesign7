@@ -93,7 +93,7 @@ function veldeke_tools_schema() {
  * Implementation of hook_update_N()
  * A first character columns
  */
-function veldeke_tools_update_7100() {
+function veldeke_tools_update_7500() {
   $nl_letter = array(
         'type' => 'varchar',
         'length' => 255,
