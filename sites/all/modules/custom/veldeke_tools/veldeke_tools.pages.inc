@@ -70,3 +70,5 @@ function veldeke_tools_terms($lang='nl',$letter='a') {
   $output .= theme('definition_list', array('title' => $title, 'items' => $terms));
   return $output;
 }
+
+

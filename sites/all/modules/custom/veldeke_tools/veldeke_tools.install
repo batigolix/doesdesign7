@@ -111,17 +111,3 @@ function veldeke_tools_update_7500() {
   db_add_index('veldeke_dictionary', 'li_letter', array('li_letter'));
   
 }
-
-/**
- * Implementation of hook_update_N()
- * Add maximum per group field
- *
-function recreatex_activities_update_7200() {
-  $max_per_group = array(
-      'type' => 'int',
-      'default' => '0',
-      'description' => "Maximum per group (if applies : capacity_check = Groups)",
-  );
-  db_add_field('slots', 'maximum_per_group', $max_per_group);
-}
- * */

@@ -186,7 +186,7 @@ function veldeke_tools_block_info() {
       'cache' => DRUPAL_CACHE_GLOBAL,
   );
 
-    $blocks['dictionary_toc'] = array(
+  $blocks['dictionary_toc'] = array(
       'info' => t('Veldeke tools: dictionary TOC'),
       'cache' => DRUPAL_CACHE_GLOBAL,
   );
@@ -265,9 +265,13 @@ function veldeke_tools_import_dictionary() {
           ->execute();
   drupal_set_message($num_deleted . ' terms deleted');
   $csv_file = 'https://docs.google.com/spreadsheet/pub?key=0AgLDdff6gGPwdHVzM2pmQkZjSXVDUUwybkpQWGROVkE&single=true&gid=0&output=csv';
-//  $csv_file = 'https://docs.google.com/spreadsheet/pub?key=0AgLDdff6gGPwdHJBOXJoU3FEMERzUDZ4Wk96WU1OOEE&single=true&gid=0&output=csv';
-  $terms = veldeke_tools_fetch_data($csv_file);
+  $csv_string = get_data($csv_file);
+  $terms = csv_to_array($csv_string); //parse the rows 
   unset($terms[0]); // header csv
+  if (variable_get('debug_mode') == 1) {
+    $terms = array_slice($terms, 1750, 50);
+  }
+  //dpm($terms);
   foreach ($terms as $term) {
     $operations[] = array('veldeke_tools_import_dictionary_term', array($term));
   }
@@ -279,8 +283,12 @@ function veldeke_tools_import_dictionary() {
 }
 
 function veldeke_tools_import_dictionary_term($term, &$context) {
+  //dsm(_remove_accents($term[3]).'--');
   $context['results'][] = $term[0] . ' : ' . check_plain($term[2]);
   $context['message'] = t('Importing "@title"', array('@title' => $term[2]));
+  $nl_letter = strtolower(_remove_accents($term[2]));
+
+  $li_letter = strtolower(_remove_accents($term[3]));
   try {
     db_insert('veldeke_dictionary')
             ->fields(array(
@@ -289,13 +297,13 @@ function veldeke_tools_import_dictionary_term($term, &$context) {
                 'nl_term' => check_plain($term[2]),
                 'li_term' => check_plain($term[3]),
                 'misc' => check_plain($term[4]),
-                'nl_letter' => strtolower($term[2][0]),
-                'li_letter' => strtolower($term[3][0]),
+                'nl_letter' => $nl_letter[0],
+                'li_letter' => $li_letter[0],
             ))
             ->execute();
     drupal_set_message($term[2] . ' imported');
   } catch (Exception $e) {
-    watchdog('recreatex', 'Problem import %e', array('%e' => $e), WATCHDOG_ERROR);
+    watchdog('veldeke_tools', 'Problem import %id - %nl_term -- %e', array('%e' => $e, '%id' => $term[0], '%nl_term' => $term[2]), WATCHDOG_ERROR);
   }
   $output = 'importing ditionary';
   return $output;
@@ -377,22 +385,87 @@ function veldeke_tools_dictionary_toc() {
  * @return array
  */
 function veldeke_tools_fetch_data($csv_file) {
-  $data = _csv_to_array($csv_file, ',');
-  return $data;
-}
 
+  $file = get_data($csv_file);
 
-/**
- * Open csv file and returns data as an array
- * @link http://gist.github.com/385876
- */
-function _csv_to_array($filename = '', $delimiter = ',') {
-  $data = array();
-  if (($handle = fopen($filename, 'r')) !== FALSE) {
-    while (($row = fgetcsv($handle, 1000, $delimiter)) !== FALSE) {
-      $data[] = $row;
-    }
-    fclose($handle);
+  while (($row = fgetcsv($file, 1000, ',')) !== FALSE) {
+    $data[] = $row;
   }
+
+  dpm($data);
+
+//  $data = _csv_to_array($csv_file, ',');
+
   return $data;
 }
+
+// returns a two-dimensional array or rows and fields
+
+function parse_csv($csv_string, $delimiter = ",", $skip_empty_lines = true, $trim_fields = true) {
+  $enc = preg_replace('/(?<!")""/', '!!Q!!', $csv_string);
+  $enc = preg_replace_callback(
+          '/"(.*?)"/s', function ($field) {
+            return urlencode(utf8_encode($field[1]));
+          }, $enc
+  );
+  $lines = preg_split($skip_empty_lines ? ($trim_fields ? '/( *\R)+/s' : '/\R+/s') : '/\R/s', $enc);
+  return array_map(
+                  function ($line) use ($delimiter, $trim_fields) {
+                    $fields = $trim_fields ? array_map('trim', explode($delimiter, $line)) : explode($delimiter, $line);
+                    return array_map(
+                                    function ($field) {
+                                      return str_replace('!!Q!!', '"', utf8_decode(urldecode($field)));
+                                    }, $fields
+                    );
+                  }, $lines
+  );
+}
+
+/* gets the data from a URL */
+
+function get_data($url) {
+  $ch = curl_init();
+  $timeout = 5;
+  curl_setopt($ch, CURLOPT_URL, $url);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+  $data = curl_exec($ch);
+  curl_close($ch);
+  return $data;
+}
+
+function _remove_accents($str) {
+  //dsm($str);
+  $from = array(
+      "á", "à", "â", "ã", "ä", "é", "è", "ê", "ë", "í", "ì", "î", "ï",
+      "ó", "ò", "ô", "õ", "ö", "ú", "ù", "û", "ü", "ç", "Á", "À", "Â",
+      "Ã", "Ä", "É", "È", "Ê", "Ë", "Í", "Ì", "Î", "Ï", "Ó", "Ò", "Ô",
+      "Õ", "Ö", "Ú", "Ù", "Û", "Ü", "Ç"
+  );
+  $to = array(
+      "a", "a", "a", "a", "a", "e", "e", "e", "e", "i", "i", "i", "i",
+      "o", "o", "o", "o", "o", "u", "u", "u", "u", "c", "A", "A", "A",
+      "A", "A", "E", "E", "E", "E", "I", "I", "I", "I", "O", "O", "O",
+      "O", "O", "U", "U", "U", "U", "C"
+  );
+  $str = str_replace($from, $to, $str);
+  //dsm($str);
+  return $str;
+}
+
+function csv_to_array($csv, $delimiter = ',', $enclosure = '"', $escape = '\\', $terminator = "\n") {
+  $r = array();
+  $rows = explode($terminator, trim($csv));
+//    $names = array_shift($rows); 
+//    $names = str_getcsv($names,$delimiter,$enclosure,$escape); 
+//    $nc = count($names); 
+  foreach ($rows as $row) {
+    if (trim($row)) {
+      $values = str_getcsv($row, $delimiter, $enclosure, $escape);
+//            if (!$values) $values = array_fill(0,$nc,null); 
+      $r[] = $values;
+    }
+  }
+  return $r;
+}
+
