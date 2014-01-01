@@ -38,7 +38,7 @@ function veldeke_tools_theme() {
 function theme_definition(&$vars) {
   $output = "<div class='definition'>";
   $output .= "<span class='definition-key'>{$vars['definition']}</span>";
-  if (isset($vars['misc'])) {
+  if (!empty($vars['misc'])) {
     $output .= " | <em class='misc'>{$vars['misc']}</em>";
   }
   $output .= '</div>';
