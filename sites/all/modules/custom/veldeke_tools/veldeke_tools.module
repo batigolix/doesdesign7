@@ -367,7 +367,7 @@ function veldeke_tools_az_browse($lang = 'nl') {
   foreach (range('A', 'Z') as $char) {
     $items[] = array('data' => l($char, 'terms/' . $lang . '/' . $char));
   }
-  return theme('item_list', array('items' => $items, 'title' => 'Browse', 'type' => $type, 'attributes' => $attributes));
+  return theme('item_list', array('items' => $items, 'title' => t('Browse'), 'type' => $type, 'attributes' => $attributes));
 }
 
 function veldeke_tools_dictionary_toc() {
@@ -498,3 +498,9 @@ function veldeke_tools_block_save($delta = '', $edit = array()) {
   }
 }
 
+
+function veldeke_tools_init(){
+    $path = drupal_get_path('module','veldeke_tools');
+  drupal_add_css($path.'/css/veldeke_tools.css');
+
+}

@@ -11,7 +11,8 @@
 .page-terms .az-browser {
 clear: both;
 }
-
+#block-veldeke_tools-dictionary .lang-nav li,
+#block-veldeke_tools-dictionary .az-browser li,
 .BlockContent-body .lang-nav li,
 .BlockContent-body .az-browser li,
 .page-terms .lang-nav li,

@@ -57,8 +57,6 @@ return $output;
  * Returns HTML for the terms pages
  */
 function veldeke_tools_terms($lang='nl',$letter='a') {
-  $path = drupal_get_path('module','veldeke_tools');
-  drupal_add_css($path.'/css/veldeke_tools.css');
   $output = '';
   $output .= veldeke_tools_lang_nav($letter);
   $output .= veldeke_tools_az_browse($lang);
