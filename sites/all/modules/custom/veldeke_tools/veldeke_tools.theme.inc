@@ -50,6 +50,7 @@ function theme_definition(&$vars) {
  * @return string
  */
 function theme_definition_list(&$vars) {
+  $filter = TRUE;
   $title = $vars['title'];
   $items = $vars['items'];
   $output = '<div class="definition-list">';

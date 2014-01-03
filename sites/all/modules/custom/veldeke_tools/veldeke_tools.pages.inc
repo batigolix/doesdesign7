@@ -66,8 +66,8 @@ function veldeke_tools_terms($lang='nl',$letter='a') {
   $alfa = array_shift(array_values($terms));
   $omega = end($terms);
   $count = count($terms);
-  $title = t('From !alfa to !omega', array('!alfa' => $alfa['term'], '!omega' => $omega['term']));
-  $output .= theme('definition_list', array('title' => $title, 'items' => $terms));
+  drupal_set_title(t('Dictionary') . ': ' . t('From !alfa to !omega', array('!alfa' => $alfa['term'], '!omega' => $omega['term'])));
+  $output .= theme('definition_list', array('title' => NULL, 'items' => $terms));
   return $output;
 }
 
