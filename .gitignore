@@ -4,3 +4,75 @@ sites/*/settings*.php
 # Ignore paths that contain user-generated content.
 sites/*/files
 sites/*/private
+
+
+
+# Ignore configuration files that may contain sensitive information #
+#####################################################################
+.htaccess
+.htpasswd
+sites/*/*settings*.php
+sites/*/settings.php
+#sites/default/settings.php
+sites/default/tmp
+landing/download
+
+# Ignore paths that contain generated content #
+###############################################
+cache/
+files/
+sites/*/files
+sites/*/private
+sites/*/temp
+sites/*/tmp/
+private
+temp
+
+# Compiled source #
+###################
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Packages #
+############
+# It's better to unpack these files and commit the raw source, git has its own
+# built in compression methods
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases #
+######################
+*.log
+*.sql
+*.sqlite
+
+# OS generated files #
+######################
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
+_notes
+dwsync.xml
+nbproject
+*.esproj
+._.DS_Store
+._.DS_Store*
+*DS_Store*
+*/.sass-cache/*
+.sass-cache
+.sass-cache/*
+._*
+www/sites/default/tmp/.htaccess
+*.sublime-project
+*.sublime-workspace
