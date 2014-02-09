@@ -4,7 +4,7 @@
 <!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="nl" <?php print $rdf_namespaces; ?>> <!--<![endif]-->
 <head>
-  <?php // print $head; ?>
+  <?php print $head; ?>
   <title><?php print $head_title; ?></title>
   <?php print $styles; ?>
   <?php print $scripts; ?>
