@@ -1,0 +1,57 @@
+<?php
+
+/**
+ * @file
+ * Main bootstrap file of the dd_tools module.
+ */
+
+// Calls block specific hooks and overrides & blocks content.
+require_once dirname(__FILE__) . '/dd_tools.blocks.inc';
+
+/**
+ * Implements hook_menu().
+ *
+ */
+function dd_tools_menu() {
+  $menu = array();
+
+  $menu['dd_tools/test'] = array(
+      'title' => 'test',
+      'page callback' => 'dd_tools_test',
+      'page arguments' => array(1),
+      'access callback' => 'user',
+      'access arguments' => array(1),
+      'file' => 'dd_tools.pages.inc',
+      'type' => MENU_LOCAL_TASK,
+      'weight' => 0,
+  );
+
+  return $menu;
+}
+
+/*
+ * Implements preprocess node
+ */
+
+function dd_tools_preprocess_node(&$vars) {
+  $vars['article_number'] = $vars['nid'];
+  if ($vars['view_mode'] == 'hero_teaser') {
+    $vars['theme_hook_suggestions'][] = 'node__' . $vars['type'] . '__hero_teaser';
+  }
+  if($vars['type'] == 'object'){
+//    $vars['content']['field_image'] = array_shift(array_slice($vars['content']['field_image'], 0, 1));
+    $vars['classes_array'][] = 'slide';
+  }
+//  dpm($vars);
+}
+
+/**
+ * Implements hook entity info alter
+ * Mainly used for adding view modes (extra teasers n stuff)
+ */
+function dd_tools_entity_info_alter(&$entity_info) {
+  $entity_info['node']['view modes']['hero_teaser'] = array(
+      'label' => t('Hero teaser'),
+      'custom settings' => TRUE,
+  );
+}

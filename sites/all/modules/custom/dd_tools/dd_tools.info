@@ -1,0 +1,4 @@
+name = Doesdesign tools
+description = dd tools
+core = 7.x
+dependencies[] = locale
