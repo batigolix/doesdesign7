@@ -91,7 +91,7 @@ function veldeke_tools_menu() {
 function veldeke_tools_search_terms_autocomplete_callback($string = "") {
   $matches = array();
   if ($string) {
-    
+
     $or = db_or();
     $or->condition('nl_term', db_like($string) . '%', 'LIKE');
     $or->condition('li_term', db_like($string) . '%', 'LIKE');
@@ -185,7 +185,7 @@ function veldeke_tools_block_info() {
       'cache' => DRUPAL_CACHE_GLOBAL,
   );
 
-    $blocks['dictionary_instruct'] = array(
+  $blocks['dictionary_instruct'] = array(
       'info' => t('Veldeke tools: dictionary instructions'),
       'cache' => DRUPAL_CACHE_GLOBAL,
   );
@@ -323,14 +323,17 @@ function veldeke_tools_import_dictionary_finished($success, $results, $operation
 }
 
 function veldeke_tools_fetch_terms($lang, $letter) {
-  $query = db_select('veldeke_dictionary', 'vd');
+  $query = db_select('veldeke_dictionary', 'vd')
+          ->extend('PagerDefault')
+          ->limit(50);
   $query->fields('vd', array('nl_term', 'li_term', 'misc'));
   if ($lang == 'li') {
     $query->condition('vd.li_letter', $letter);
+    $query->orderBy('vd.li_term', 'ASC');
   } else {
     $query->condition('vd.nl_letter', $letter);
+    $query->orderBy('vd.nl_term', 'ASC');
   }
-//  $result = $query->execute();
   $results = $query->execute();
   if (variable_get('debug_mode') == 1) {
     dpm((string) $query);
@@ -477,12 +480,12 @@ function veldeke_tools_block_configure($delta = '') {
   $form = array();
   if ($delta == 'dictionary_instruct') {
     $form['dicinstruct_text'] = array(
-      '#type' => 'textarea',
-      '#title' => t('Block contents'),
-      '#rows' => 5,
-        '#cols'=> 20,
-      '#description' => t('This text will appear in the example block.'),
-      '#default_value' => variable_get('dicinstruct_text', '<strong>Tilde</strong>: Um aan te gaeve det \'n waord \'ne lange klank haet gebroeke weej de tilde ( ~ ) Beej \'t schrieve laote weej de tilde weg.'),
+        '#type' => 'textarea',
+        '#title' => t('Block contents'),
+        '#rows' => 5,
+        '#cols' => 20,
+        '#description' => t('This text will appear in the example block.'),
+        '#default_value' => variable_get('dicinstruct_text', '<strong>Tilde</strong>: Um aan te gaeve det \'n waord \'ne lange klank haet gebroeke weej de tilde ( ~ ) Beej \'t schrieve laote weej de tilde weg.'),
     );
   }
   return $form;
@@ -498,9 +501,7 @@ function veldeke_tools_block_save($delta = '', $edit = array()) {
   }
 }
 
-
-function veldeke_tools_init(){
-    $path = drupal_get_path('module','veldeke_tools');
-  drupal_add_css($path.'/css/veldeke_tools.css');
-
+function veldeke_tools_init() {
+  $path = drupal_get_path('module', 'veldeke_tools');
+  drupal_add_css($path . '/css/veldeke_tools.css');
 }

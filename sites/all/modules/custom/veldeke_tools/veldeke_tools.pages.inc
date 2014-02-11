@@ -66,6 +66,7 @@ function veldeke_tools_terms($lang='nl',$letter='a') {
   $count = count($terms);
   drupal_set_title(t('Dictionary') . ': ' . t('From !alfa to !omega', array('!alfa' => $alfa['term'], '!omega' => $omega['term'])));
   $output .= theme('definition_list', array('title' => NULL, 'items' => $terms));
+  $output .= theme('pager'); // todo : load more button
   return $output;
 }
 
