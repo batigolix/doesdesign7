@@ -294,10 +294,15 @@ function veldeke_tools_import_dictionary_term($term, &$context) {
 
   $li_letter = strtolower(_remove_accents($term[3]));
   try {
+
+    // set auto increment start value to 1
+    $start_value = (int) 1; // Make sure it's an integer
+    $sql = "ALTER TABLE {veldeke_dictionary} AUTO_INCREMENT = $start_value";
+    db_query($sql);
+
     db_insert('veldeke_dictionary')
             ->fields(array(
                 'updated' => check_plain($term[1]),
-                'dtid' => $term[0],
                 'nl_term' => check_plain($term[2]),
                 'li_term' => check_plain($term[3]),
                 'misc' => check_plain($term[4]),
@@ -412,19 +417,19 @@ function parse_csv($csv_string, $delimiter = ",", $skip_empty_lines = true, $tri
   $enc = preg_replace('/(?<!")""/', '!!Q!!', $csv_string);
   $enc = preg_replace_callback(
           '/"(.*?)"/s', function ($field) {
-            return urlencode(utf8_encode($field[1]));
-          }, $enc
+    return urlencode(utf8_encode($field[1]));
+  }, $enc
   );
   $lines = preg_split($skip_empty_lines ? ($trim_fields ? '/( *\R)+/s' : '/\R+/s') : '/\R/s', $enc);
   return array_map(
-                  function ($line) use ($delimiter, $trim_fields) {
-                    $fields = $trim_fields ? array_map('trim', explode($delimiter, $line)) : explode($delimiter, $line);
-                    return array_map(
-                                    function ($field) {
-                                      return str_replace('!!Q!!', '"', utf8_decode(urldecode($field)));
-                                    }, $fields
-                    );
-                  }, $lines
+          function ($line) use ($delimiter, $trim_fields) {
+    $fields = $trim_fields ? array_map('trim', explode($delimiter, $line)) : explode($delimiter, $line);
+    return array_map(
+            function ($field) {
+      return str_replace('!!Q!!', '"', utf8_decode(urldecode($field)));
+    }, $fields
+    );
+  }, $lines
   );
 }
 
