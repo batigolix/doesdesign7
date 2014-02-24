@@ -49,7 +49,6 @@ function veldeke_tools_reset() {
 /**
  * IMplements custom submit
  */
-
 function veldeke_tools_properties_filter_form_submit(&$form, &$form_state) {
   $_SESSION['form_values'] = $form_state['values'];
   $form_state['rebuild'] = TRUE;
@@ -60,16 +59,34 @@ function veldeke_tools_properties_filter_form_submit(&$form, &$form_state) {
  */
 
 function veldeke_tools_import_dictionary_form($form, &$form_state) {
+  kpr(variable_get('letters'));
   $form = array();
-  $form['submit'] = array(
-    '#type' => 'submit',
-    '#value' => t('Import'),
+  $letters = array();
+  foreach (range('A', 'Z') as $char) {
+    $letters[$char] = $char;
+  }
+  $form['letters'] = array(
+      '#type' => 'checkboxes',
+      '#options' => $letters,
+      '#title'=>'Letters',
+      '#default_value'=>  variable_get('letters',$letters),
   );
+  $form['submit'] = array(
+      '#type' => 'submit',
+      '#value' => t('Import'),
+  );
+
+
+
   return $form;
 }
-function veldeke_tools_import_dictionary_form_validate(&$form, &$form_state){
+
+function veldeke_tools_import_dictionary_form_validate(&$form, &$form_state) {
+  
 }
 
-function veldeke_tools_import_dictionary_form_submit(&$form, &$form_state){
-  batch_set(veldeke_tools_import_dictionary());
+function veldeke_tools_import_dictionary_form_submit(&$form, &$form_state) {
+  $letters = $form_state['values']['letters'];
+  variable_set('letters', $letters);
+  batch_set(veldeke_tools_import_dictionary($letters));
 }

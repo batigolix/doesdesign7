@@ -1,3 +1,11 @@
-#sidebar-first ul.menu {
-  padding: 5px;
-  margin: 5px; }
+.red {
+  color: red;
+}
+
+.orange {
+  color: orange;
+}
+
+.green {
+  color: green;
+}
