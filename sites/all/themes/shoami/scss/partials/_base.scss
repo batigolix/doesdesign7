@@ -1,0 +1,34 @@
+$light_brown: #b37649;
+$dark_yellow: #ad771a;
+$light_grey: #adadb0;
+$dark_grey: #635753;
+$light_beige: #d3cdc8;
+$color: $light_brown;
+$light_yellow: #ebe5d0;
+
+@mixin font($weight: 700) {
+  font-family: "Gentium Basic", Georgia, serif, cursive;
+  font-weight: bold;
+  font-weight: $weight;
+}
+
+// grid
+// mobile first phones portrait
+$grids: 3;                       
+// phones landscape and above
+$break1: 480px; 
+$grids: add-grid(6 at $break1);  
+// tablet portrait and above
+$break2: 768px; 
+$grids: add-grid(8 at $break2);  
+// tablet landscape, laptops, oldies and above
+$break3: 1000px; 
+$grids: add-grid(10 at $break3); 
+// desktop
+$break4: 1220px; 
+$grids: add-grid(12 at $break4); 
+
+$gutters: 1/3;
+$grid-padding: gutter-span() / 4;
+
+$include-clearfix: true;
