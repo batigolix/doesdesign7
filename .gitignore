@@ -5,8 +5,6 @@ sites/*/settings*.php
 sites/*/files
 sites/*/private
 
-
-
 # Ignore configuration files that may contain sensitive information #
 #####################################################################
 .htaccess
@@ -76,3 +74,7 @@ nbproject
 www/sites/default/tmp/.htaccess
 *.sublime-project
 *.sublime-workspace
+
+# development modules #
+#######################
+sites/all/modules/development
