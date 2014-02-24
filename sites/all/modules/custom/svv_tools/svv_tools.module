@@ -3,3 +3,18 @@
 function svv_tools_init() {
   drupal_add_css(drupal_get_path('module', 'svv_tools') . '/css/svv_tools.css');
 }
+
+/**
+ * Implements hook_wysiwyg_editor_settings_alter().
+ *
+ * @param type $settings
+ * @param type $context
+ */
+function svv_tools_wysiwyg_editor_settings_alter(&$settings, $context) {
+  // We only add the settings to ckeditor wysiwyg profiles.
+  if ($context['profile']->editor == 'ckeditor') {
+    $format = $context['profile']->format;
+    $path = drupal_get_path('module', 'svv_tools') . '/js';
+    $settings['stylesSet'] = "svv:/$path/ckeditor_styles.js";
+  }
+}
