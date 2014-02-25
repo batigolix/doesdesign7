@@ -9,6 +9,10 @@ function dd_tools_block_info() {
       'info' => t('DD tools: Slideshow'),
       'cache' => DRUPAL_CACHE_GLOBAL,
   );
+  $blocks['news'] = array(
+      'info' => t('DD tools: News'),
+      'cache' => DRUPAL_CACHE_GLOBAL,
+  );
   return $blocks;
 }
 
@@ -23,9 +27,14 @@ function dd_tools_block_view($delta = '') {
     case 'slideshow':
       $blocks['content'] = dd_tools_slideshow();
       break;
+    case 'news':
+      $blocks['subject'] = t('News');
+      $blocks['content'] = dd_tools_news();
+      break;
   }
   return $blocks;
 }
+
 function dd_tools_slideshow() {
   $items = variable_get('slideshow_items', 5);
   $query = db_select('node', 'n');
@@ -48,33 +57,73 @@ function dd_tools_slideshow() {
     $node_view = node_view($node, 'hero_teaser');
     $items[] = array('data' => drupal_render($node_view));
   }
-    $lib_path = libraries_get_path('responsiveslides');
+  $lib_path = libraries_get_path('responsiveslides');
   drupal_add_js($lib_path . '/responsiveslides.min.js');
   $rs_js = 'jQuery(function() {jQuery(".rslides").responsiveSlides({auto: true, timeout: 3000, speed: 500, pager: true, pauseControls: true, navContainer: ""});});';
   drupal_add_js($rs_js, 'inline');
   return theme('item_list', array('items' => $items, 'title' => NULL, 'type' => 'ul', 'attributes' => array('class' => array('rslides'))));
 }
+
 /**
  * Implements hook_block_configure().
  */
 function dd_tools_block_configure($delta = '') {
   $form = array();
-  if ($delta == 'slideshow') {
-    $form['slideshow_items'] = array(
-      '#type' => 'select',
-      '#title' => t('Number of items'),
-      '#options' => array(2,5,10),
-      '#description' => t('This number of items will be shown in the slideshow block'),
-      '#default_value' => variable_get('slideshow_items', 5),
-    );
+  switch ($delta) {
+    case 'slideshow' :
+      $form['slideshow_items'] = array(
+          '#type' => 'select',
+          '#title' => t('Number of items'),
+          '#options' => array(2=>2, 5=>5, 10=>10),
+          '#description' => t('This number of items will be shown in the slideshow block'),
+          '#default_value' => variable_get('slideshow_items', 5),
+      );
+      break;
+    case 'news' :
+      $form['news_items'] = array(
+          '#type' => 'select',
+          '#title' => t('Number of items'),
+          '#options' => array(2=>2, 5=>5, 10=>10),
+          '#description' => t('This number of items will be shown in the news block'),
+          '#default_value' => variable_get('news_items', 5),
+      );
+      break;
   }
   return $form;
 }
+
 /**
  * Implements hook_block_save().
  */
 function dd_tools_block_save($delta = '', $edit = array()) {
-  if ($delta == 'slideshow') {
-    variable_set('slideshow_items', $edit['slideshow_items']);
+  switch ($delta) {
+    case 'slideshow':
+      variable_set('slideshow_items', $edit['slideshow_items']);
+      break;
+    case 'news':
+      variable_set('news_items', $edit['news_items']);
+      break;
   }
+}
+
+function dd_tools_news() {
+  $limit = variable_get('news_items', 5);
+  $query = db_select('node', 'n')
+          ->fields('n')
+          ->condition('n.status', 1)
+          ->range(0, $limit)
+          ->condition('n.type', 'story');
+  $results = $query->execute();
+  $items = array();
+  foreach ($results as $result) {
+    $items[] = array('data' => format_date($result->changed, 'medium') . ' ' . l($result->title, $result->nid));
+  }
+  $result = $query->execute();
+  $build['news_list'] = array(
+      '#theme' => 'item_list',
+      '#items' => $items,
+      '#attrinutes' => array('class'=>array('news-list')),
+  );
+  $build['more'] = array('#markup' => l(t('More'),'nieuws'));
+  return $build;
 }
