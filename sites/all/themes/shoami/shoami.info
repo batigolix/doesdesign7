@@ -8,16 +8,11 @@ engine = phptemplate
 regions[page_top] = Page top
 regions[header1] = Header Right 1st Col
 regions[header2] = Header Right 2nd Col
-regions[highlight] = Highlight
 regions[help] = Help
-regions[content_top1] = Content Top 1st Col
-regions[content_top2] = Content Top 2nd Col
+regions[content_top] = Content top
 regions[content] = Content
 regions[sidebar] =  Sidebar
-regions[content_bot_row_2_1] = Content Bottom Row 2 1st Col
-regions[content_bot_row_2_2] = Content Bottom Row 2 2nd Col
 regions[footer] = Footer
-regions[page_bottom] = Page bottom
 
 features[] = logo
 features[] = name

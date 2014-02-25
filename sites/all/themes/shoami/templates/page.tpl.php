@@ -16,22 +16,15 @@
     
    <div id="content-wrapper">
     <div id="content-top">
-    <?php if ($page['content_top1']): ?>
+    <?php if ($page['content_top']): ?>
       <nav id="content-top-1" role="navigation">
-        <?php print render($page['content_top1']); ?>
+        <?php print render($page['content_top']); ?>
       </nav>
-    <?php endif; ?>
-    <?php if ($page['content_top2']): ?>
-      <div id="content-top-2">
-        <?php print render($page['content_top2']); ?>
-      </div>
     <?php endif; ?>
     </div><!-- end content top row -->
     <div id="content">
           <div id="content-area" role="main">
         <?php if ($breadcrumb || $title|| $messages || $tabs || $action_links): ?>
-            <?php // print $breadcrumb; ?>
-            <?php if ($page['highlight']): ?><div id="highlight"><?php print render($page['highlight']) ?></div><?php endif; ?>
             <?php if ($title && !$is_front): ?><h1 class="title"><?php print $title; ?></h1><?php endif; ?>
             <?php print render($title_suffix); ?>
             <?php print $messages; ?>
@@ -41,28 +34,13 @@
         <?php endif; ?>
           <?php print render($page['content']) ?>
 
-
-  <!-- bunch of pseudo regions for the homepage. prevent using panels n shite -->
-<div id="content-bot-row">
-    <?php if ($page['content_bot_row_2_1']): ?>
-      <div id="content-bot-row-1">
-        <?php print render($page['content_bot_row_2_1']); ?>
-      </div>
-    <?php endif; ?>
-    <?php if ($page['content_bot_row_2_2']): ?>
-      <div id="content-bot-row-2">
-        <?php print render($page['content_bot_row_2_2']); ?>
-      </div>
-    <?php endif; ?>
-</div><!-- end content bot row 2 -->
-
-
         </div><!-- end content-area -->
     <?php if ($page['sidebar']): ?>
       <aside id="sidebar" role="complementary">
         <?php print render($page['sidebar']); ?>
       </aside>
     <?php endif; ?> <!-- /sidebar-first -->
+        <div id="content-end"></div>
     </div><!-- end content -->
 
 
