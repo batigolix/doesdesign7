@@ -13,6 +13,10 @@ function dd_tools_block_info() {
       'info' => t('DD tools: News'),
       'cache' => DRUPAL_CACHE_GLOBAL,
   );
+  $blocks['categories'] = array(
+      'info' => t('DD tools: Categories'),
+      'cache' => DRUPAL_CACHE_GLOBAL,
+  );
   return $blocks;
 }
 
@@ -30,6 +34,10 @@ function dd_tools_block_view($delta = '') {
     case 'news':
       $blocks['subject'] = t('News');
       $blocks['content'] = dd_tools_news();
+      break;
+    case 'categories':
+      $blocks['subject'] = t('Categories');
+      $blocks['content'] = dd_tools_categories();
       break;
   }
   return $blocks;
@@ -126,4 +134,21 @@ function dd_tools_news() {
   );
   $build['more'] = array('#markup' => l(t('More'),'nieuws'));
   return $build;
+}
+
+function dd_tools_categories() {
+    $vocabulary = taxonomy_vocabulary_machine_name_load('vocabulary_7');
+  $terms = taxonomy_get_tree($vocabulary->vid);
+  $items = array();
+  foreach ($terms as $term) {
+    $items[] = array('data'=>l($term->name,  drupal_get_path_alias('taxonomy/term/'.$term->tid)));
+  }
+  $build['category_list'] = array(
+      '#theme' => 'item_list',
+      '#items' => $items,
+      '#attrinutes' => array('class'=>array('category-list')),
+  );
+//  $build['more'] = array('#markup' => l(t('More'),'nieuws'));
+  return $build;
+
 }

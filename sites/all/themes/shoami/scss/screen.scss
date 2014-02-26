@@ -267,11 +267,16 @@ a {
   }
 }
 
-.view-toon-termen-soorten-objecten {
-  .views-row {
-    font-size: 1.2em;
-    line-height: 1.3em;
-    padding: 10px 0;
+#block-dd_tools-categories {
+  ul {
+    list-style: none outside none;
+    margin: 1em auto;
+    padding: 0px;
+    li {
+      border-bottom: 1px dotted #999999;
+      padding: 8px 0;
+      font-size: 1.2em;
+    }
   }
 }
 

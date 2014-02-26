@@ -529,7 +529,8 @@ a:hover, a:active, a:link, a:visited { color: #635753; }
 #block-system-main-menu .menu li a { text-decoration: none; color: white; padding: 6px; font-family: "Gentium Basic", Georgia, serif, cursive; font-weight: bold; font-weight: 700; text-shadow: black 1px 1px 1px; }
 @media (min-width: 480px) { #block-system-main-menu .menu li { display: inline; line-height: 3em; } }
 
-.view-toon-termen-soorten-objecten .views-row { font-size: 1.2em; line-height: 1.3em; padding: 10px 0; }
+#block-dd_tools-categories ul { list-style: none outside none; margin: 1em auto; padding: 0px; }
+#block-dd_tools-categories ul li { border-bottom: 1px dotted #999999; padding: 8px 0; font-size: 1.2em; }
 
 .block div.views-row { border-bottom: 1px dotted #999999; padding: 8px 0; }
 .block div.views-row-last { border-bottom: none; }
