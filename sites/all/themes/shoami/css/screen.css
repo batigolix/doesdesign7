@@ -529,8 +529,8 @@ a:hover, a:active, a:link, a:visited { color: #635753; }
 #block-system-main-menu .menu li a { text-decoration: none; color: white; padding: 6px; font-family: "Gentium Basic", Georgia, serif, cursive; font-weight: bold; font-weight: 700; text-shadow: black 1px 1px 1px; }
 @media (min-width: 480px) { #block-system-main-menu .menu li { display: inline; line-height: 3em; } }
 
-#block-dd_tools-categories ul { list-style: none outside none; margin: 1em auto; padding: 0px; }
-#block-dd_tools-categories ul li { border-bottom: 1px dotted #999999; padding: 8px 0; font-size: 1.2em; }
+#block-dd_tools-news ul, #block-dd_tools-categories ul { list-style: none outside none; margin: 1em auto; padding: 0px; }
+#block-dd_tools-news ul li, #block-dd_tools-categories ul li { border-bottom: 1px dotted #999999; padding: 8px 0; font-size: 1.2em; }
 
 .block div.views-row { border-bottom: 1px dotted #999999; padding: 8px 0; }
 .block div.views-row-last { border-bottom: none; }
@@ -580,3 +580,9 @@ h2.block-title { font-size: 1.6em; }
 .item-list .pager li a:hover, .item-list .pager li a:active, .item-list .pager li a:link, .item-list .pager li a:visited { color: #ad771a; text-decoration: none; }
 .item-list .pager .pager-next, .item-list .pager .pager-last { border: 0; font-weight: bold; }
 .item-list .pager .pager-current { background: #ad771a; color: white; }
+
+#flickr_images { padding: 0px; margin: 0px; }
+#flickr_images ul { float: left; padding: 10px 0px; margin: 0px; }
+#flickr_images ul li { display: inline; list-style: none; }
+#flickr_images ul li img { border: none; padding: 0 5px 5px 0; width: 100px; height: 100px; opacity: 0.6; -moz-opacity: 0.6; }
+#flickr_images ul li img:hover { opacity: 1; -moz-opacity: 1; }

@@ -266,7 +266,7 @@ a {
     }
   }
 }
-
+#block-dd_tools-news,
 #block-dd_tools-categories {
   ul {
     list-style: none outside none;
@@ -475,5 +475,31 @@ h2.block-title {
   .pager-current {
     background: $dark_yellow;
     color: white;
+  }
+}
+
+#flickr_images {
+  padding: 0px;
+  margin: 0px;
+  ul {
+    float: left;
+    padding: 10px 0px;
+    margin: 0px;
+    li {
+      display: inline;
+      list-style: none;
+      img {
+        border: none;
+        padding: 0 5px 5px 0;
+        width: 100px;
+        height: 100px;
+        opacity: 0.6;
+        -moz-opacity: 0.6;  
+        &:hover {
+          opacity: 1;
+          -moz-opacity: 1;
+        }
+      }
+    }
   }
 }

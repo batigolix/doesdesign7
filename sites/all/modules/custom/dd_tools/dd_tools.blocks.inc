@@ -17,6 +17,10 @@ function dd_tools_block_info() {
       'info' => t('DD tools: Categories'),
       'cache' => DRUPAL_CACHE_GLOBAL,
   );
+  $blocks['flickr'] = array(
+      'info' => t('DD tools: Flickr'),
+      'cache' => DRUPAL_CACHE_GLOBAL,
+  );
   return $blocks;
 }
 
@@ -39,9 +43,40 @@ function dd_tools_block_view($delta = '') {
       $blocks['subject'] = t('Categories');
       $blocks['content'] = dd_tools_categories();
       break;
+    case 'flickr':
+      $blocks['subject'] = t('Photo\'s on Flickr');
+      $blocks['content'] = array(
+          '#markup' => '<div id="flickr_images"> </div>',
+          '#attached' => array(
+              'js' => array(
+                  'data'=>drupal_get_path('module', 'dd_tools') . '/js/flickr.js',
+                  'type'=>'file',
+                  array(
+                      'data' => array(
+                          'dd_tools' => array(
+                              'block_items' => variable_get('flickr_items', 13),
+                          ),
+                      ),
+                      'type' => 'setting',
+                  ),
+              ),
+          ),
+      );
+      break;
   }
   return $blocks;
 }
+
+/*
+  $form['notification_email']['#attached']['js'][] = array(
+  'data' => array('setting_name' => $js_settings),
+  'type' => 'setting'
+  );
+  $form['notification_email']['#attached']['js'][] = array(
+  'data' => 'file.js',
+  'type' => 'file'
+  );
+ */
 
 function dd_tools_slideshow() {
   $items = variable_get('slideshow_items', 5);
@@ -82,7 +117,7 @@ function dd_tools_block_configure($delta = '') {
       $form['slideshow_items'] = array(
           '#type' => 'select',
           '#title' => t('Number of items'),
-          '#options' => array(2=>2, 5=>5, 10=>10),
+          '#options' => array(2 => 2, 5 => 5, 10 => 10),
           '#description' => t('This number of items will be shown in the slideshow block'),
           '#default_value' => variable_get('slideshow_items', 5),
       );
@@ -91,9 +126,18 @@ function dd_tools_block_configure($delta = '') {
       $form['news_items'] = array(
           '#type' => 'select',
           '#title' => t('Number of items'),
-          '#options' => array(2=>2, 5=>5, 10=>10),
+          '#options' => array(2 => 2, 5 => 5, 10 => 10),
           '#description' => t('This number of items will be shown in the news block'),
           '#default_value' => variable_get('news_items', 5),
+      );
+      break;
+    case 'flickr' :
+      $form['flickr_items'] = array(
+          '#type' => 'select',
+          '#title' => t('Number of items'),
+          '#options' => array(10 => 10, 12 => 12, 15 => 15, 16 => 16, 18 => 18, 20 => 20),
+          '#description' => t('This number of items will be shown in the Flickr block'),
+          '#default_value' => variable_get('flickr_items', 5),
       );
       break;
   }
@@ -110,6 +154,9 @@ function dd_tools_block_save($delta = '', $edit = array()) {
       break;
     case 'news':
       variable_set('news_items', $edit['news_items']);
+      break;
+    case 'flickr':
+      variable_set('flickr_items', $edit['flickr_items']);
       break;
   }
 }
@@ -130,25 +177,24 @@ function dd_tools_news() {
   $build['news_list'] = array(
       '#theme' => 'item_list',
       '#items' => $items,
-      '#attrinutes' => array('class'=>array('news-list')),
+      '#attrinutes' => array('class' => array('news-list')),
   );
-  $build['more'] = array('#markup' => l(t('More'),'nieuws'));
+  $build['more'] = array('#markup' => l(t('More'), 'nieuws'));
   return $build;
 }
 
 function dd_tools_categories() {
-    $vocabulary = taxonomy_vocabulary_machine_name_load('vocabulary_7');
+  $vocabulary = taxonomy_vocabulary_machine_name_load('vocabulary_7');
   $terms = taxonomy_get_tree($vocabulary->vid);
   $items = array();
   foreach ($terms as $term) {
-    $items[] = array('data'=>l($term->name,  drupal_get_path_alias('taxonomy/term/'.$term->tid)));
+    $items[] = array('data' => l($term->name, drupal_get_path_alias('taxonomy/term/' . $term->tid)));
   }
   $build['category_list'] = array(
       '#theme' => 'item_list',
       '#items' => $items,
-      '#attrinutes' => array('class'=>array('category-list')),
+      '#attrinutes' => array('class' => array('category-list')),
   );
 //  $build['more'] = array('#markup' => l(t('More'),'nieuws'));
   return $build;
-
 }
