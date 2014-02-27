@@ -83,14 +83,10 @@ function dd_tools_slideshow() {
   $query = db_select('node', 'n');
   $query->condition('n.promote', 1);
   $query->range(0, $items);
-
   $query->condition('n.status', 1);
   $query->condition('n.type', 'object');
   $query->fields('n', array('nid', 'title'));
-
-//  $query->addField('fdfc', 'entity_id', 'entid');
   $results = $query->execute();
-
   foreach ($results as $result) {
     $nids[] = $result->nid;
   }
@@ -101,14 +97,22 @@ function dd_tools_slideshow() {
     $items[] = array('data' => drupal_render($node_view));
   }
   $lib_path = libraries_get_path('responsiveslides');
-  drupal_add_js($lib_path . '/responsiveslides.min.js');
   $rs_js = 'jQuery(function() {jQuery(".rslides").responsiveSlides({auto: true, timeout: 3000, speed: 500, pager: true, pauseControls: true, navContainer: ""});});';
-  drupal_add_js($rs_js, 'inline');
-  //return theme('item_list', array('items' => $items, 'title' => NULL, 'type' => 'ul', 'attributes' => array('class' => array('rslides'))));
-  
   $build = array(
-      '#markup'=> theme('item_list', array('items' => $items, 'title' => NULL, 'type' => 'ul', 'attributes' => array('class' => array('rslides')))),
-      );
+      '#markup' => theme('item_list', array('items' => $items, 'title' => NULL, 'type' => 'ul', 'attributes' => array('class' => array('rslides')))),
+      '#attached' => array(
+          'js' => array(
+              array(
+                  'data' => $lib_path . '/responsiveslides.min.js',
+                  'type' => 'file',
+              ),
+              array(
+                  'data' => $rs_js,
+                  'type' => 'inline',
+              ),
+          ),
+      ),
+  );
   return $build;
 }
 
