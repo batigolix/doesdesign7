@@ -148,7 +148,7 @@ function shoami_preprocess_node(&$variables) {
   //dpm($variables);
 }
 
-function shoami_item_list($variables) {
+function XXXshoami_item_list($variables) {
   $output = '';
   $items = $variables['items'];
   $title = $variables['title'];

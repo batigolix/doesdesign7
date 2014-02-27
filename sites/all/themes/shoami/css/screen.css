@@ -575,11 +575,11 @@ h2.block-title { font-size: 1.6em; }
 
 .node label, .node .label { font-weight: bold; }
 
-.item-list .pager { margin: 12px 0; text-align: left; padding-top: 12px; }
-.item-list .pager li { border: solid 1px #ad771a; margin: 0 3px; padding: 2px 6px; }
-.item-list .pager li a:hover, .item-list .pager li a:active, .item-list .pager li a:link, .item-list .pager li a:visited { color: #ad771a; text-decoration: none; }
-.item-list .pager .pager-next, .item-list .pager .pager-last { border: 0; font-weight: bold; }
-.item-list .pager .pager-current { background: #ad771a; color: white; }
+.content .pager { margin: 12px 0; text-align: left; padding-top: 12px; }
+.content .pager li { border: solid 1px #ad771a; margin: 0 3px; padding: 2px 6px; }
+.content .pager li a:hover, .content .pager li a:active, .content .pager li a:link, .content .pager li a:visited { color: #ad771a; text-decoration: none; }
+.content .pager .pager-next, .content .pager .pager-last { border: 0; font-weight: bold; }
+.content .pager .pager-current { background: #ad771a; color: white; }
 
 #flickr_images { padding: 0px; margin: 0px; }
 #flickr_images ul { float: left; padding: 10px 0px; margin: 0px; }
