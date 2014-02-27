@@ -584,5 +584,5 @@ h2.block-title { font-size: 1.6em; }
 #flickr_images { padding: 0px; margin: 0px; }
 #flickr_images ul { float: left; padding: 10px 0px; margin: 0px; }
 #flickr_images ul li { display: inline; list-style: none; }
-#flickr_images ul li img { border: none; padding: 0 5px 5px 0; width: 100px; height: 100px; opacity: 0.6; -moz-opacity: 0.6; }
+#flickr_images ul li img { border: none; padding: 0 5px 5px 0; width: 88px; height: 88px; opacity: 0.6; -moz-opacity: 0.6; }
 #flickr_images ul li img:hover { opacity: 1; -moz-opacity: 1; }

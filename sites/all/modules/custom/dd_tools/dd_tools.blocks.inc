@@ -49,8 +49,8 @@ function dd_tools_block_view($delta = '') {
           '#markup' => '<div id="flickr_images"> </div>',
           '#attached' => array(
               'js' => array(
-                  'data'=>drupal_get_path('module', 'dd_tools') . '/js/flickr.js',
-                  'type'=>'file',
+                  'data' => drupal_get_path('module', 'dd_tools') . '/js/flickr.js',
+                  'type' => 'file',
                   array(
                       'data' => array(
                           'dd_tools' => array(
@@ -104,7 +104,12 @@ function dd_tools_slideshow() {
   drupal_add_js($lib_path . '/responsiveslides.min.js');
   $rs_js = 'jQuery(function() {jQuery(".rslides").responsiveSlides({auto: true, timeout: 3000, speed: 500, pager: true, pauseControls: true, navContainer: ""});});';
   drupal_add_js($rs_js, 'inline');
-  return theme('item_list', array('items' => $items, 'title' => NULL, 'type' => 'ul', 'attributes' => array('class' => array('rslides'))));
+  //return theme('item_list', array('items' => $items, 'title' => NULL, 'type' => 'ul', 'attributes' => array('class' => array('rslides'))));
+  
+  $build = array(
+      '#markup'=> theme('item_list', array('items' => $items, 'title' => NULL, 'type' => 'ul', 'attributes' => array('class' => array('rslides')))),
+      );
+  return $build;
 }
 
 /**
