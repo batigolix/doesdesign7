@@ -530,7 +530,7 @@ a:hover, a:active, a:link, a:visited { color: #635753; }
 @media (min-width: 480px) { #block-system-main-menu .menu li { display: inline; line-height: 3em; } }
 
 #block-dd_tools-news ul, #block-dd_tools-categories ul { list-style: none outside none; margin: 1em auto; padding: 0px; }
-#block-dd_tools-news ul li, #block-dd_tools-categories ul li { border-bottom: 1px dotted #999999; padding: 8px 0; font-size: 1.2em; }
+#block-dd_tools-news ul li, #block-dd_tools-categories ul li { border-bottom: 1px dotted #999999; padding: 8px 0; margin: 0; font-size: 1.2em; }
 
 .block div.views-row { border-bottom: 1px dotted #999999; padding: 8px 0; }
 .block div.views-row-last { border-bottom: none; }
