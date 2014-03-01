@@ -21,6 +21,10 @@ function dd_tools_block_info() {
       'info' => t('DD tools: Flickr'),
       'cache' => DRUPAL_CACHE_GLOBAL,
   );
+  $blocks['contact'] = array(
+      'info' => t('DD tools: Contact'),
+      'cache' => DRUPAL_CACHE_GLOBAL,
+  );
   return $blocks;
 }
 
@@ -50,7 +54,6 @@ function dd_tools_block_view($delta = '') {
           '#attached' => array(
               'js' => array(
                   'data' => drupal_get_path('module', 'dd_tools') . '/js/flickr.js',
-                  'type' => 'file',
                   array(
                       'data' => array(
                           'dd_tools' => array(
@@ -63,21 +66,16 @@ function dd_tools_block_view($delta = '') {
           ),
       );
       break;
+    case 'contact':
+      $blocks['content'] = dd_tools_contact();
+      break;
   }
   return $blocks;
 }
 
-/*
-  $form['notification_email']['#attached']['js'][] = array(
-  'data' => array('setting_name' => $js_settings),
-  'type' => 'setting'
-  );
-  $form['notification_email']['#attached']['js'][] = array(
-  'data' => 'file.js',
-  'type' => 'file'
-  );
+/**
+ * Creates the object slideshow
  */
-
 function dd_tools_slideshow() {
   $items = variable_get('slideshow_items', 5);
   $query = db_select('node', 'n');
@@ -202,8 +200,89 @@ function dd_tools_categories() {
   $build['category_list'] = array(
       '#theme' => 'item_list',
       '#items' => $items,
-      '#attrinutes' => array('class' => array('category-list')),
+      '#attributes' => array('class' => array('category-list')),
   );
 //  $build['more'] = array('#markup' => l(t('More'),'nieuws'));
   return $build;
 }
+
+function dd_tools_contact() {
+
+
+  /* <div><a href=""><img alt="Faceboork" src="/sites/doesdesign.nl/files/facebook-logo.png" style="border-style:solid; border-width:0px; height:32px; width:32px" title="Facebook" /></a> <a href="http://www.linkedin.com/profile/edit?trk=hb_tab_pro_top"><img alt="Linkedin" src="/sites/doesdesign.nl/files/linkedin-logo.png" style="border-style:solid; border-width:0px; height:32px; width:32px" title="Linkedin" /></a> <a href="http://www.youtube.com/user/metalartcreations?feature=mhee"><img alt="Youtube" src="/sites/doesdesign.nl/files/youtube-logo.png" style="border-style:solid; border-width:0px; height:32px; width:32px" title="Youtube" /></a> <a href="http://twitter.com/#!/Doesdesign_nl"><img alt="Twitter" src="/sites/doesdesign.nl/files/twitter-logo.png" style="border-style:solid; border-width:0px; height:32px; width:32px" title="Twitter" /></a></div>
+   */
+
+  $socials = array(
+      array(
+          'name' => 'Facebook',
+          'img' => 'facebook-logo.png',
+          'cta' => t('Visit Doesdesign at Facebook'),
+          'url' => 'https://www.facebook.com/Doesdesign.nl',
+          'class' => 'facebook',
+      ),
+      array(
+          'name' => 'Linkedin',
+          'img' => 'linkedin-logo.png',
+          'cta' => t('Visit Birigit at Linkedin'),
+          'url' => 'http://nl.linkedin.com/in/birgitdoesborg',
+          'class' => 'linkedin',
+      ),
+      array(
+          'name' => 'Twitter',
+          'img' => 'twitter-logo.png',
+          'cta' => t('Tweet Birigit'),
+          'url' => 'http://twitter.com/#!/Doesdesign_nl',
+          'class' => 'twitter',
+      ),
+      array(
+          'name' => 'YouTube',
+          'cta' => t('Visit YouTube page'),
+          'img' => 'youtube-logo.png',
+          'url' => 'http://www.youtube.com/user/metalartcreations',
+          'class' => 'youtube',
+      ),
+  );
+  $img_path = drupal_get_path('module', 'dd_tools') . '/images/';
+  $items = array();
+  foreach ($socials as $social) {
+
+    $img = theme('image', array(
+        'path' => $img_path . $social['img'], 'attributes' => array(
+            'title' => $social['cta'],
+            'alt' => $social['name'],
+        )
+    ));
+    $items[] = array(
+        'data' => l($img, $social['url'], array('html' => TRUE, 'attributes' => array('class' => array('social', $social['class']), 'alt' => $social['cta']))),
+    );
+  }
+  $build['doespic'] = array(
+      '#theme' => 'image',
+      '#path' => $img_path . 'Doesklein.jpg',
+      '#attributes' => array(
+          'class' => array(
+              'doespic'
+          ),
+          'title' => 'Birgit Doesborg',
+          'alt' => 'Foto Birgit Doesborg',
+      ),
+  );
+  $build['about']['#markup'] = '<div class="about"><strong>' . l('Birgit Doesborg', 'about') . '</strong>, Goud- en zilversmid.</div>';
+  $build['contact_link']['#markup'] = '<div class="contact"><strong>' . l('Contact', 'contact') . '</strong></div>';
+  $build['social'] = array(
+      '#theme' => 'item_list',
+      '#items' => $items,
+      '#attributes' => array('class' => array('socialist')),
+  );
+  return $build;
+}
+
+/*    height: 80px;
+ * 
+ * 
+ * <div><a href="/about"><img alt="" src="/sites/doesdesign.nl/files/Doesklein.jpg" style="float:left; height:100px; margin-left:0px; margin-right:10px; width:75px" /></a><strong><a href="/about">Birgit Doesborg</a>, </strong>Goud- en zilversmid<strong> </strong></div>
+
+<div><strong><a href="/contact">Contact</a></strong></div>
+
+
+*/

@@ -44,6 +44,12 @@ function doesdesign_field_default_fields() {
           'type' => 'text_default',
           'weight' => '1',
         ),
+        'hero_teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => '4',
+        ),
         'search_index' => array(
           'label' => 'hidden',
           'module' => 'text',
@@ -62,10 +68,10 @@ function doesdesign_field_default_fields() {
           'label' => 'hidden',
           'module' => 'text',
           'settings' => array(
-            'trim_length' => 600,
+            'trim_length' => '300',
           ),
           'type' => 'text_summary_or_trimmed',
-          'weight' => '2',
+          'weight' => '1',
         ),
       ),
       'entity_type' => 'node',
@@ -148,6 +154,12 @@ function doesdesign_field_default_fields() {
           'type' => 'number_decimal',
           'weight' => '-1',
         ),
+        'hero_teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => '2',
+        ),
         'search_index' => array(
           'label' => 'above',
           'module' => 'number',
@@ -176,7 +188,7 @@ function doesdesign_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => '-1',
+          'weight' => '5',
         ),
       ),
       'entity_type' => 'node',
@@ -250,7 +262,7 @@ function doesdesign_field_default_fields() {
             'colorbox_gallery' => 'post',
             'colorbox_gallery_custom' => '',
             'colorbox_image_style' => 'large',
-            'colorbox_node_style' => 'square-thumb-medium',
+            'colorbox_node_style' => 'large-thumb',
           ),
           'type' => 'colorbox',
           'weight' => '0',
@@ -264,6 +276,19 @@ function doesdesign_field_default_fields() {
           ),
           'type' => 'image',
           'weight' => '-4',
+        ),
+        'hero_teaser' => array(
+          'label' => 'hidden',
+          'module' => 'colorbox',
+          'settings' => array(
+            'colorbox_caption' => 'auto',
+            'colorbox_gallery' => 'none',
+            'colorbox_gallery_custom' => '',
+            'colorbox_image_style' => '',
+            'colorbox_node_style' => 'x-medium',
+          ),
+          'type' => 'colorbox',
+          'weight' => '0',
         ),
         'rss' => array(
           'label' => 'above',
@@ -296,14 +321,14 @@ function doesdesign_field_default_fields() {
           'weight' => '0',
         ),
         'teaser' => array(
-          'label' => 'above',
+          'label' => 'hidden',
           'module' => 'image',
           'settings' => array(
-            'image_link' => '',
-            'image_style' => 'thumbnail',
+            'image_link' => 'content',
+            'image_style' => 'square-thumb-medium',
           ),
           'type' => 'image',
-          'weight' => '-4',
+          'weight' => '0',
         ),
         'token' => array(
           'label' => 'above',
@@ -417,6 +442,12 @@ function doesdesign_field_default_fields() {
           'type' => 'number_decimal',
           'weight' => '1',
         ),
+        'hero_teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => '3',
+        ),
         'search_index' => array(
           'label' => 'above',
           'module' => 'number',
@@ -439,7 +470,7 @@ function doesdesign_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => '1',
+          'weight' => '6',
         ),
       ),
       'entity_type' => 'node',
@@ -505,6 +536,12 @@ function doesdesign_field_default_fields() {
           'type' => 'taxonomy_term_reference_link',
           'weight' => '2',
         ),
+        'hero_teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => '6',
+        ),
         'search_index' => array(
           'label' => 'above',
           'module' => 'taxonomy',
@@ -521,10 +558,9 @@ function doesdesign_field_default_fields() {
         ),
         'teaser' => array(
           'label' => 'above',
-          'module' => 'taxonomy',
           'settings' => array(),
-          'type' => 'taxonomy_term_reference_link',
-          'weight' => '10',
+          'type' => 'hidden',
+          'weight' => '3',
         ),
       ),
       'entity_type' => 'node',
@@ -587,6 +623,12 @@ function doesdesign_field_default_fields() {
           'type' => 'taxonomy_term_reference_link',
           'weight' => '5',
         ),
+        'hero_teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => '5',
+        ),
         'search_index' => array(
           'label' => 'above',
           'module' => 'taxonomy',
@@ -603,10 +645,9 @@ function doesdesign_field_default_fields() {
         ),
         'teaser' => array(
           'label' => 'above',
-          'module' => 'taxonomy',
           'settings' => array(),
-          'type' => 'taxonomy_term_reference_link',
-          'weight' => '10',
+          'type' => 'hidden',
+          'weight' => '2',
         ),
       ),
       'entity_type' => 'node',
@@ -666,6 +707,12 @@ function doesdesign_field_default_fields() {
           'type' => 'taxonomy_term_reference_link',
           'weight' => '7',
         ),
+        'hero_teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => '7',
+        ),
         'search_index' => array(
           'label' => 'above',
           'settings' => array(),
@@ -681,10 +728,9 @@ function doesdesign_field_default_fields() {
         ),
         'teaser' => array(
           'label' => 'above',
-          'module' => 'taxonomy',
           'settings' => array(),
-          'type' => 'taxonomy_term_reference_link',
-          'weight' => '10',
+          'type' => 'hidden',
+          'weight' => '4',
         ),
       ),
       'entity_type' => 'node',
@@ -737,6 +783,12 @@ function doesdesign_field_default_fields() {
           'settings' => array(),
           'type' => 'text_default',
           'weight' => '-1',
+        ),
+        'hero_teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
         ),
         'teaser' => array(
           'label' => 'hidden',
@@ -810,6 +862,12 @@ function doesdesign_field_default_fields() {
           'module' => 'file',
           'settings' => array(),
           'type' => 'file_table',
+          'weight' => 0,
+        ),
+        'hero_teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
           'weight' => 0,
         ),
         'rss' => array(
@@ -893,6 +951,12 @@ function doesdesign_field_default_fields() {
           'type' => 'text_default',
           'weight' => '1',
         ),
+        'hero_teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
         'teaser' => array(
           'label' => 'hidden',
           'module' => 'text',
@@ -966,6 +1030,12 @@ function doesdesign_field_default_fields() {
           'module' => 'file',
           'settings' => array(),
           'type' => 'file_table',
+          'weight' => 0,
+        ),
+        'hero_teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
           'weight' => 0,
         ),
         'rss' => array(

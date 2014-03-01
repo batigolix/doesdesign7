@@ -7,9 +7,7 @@
 @import "blueprint";
 @import "singularitygs";
 @import "partials/base";
-
 @include global-reset;
-
 @include blueprint;
 
 * {
@@ -43,17 +41,26 @@ h3 {
   font-size: 1.4em;
 }
 
-h4 {
-  font-size: 1.2em;
+h1, h2, h3, h4, h5, h6 {
+  @include font;
+  line-height: 1.3em;
+  @include text-shadow(white 1px 1px 0);
+  color: $dark_yellow;
+  a {
+    font-weight: bold;
+    font-weight: 700;
+    text-decoration: underline;
+  }
 }
 
-h5 {
-  font-size: 1em;
+#content-header {
+  h1 {
+    margin-bottom: 0;
+  }
 }
 
-/*hide some crap that is too hard to make responsive */
-/*.view-sieraden, #content-top-2
- * display: none */
+
+/* header */
 
 #header {
   #header-block {
@@ -62,20 +69,35 @@ h5 {
       @include grid-span(6,1);
     }
     @include breakpoint($break2) {
-      @include grid-span(4, 5);
+      @include grid-span(3, 6);
     }
     @include breakpoint($break3) {
       @include grid-span(3, 8);
     }
-    background: url(../images/fff-50.png);
-    border: 1px dotted #999999;
-    padding: 6px;
-    margin: 3px;
-    .content {
-      div {
-        margin-bottom: 6px;
+    #block-dd_tools-contact {
+      background: url(../images/fff-50.png);
+      border: 1px dotted #999999;
+      padding: 6px;
+      margin: 3px;
+      .content {
+        div {
+          margin-bottom: 6px;
+        }
       }
-    }
+      img.doespic {
+        float: left;
+        margin: 0 8px 0 0;
+      }
+      .socialist {
+        margin: 0;
+        padding: 0;
+        li{
+          list-style: none;
+          display: inline;
+          margin: 0 2px 0 0;
+          padding: 0;
+        }
+      }}
   }
   #logo {
     @include breakpoint($break1) {
@@ -98,7 +120,6 @@ h5 {
       @include grid-span(4, 2);
       font-size: 125%; 
     }
-    height: 80px;
     margin: 0 12px 0;
     #site-name {
       @include text-shadow(black 2px 2px 2px);
@@ -116,7 +137,6 @@ h5 {
       @include breakpoint($break3) {
         font-size: 150%; 
       }
-
     }
     #site-slogan {
       @include font(100);
@@ -131,17 +151,7 @@ h5 {
   }
 }
 
-h1, h2, h3, h4, h5, h6 {
-  @include font;
-  line-height: 1.3em;
-  @include text-shadow(white 1px 1px 0);
-  color: $dark_yellow;
-  a {
-    font-weight: bold;
-    font-weight: 700;
-    text-decoration: underline;
-  }
-}
+/* content area  */
 
 #content {
   #content-area {
@@ -160,11 +170,6 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-#content-header {
-  h1 {
-    margin-bottom: 0;
-  }
-}
 
 a {
   &:hover, &:active, &:link, &:visited {
@@ -176,63 +181,101 @@ a {
   display: none;
 }
 
-.page-taxonomy .views-field-field-image,
-.node-type-object .field-type-image .field-item {
-  display: inline;
-  img {
-    border: 2px #eeeeee solid;
-    padding: 2px;
-    @include box-shadow(#bbbbbb 1px 1px 3px);
-    @include border-radius(2px);
-  }
-}
+/* lists of objects */
 
 .page-taxonomy {
-  .view-taxonomy-term {
-    .views-row {
-      width: 139px;
+  #content{
+    .taxonomy-term-description {
+      font-size: 1.3em;
+      font-style: oblique;
+    }
+    article {
+      h2 {
+        font-size: 1.4em;
+        line-height: 1.2em;
+        margin: 7px 0;
+      }
+      a {
+        text-decoration: none;
+      }
+      width: 134px;
+      margin: 0 11px 11px 0;
+      height: 300px;
+      @include breakpoint($break2) {
+        width: 154px;
+        margin: 0 11px 11px 0;
+        height: 360px;
+      }
       float: left;
       display: inline;
-      margin: 0 4px 0 0;
-      height: 360px;
       overflow: hidden;
-    }
-  }
-}
-
-.page-taxonomy {
-  .view-categoriebeschrijvingen {
-    .views-field-description {
-      p {
-        font-size: 1.5em;
-        font-style: oblique;
+      .object-image {
+        display: inline;
+        img {
+          max-width: 100%; 
+          _width: 100%; 
+          vertical-align: middle; 
+          height: auto;
+          top: 0px;
+          border: 2px #eeeeee solid;
+          padding: 2px;
+          @include box-shadow(#bbbbbb 1px 1px 3px);
+          @include border-radius(2px);
+        }
+      }
+      .object-description {
+        font-size: 0.8em;
       }
     }
   }
 }
 
-// make decent css code for display text on top of image
-.view-taxonomy-term-2, .view-taxonomy-term {
-  .views-field {
-    margin-bottom: 7px;
-    .views-field-image {
-      top: 0px;
-    }
-    .views-field-title {
-      top: 20px;
-    }
-    h2 {
-      font-size: 1.4em;
-      line-height: 1.2em;
-    }
-    a {
-      text-decoration: none;
-      .views-field-body {
-        top: 60px;
+/* object detail page */
+
+.node-type-object #content {
+  .field-type-image {
+    .field-item {
+      float: left;
+      display: inline;
+      margin: 0 22px 22px 0;
+      @include breakpoint($break1) {
+        width: 240px;
+      }
+      @include breakpoint($break2) {
+        width: 308px;
+      }
+      img {
+        max-width: 100%; 
+        _width: 100%; 
+        vertical-align: middle; 
+        height: auto;
+        top: 0px;
+        border: 2px #eeeeee solid;
+        padding: 2px;
+        @include box-shadow(#bbbbbb 1px 1px 3px);
+        @include border-radius(2px);
       }
     }
   }
+  .data-list {
+    clear: right;
+    font-size: 1.2em;
+    .label {
+      font-weight: bold;
+    }
+    .field {
+      border-bottom: 1px dotted #999999;
+      line-height: 1.3em;
+      padding: 0 0 10px 0;
+      margin: 10px 0 0 0;
+    }
+    .field-name-body {
+      margin: 10px 0 0 0;
+    }
+  }
 }
+
+/* navigation */
 
 #block-system-main-menu {
   .menu {
@@ -260,12 +303,13 @@ a {
       @include breakpoint($break1) {
         display: inline;
         line-height: 3em;
-
       }
-
     }
   }
 }
+
+/* blocks */
+
 #block-dd_tools-news,
 #block-dd_tools-categories {
   ul {
@@ -277,45 +321,16 @@ a {
       padding: 8px 0;
       margin: 0;
       font-size: 1.2em;
-      
+      &.last { 
+        border-bottom: none;
+      }
+
     }
   }
 }
 
-.block {
-  div.views-row {
-    border-bottom: 1px dotted #999999;
-    padding: 8px 0;
-  }
-  div.views-row-last {
-    border-bottom: none;
-  }
-  .content {
-    h3 {
-      font-size: 1.2em;
-    }
-  }
-}
-
-#content-area {
-  .data-list {
-    font-size: 1.2em;
-    .field {
-      border-bottom: 1px dotted #999999;
-      line-height: 1.3em;
-      padding: 0 0 10px 0;
-      margin: 10px 0 0 0;
-    }
-    .field-name-body {
-      margin: 10px 0 0 0;
-    }
-  }
-}
-
-.view-news, .view-doesdesign-op-het-web {
-  .views-field-timestamp {
-    font-style: oblique;
-  }
+h2.block-title {
+  font-size: 1.6em;
 }
 
 #content-top, #content, #footer {
@@ -348,14 +363,12 @@ a {
   }
 }
 
-h2.block-title {
-  font-size: 1.6em;
-}
 
 // the slideshow
 
-.view-sieraden, #block-dd_tools-slideshow {
+#block-dd_tools-slideshow {
   ul {
+    width: 100%;
     margin: 0;
     padding: 0;
     li {
@@ -365,13 +378,18 @@ h2.block-title {
   }
   .slide {
     img {
+      max-width: 100%; 
+      _width: 100%; 
+      vertical-align: middle; 
+      height: auto;
+      top: 0px;
       border: 3px $light_brown solid;
     }
     position: relative;
     float: left;
     .text {
       position: absolute;
-      top: 206px;
+      bottom: 3em;
       left: 10px;
       color: white;
       padding: 10px;
@@ -443,15 +461,6 @@ h2.block-title {
 .front {
   #content-header {
     display: none;
-  }
-  #block-views-sieraden-block_1 {
-    padding-top: 0;
-  }
-}
-
-.node {
-  label, .label {
-    font-weight: bold;
   }
 }
 

@@ -10,7 +10,7 @@
  */
 function shoami_html_head_alter(&$head_elements) {
   $head_elements['system_meta_content_type']['#attributes'] = array(
-    'charset' => 'utf-8'
+      'charset' => 'utf-8'
   );
 }
 
@@ -43,24 +43,25 @@ function shoami_preprocess_html(&$vars) {
     $vars['rdf']->namespaces = '';
     $vars['rdf']->profile = '';
   }
-  
 
- // use the $html5shiv variable in their html.tpl.php
-  $element = array(  
-    'element' => array(
-    '#tag' => 'script',
-    '#value' => '',
-    '#attributes' => array(
-      'src' => '//html5shiv.googlecode.com/svn/trunk/html5.js',
-     ),
-   ),
- );
 
- $shimset = theme_get_setting('shoami_shim');
- $script = theme('html_tag', $element);
- //If the theme setting for adding the html5shim is checked, set the variable.
- if ($shimset == 1) { $vars['html5shim'] = "\n<!--[if lt IE 9]>\n" . $script . "<![endif]-->\n"; }
+  // use the $html5shiv variable in their html.tpl.php
+  $element = array(
+      'element' => array(
+          '#tag' => 'script',
+          '#value' => '',
+          '#attributes' => array(
+              'src' => '//html5shiv.googlecode.com/svn/trunk/html5.js',
+          ),
+      ),
+  );
 
+  $shimset = theme_get_setting('shoami_shim');
+  $script = theme('html_tag', $element);
+  //If the theme setting for adding the html5shim is checked, set the variable.
+  if ($shimset == 1) {
+    $vars['html5shim'] = "\n<!--[if lt IE 9]>\n" . $script . "<![endif]-->\n";
+  }
 }
 
 /**
@@ -111,7 +112,7 @@ function shoami_breadcrumb($vars) {
  * Override or insert variables into theme_menu_local_task().
  */
 function shoami_preprocess_menu_local_task(&$variables) {
-  $link =& $variables['element']['#link'];
+  $link = & $variables['element']['#link'];
 
   // If the link does not contain HTML already, check_plain() it now.
   // After we set 'html'=TRUE the link will not be sanitized by l().
@@ -125,7 +126,7 @@ function shoami_preprocess_menu_local_task(&$variables) {
 /**
  * Duplicate of theme_menu_local_tasks() but adds clearfix to tabs.
  */
-function shoami_menu_local_tasks(&$variables) {  
+function shoami_menu_local_tasks(&$variables) {
   $output = '';
 
   if (!empty($variables['primary'])) {
@@ -145,7 +146,30 @@ function shoami_menu_local_tasks(&$variables) {
 }
 
 function shoami_preprocess_node(&$variables) {
-  //dpm($variables);
+//kpr($variables);
+//  
+//  foreach ($variables['field_image'] as $key => $image) {
+//    unset($variables['field_image'][$key]['height']);
+//    unset($variables['field_image'][$key]['width']);
+//  }
+//  kpr($variables['field_image']);
+//  
+}
+
+function shoami_preprocess_image(&$variables) {
+//  kpr($variables);
+  if (isset($variables['style_name'])) {
+    switch ($variables['style_name']) {
+      case 'square-thumb':
+      case 'square-thumb-medium':
+      case 'large-thumb':
+      case 'x-medium':
+        foreach (array('width', 'height') as $key) {
+          unset($variables[$key]);
+        }
+        break;
+    }
+  }
 }
 
 function XXXshoami_item_list($variables) {
@@ -175,16 +199,13 @@ function XXXshoami_item_list($variables) {
         foreach ($item as $key => $value) {
           if ($key == 'data') {
             $data = $value;
-          }
-          elseif ($key == 'children') {
+          } elseif ($key == 'children') {
             $children = $value;
-          }
-          else {
+          } else {
             $attributes[$key] = $value;
           }
         }
-      }
-      else {
+      } else {
         $data = $item;
       }
       if (count($children) > 0) {
@@ -203,4 +224,3 @@ function XXXshoami_item_list($variables) {
   }
   return $output;
 }
-

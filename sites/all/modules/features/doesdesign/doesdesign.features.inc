@@ -5,9 +5,9 @@
  */
 
 /**
- * Implements hook_views_api().
+ * Implements hook_ctools_plugin_api().
  */
-function doesdesign_views_api() {
+function doesdesign_ctools_plugin_api() {
   return array("api" => "3.0");
 }
 
@@ -47,6 +47,7 @@ function doesdesign_image_default_styles() {
         'weight' => '2',
       ),
     ),
+    'label' => 'micro',
   );
 
   // Exported image style: square-thumb.
@@ -69,6 +70,7 @@ function doesdesign_image_default_styles() {
         'weight' => '1',
       ),
     ),
+    'label' => 'square-thumb',
   );
 
   // Exported image style: square-thumb-medium.
@@ -91,13 +93,15 @@ function doesdesign_image_default_styles() {
         'weight' => '1',
       ),
     ),
+    'label' => 'square-thumb-medium',
   );
 
   // Exported image style: x-medium.
   $styles['x-medium'] = array(
     'name' => 'x-medium',
+    'label' => 'x-medium',
     'effects' => array(
-      2 => array(
+      3 => array(
         'label' => 'Schalen en bijsnijden',
         'help' => 'Bij het schalen blijft de breedte-hoogte verhouding van de oorspronkelijke afbeelding behouden. Bij het bijsnijden wordt de langste zijde ingekort. Hiermee kunt u bijvoorbeeld vierkante miniaturen maken.',
         'effect callback' => 'image_scale_and_crop_effect',
@@ -107,8 +111,8 @@ function doesdesign_image_default_styles() {
         'module' => 'image',
         'name' => 'image_scale_and_crop',
         'data' => array(
-          'width' => '599',
-          'height' => '310',
+          'width' => '700',
+          'height' => '350',
         ),
         'weight' => '1',
       ),
