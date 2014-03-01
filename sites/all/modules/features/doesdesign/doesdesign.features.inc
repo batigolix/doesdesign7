@@ -5,17 +5,33 @@
  */
 
 /**
- * Implements hook_ctools_plugin_api().
- */
-function doesdesign_ctools_plugin_api() {
-  return array("api" => "3.0");
-}
-
-/**
  * Implements hook_image_default_styles().
  */
 function doesdesign_image_default_styles() {
   $styles = array();
+
+  // Exported image style: large-thumb.
+  $styles['large-thumb'] = array(
+    'name' => 'large-thumb',
+    'label' => 'large-thumb',
+    'effects' => array(
+      2 => array(
+        'label' => 'Schalen en bijsnijden',
+        'help' => 'Bij het schalen blijft de breedte-hoogte verhouding van de oorspronkelijke afbeelding behouden. Bij het bijsnijden wordt de langste zijde ingekort. Hiermee kunt u bijvoorbeeld vierkante miniaturen maken.',
+        'effect callback' => 'image_scale_and_crop_effect',
+        'dimensions callback' => 'image_resize_dimensions',
+        'form callback' => 'image_resize_form',
+        'summary theme' => 'image_resize_summary',
+        'module' => 'image',
+        'name' => 'image_scale_and_crop',
+        'data' => array(
+          'width' => '500',
+          'height' => '400',
+        ),
+        'weight' => '1',
+      ),
+    ),
+  );
 
   // Exported image style: micro.
   $styles['micro'] = array(
