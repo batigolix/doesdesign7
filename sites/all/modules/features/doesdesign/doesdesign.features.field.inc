@@ -279,15 +279,12 @@ function doesdesign_field_default_fields() {
         ),
         'hero_teaser' => array(
           'label' => 'hidden',
-          'module' => 'colorbox',
+          'module' => 'image',
           'settings' => array(
-            'colorbox_caption' => 'auto',
-            'colorbox_gallery' => 'none',
-            'colorbox_gallery_custom' => '',
-            'colorbox_image_style' => '',
-            'colorbox_node_style' => 'x-medium',
+            'image_link' => 'content',
+            'image_style' => 'x-medium',
           ),
-          'type' => 'colorbox',
+          'type' => 'image',
           'weight' => '0',
         ),
         'rss' => array(
