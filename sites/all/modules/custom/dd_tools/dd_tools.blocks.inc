@@ -174,6 +174,7 @@ function dd_tools_news() {
           ->fields('n')
           ->condition('n.status', 1)
           ->range(0, $limit)
+          ->orderBy('n.created','DESC')
           ->condition('n.type', 'story');
   $results = $query->execute();
   $items = array();
