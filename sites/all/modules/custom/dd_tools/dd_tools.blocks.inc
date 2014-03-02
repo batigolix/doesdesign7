@@ -92,7 +92,7 @@ function dd_tools_slideshow() {
   $items = array();
   foreach ($nodes as $node) {
     $node_view = node_view($node, 'hero_teaser');
-    $items[] = array('data' => drupal_render($node_view));
+    $items[] = array('data' => drupal_render($node_view), 'class'=>array('slide'));
   }
   $lib_path = libraries_get_path('responsiveslides');
   $rs_js = 'jQuery(function() {jQuery(".rslides").responsiveSlides({auto: true, timeout: 3000, speed: 500, pager: true, pauseControls: true, navContainer: ""});});';
