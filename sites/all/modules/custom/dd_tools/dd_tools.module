@@ -76,7 +76,7 @@ function dd_tools_taxonomy_term_page($tid) {
 function dd_tools_node_view($node, $view_mode, $langcode) {
   switch ($node->type) {
     case 'object':
-      $node->content['adhesive_tape_contact_subject'] = array(
+      $node->content['object_contact'] = array(
           '#type' => 'item',
           '#title' => t('Contact: '),
           '#markup' => l(
@@ -97,20 +97,13 @@ function dd_tools_node_view($node, $view_mode, $langcode) {
 /**
  * Implements hook_field_extra_fields().
  *
- * Declare our Facebook Like button as a pseudo-field.
+ * Declare link to contact form as a pseudo-field.
  */
 function dd_tools_field_extra_fields() {
-  // The levels of the array that we return correspond to the
-  // entity type, bundle and then either 'display' or 'form'.
-  // In this case, we apply to 'page' nodes, when we display them.
   $extra['node']['object']['display'] = array(
-      // The keys here must correspond to the keys of the items
-      // that we add in our hook_node_view() or similar function.
-      // Prefix it with our module name to ensure it doesn't clash
-      // with anything from other modules.
-      'adhesive_tape_contact_subject' => array(
+      'object_contact' => array(
           'label' => t('Custom link to contact form that sends subject along'),
-          'description' => t('Custom link to contact form that sends subject along, added in adhesive_tape_node_view().'),
+          'description' => t('Custom link to contact form that sends subject along, added in dd_tape_node_view().'),
           'weight' => 10,
       ),
   );
@@ -124,8 +117,6 @@ function dd_tools_form_object_node_form_alter(&$form, &$form_state, $form_id) {
   $form['options']['authord']['#weight'] = 99;
   unset($form['author']);
   unset($form['print']);
-  $form['#validate'][] = 'adhesive_tape_validate_node_form';
-  // $form['options']['field_in_the_spotlight'] = $form['field_in_the_spotlight'];
   $form['meta_info'] = array(
       '#type' => 'fieldset',
       '#title' => t('Meta informatie'),
