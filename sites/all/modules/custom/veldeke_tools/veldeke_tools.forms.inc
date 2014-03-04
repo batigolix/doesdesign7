@@ -59,30 +59,36 @@ function veldeke_tools_properties_filter_form_submit(&$form, &$form_state) {
  */
 
 function veldeke_tools_import_dictionary_form($form, &$form_state) {
-  kpr(variable_get('letters'));
   $form = array();
   $letters = array();
-  foreach (range('A', 'Z') as $char) {
-    $letters[$char] = $char;
+  foreach (range('a', 'z') as $char) {
+    $letters[$char] = strtoupper($char);
   }
+
   $form['letters'] = array(
       '#type' => 'checkboxes',
       '#options' => $letters,
-      '#title'=>'Letters',
-      '#default_value'=>  variable_get('letters',$letters),
+      '#title' => 'Letters',
+      '#default_value' => variable_get('letters', $letters),
   );
+  
+  $form['#attached']['css'] = array(
+      drupal_get_path('module', 'veldeke_tools') . '/css/veldeke_tools.css',
+  );
+  
   $form['submit'] = array(
       '#type' => 'submit',
       '#value' => t('Import'),
   );
 
-
-
   return $form;
 }
 
 function veldeke_tools_import_dictionary_form_validate(&$form, &$form_state) {
-  
+  $letters = array_filter($form_state['values']['letters']);
+  if (count($letters) > 5) {
+    form_set_error('letters', t('Only import 5 letters at once'));
+  }
 }
 
 function veldeke_tools_import_dictionary_form_submit(&$form, &$form_state) {

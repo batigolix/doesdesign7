@@ -9,7 +9,7 @@
 
 .page-terms .lang-nav li,
 .page-terms .az-browser {
-clear: both;
+  clear: both;
 }
 #block-veldeke_tools-dictionary .lang-nav li,
 #block-veldeke_tools-dictionary .az-browser li,
@@ -42,8 +42,8 @@ clear: both;
 }
 
 .page-terms dd, .page-terms dt {
-        border-top: #ccc solid 1px;
- padding: 3px 0;
+  border-top: #ccc solid 1px;
+  padding: 3px 0;
 }
 
 
@@ -55,4 +55,13 @@ clear: both;
 .page-terms dd {
   width: 66%;
   float: left;
+}
+
+.form-item-letters .form-item {
+  display: inline;
+  margin: 6px 6px 0 0;
+}
+
+.form-item-letters .form-item:hover {
+  border: dashed orange 1px;
 }

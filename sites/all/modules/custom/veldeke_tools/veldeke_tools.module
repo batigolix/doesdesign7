@@ -264,20 +264,25 @@ function veldeke_tools_lang_nav($letter = 'a') {
 /**
  * 
  */
-function veldeke_tools_import_dictionary() {
-  $num_deleted = db_delete('veldeke_dictionary')
-          ->execute();
-  drupal_set_message($num_deleted . ' terms deleted');
+function veldeke_tools_import_dictionary($letters) {
+  $letters = array_filter($letters);
+  foreach ($letters as $letter) {
+    $num_deleted = db_delete('veldeke_dictionary')
+            ->condition('nl_letter', $letter)
+            ->execute();
+    watchdog('dictionary', $num_deleted . ' terms deleted');
+  }
   $csv_file = 'https://docs.google.com/spreadsheet/pub?key=0AgLDdff6gGPwdHVzM2pmQkZjSXVDUUwybkpQWGROVkE&single=true&gid=0&output=csv';
   $csv_string = get_data($csv_file);
   $terms = csv_to_array($csv_string); //parse the rows 
   unset($terms[0]); // header csv
   if (variable_get('debug_mode') == 1) {
-    $terms = array_slice($terms, 1750, 50);
+    $terms = array_slice($terms, 1000, 50);
   }
-  //dpm($terms);
   foreach ($terms as $term) {
-    $operations[] = array('veldeke_tools_import_dictionary_term', array($term));
+    if (in_array($term[2], $letters)) {
+      $operations[] = array('veldeke_tools_import_dictionary_term', array($term));
+    }
   }
   $batch = array(
       'operations' => $operations,
@@ -288,11 +293,10 @@ function veldeke_tools_import_dictionary() {
 
 function veldeke_tools_import_dictionary_term($term, &$context) {
   //dsm(_remove_accents($term[3]).'--');
-  $context['results'][] = $term[0] . ' : ' . check_plain($term[2]);
-  $context['message'] = t('Importing "@title"', array('@title' => $term[2]));
-  $nl_letter = strtolower(_remove_accents($term[2]));
-
-  $li_letter = strtolower(_remove_accents($term[3]));
+  $context['results'][] = $term[0] . ' : ' . check_plain($term[3]);
+  $context['message'] = t('Importing "@title"', array('@title' => $term[3]));
+  $nl_letter = strtolower(_remove_accents($term[3]));
+  $li_letter = strtolower(_remove_accents($term[4]));
   try {
 
     // set auto increment start value to 1
@@ -303,16 +307,16 @@ function veldeke_tools_import_dictionary_term($term, &$context) {
     db_insert('veldeke_dictionary')
             ->fields(array(
                 'updated' => check_plain($term[1]),
-                'nl_term' => check_plain($term[2]),
-                'li_term' => check_plain($term[3]),
-                'misc' => check_plain($term[4]),
+                'nl_term' => check_plain($term[3]),
+                'li_term' => check_plain($term[4]),
+                'misc' => check_plain($term[5]),
                 'nl_letter' => $nl_letter[0],
                 'li_letter' => $li_letter[0],
             ))
             ->execute();
-    drupal_set_message($term[2] . ' imported');
+    drupal_set_message($term[3] . ' imported');
   } catch (Exception $e) {
-    watchdog('veldeke_tools', 'Problem import %id - %nl_term -- %e', array('%e' => $e, '%id' => $term[0], '%nl_term' => $term[2]), WATCHDOG_ERROR);
+    watchdog('veldeke_tools', 'Problem import - %nl_term -- %e', array('%e' => $e, '%nl_term' => $term[3]), WATCHDOG_ERROR);
   }
   $output = 'importing ditionary';
   return $output;
@@ -328,9 +332,9 @@ function veldeke_tools_import_dictionary_finished($success, $results, $operation
 }
 
 function veldeke_tools_fetch_terms($lang, $letter) {
-  $query = db_select('veldeke_dictionary', 'vd')
-          ->extend('PagerDefault')
-          ->limit(50);
+  $query = db_select('veldeke_dictionary', 'vd');
+  //->extend('PagerDefault')
+//          ->limit(50);
   $query->fields('vd', array('nl_term', 'li_term', 'misc'));
   if ($lang == 'li') {
     $query->condition('vd.li_letter', $letter);
@@ -403,10 +407,6 @@ function veldeke_tools_fetch_data($csv_file) {
   while (($row = fgetcsv($file, 1000, ',')) !== FALSE) {
     $data[] = $row;
   }
-
-  dpm($data);
-
-//  $data = _csv_to_array($csv_file, ',');
 
   return $data;
 }
