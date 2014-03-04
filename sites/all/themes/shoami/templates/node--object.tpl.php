@@ -23,7 +23,7 @@
     <div class="field-label">Artikelnummer:</div> 
     <div><?php print render($article_number); ?></div>
   </div>
-  <?php print render($content['adhesive_tape_contact_subject']); ?>
+  <?php print render($content['object_contact']); ?>
 </div> <!-- /node--object.tpl.php--> 
 </div> <!-- /node--object.tpl.php--> 
 
