@@ -179,7 +179,7 @@ function dd_tools_news() {
   $results = $query->execute();
   $items = array();
   foreach ($results as $result) {
-    $items[] = array('data' => format_date($result->changed, 'medium') . ' ' . l($result->title, $result->nid));
+    $items[] = array('data' => format_date($result->changed, 'medium') . ' ' . l($result->title, drupal_get_path_alias('node/' . $result->nid)));
   }
   $result = $query->execute();
   $build['news_list'] = array(
