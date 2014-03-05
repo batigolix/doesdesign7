@@ -57,11 +57,7 @@
   float: left;
 }
 
-.form-item-letters .form-item {
+#veldeke-tools-import-dictionary-form .form-item-letters .form-item {
   display: inline;
-  margin: 6px 6px 0 0;
-}
-
-.form-item-letters .form-item:hover {
-  border: dashed orange 1px;
+  padding: 6px 18px 0 0;
 }
