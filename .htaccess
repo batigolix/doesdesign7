@@ -129,3 +129,5 @@ RewriteRule ^ http://%1%{REQUEST_URI} [L,R=301]
     </FilesMatch>
   </IfModule>
 </IfModule>
+
+SetEnv PHPRC /home/doesborg/public_html/php.ini
