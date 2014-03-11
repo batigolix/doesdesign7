@@ -205,8 +205,10 @@ function veldeke_tools_block_view($delta = '') {
       $blocks['content'] = drupal_get_form('veldeke_tools_search_terms_form');
       break;
     case 'dictionary':
+      $arg_lang = arg(1);
+      $az_lang = $arg_lang == 'li' ? 'li' : 'nl';
       $blocks['subject'] = t('Dictionary');
-      $blocks['content'] = veldeke_tools_lang_nav() . veldeke_tools_az_browse();
+      $blocks['content'] = veldeke_tools_lang_nav() . veldeke_tools_az_browse($az_lang);
       break;
     case 'dictionary_toc':
       $blocks['subject'] = t('Dictionary table of contents');
@@ -377,7 +379,7 @@ function veldeke_tools_az_browse($lang = 'nl') {
   );
   $items = array();
   foreach (range('A', 'Z') as $char) {
-    $items[] = array('data' => l($char, 'terms/' . $lang . '/' . $char));
+    $items[] = array('data' => l($char, 'terms/' . $lang . '/' . strtolower($char)));
   }
   return theme('item_list', array('items' => $items, 'title' => t('Browse'), 'type' => $type, 'attributes' => $attributes));
 }
