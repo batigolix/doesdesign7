@@ -78,6 +78,7 @@ function dd_tools_block_view($delta = '') {
  */
 function dd_tools_slideshow() {
   $items = variable_get('slideshow_items', 5);
+  dsm($items);
   $query = db_select('node', 'n');
   $query->condition('n.promote', 1);
   $query->range(0, $items);
@@ -92,7 +93,7 @@ function dd_tools_slideshow() {
   $items = array();
   foreach ($nodes as $node) {
     $node_view = node_view($node, 'hero_teaser');
-    $items[] = array('data' => drupal_render($node_view), 'class'=>array('slide'));
+    $items[] = array('data' => drupal_render($node_view), 'class' => array('slide'));
   }
   $lib_path = libraries_get_path('responsiveslides');
   $rs_js = 'jQuery(function() {jQuery(".rslides").responsiveSlides({auto: true, timeout: 3000, speed: 500, pager: true, pauseControls: true, navContainer: ""});});';
@@ -124,7 +125,7 @@ function dd_tools_block_configure($delta = '') {
       $form['slideshow_items'] = array(
           '#type' => 'select',
           '#title' => t('Number of items'),
-          '#options' => array(2 => 2, 5 => 5, 10 => 10),
+          '#options' => array(3 => 3, 5 => 5, 7 => 7, 9 => 9, 11 => 11, 13 => 13, 15 => 15, 17 => 17),
           '#description' => t('This number of items will be shown in the slideshow block'),
           '#default_value' => variable_get('slideshow_items', 5),
       );
@@ -174,7 +175,7 @@ function dd_tools_news() {
           ->fields('n')
           ->condition('n.status', 1)
           ->range(0, $limit)
-          ->orderBy('n.created','DESC')
+          ->orderBy('n.created', 'DESC')
           ->condition('n.type', 'story');
   $results = $query->execute();
   $items = array();
