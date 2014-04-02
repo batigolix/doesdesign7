@@ -78,7 +78,6 @@ function dd_tools_block_view($delta = '') {
  */
 function dd_tools_slideshow() {
   $items = variable_get('slideshow_items', 5);
-  dsm($items);
   $query = db_select('node', 'n');
   $query->condition('n.promote', 1);
   $query->range(0, $items);
