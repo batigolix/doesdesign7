@@ -207,8 +207,10 @@ function veldeke_tools_block_view($delta = '') {
     case 'dictionary':
       $arg_lang = arg(1);
       $az_lang = $arg_lang == 'li' ? 'li' : 'nl';
+      $arg_letter = arg(2);
+      $az_letter = isset($arg_letter) ? $arg_letter : 'a';
       $blocks['subject'] = t('Dictionary');
-      $blocks['content'] = veldeke_tools_lang_nav() . veldeke_tools_az_browse($az_lang);
+      $blocks['content'] = veldeke_tools_lang_nav($az_letter) . veldeke_tools_az_browse($az_lang);
       break;
     case 'dictionary_toc':
       $blocks['subject'] = t('Dictionary table of contents');
