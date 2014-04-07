@@ -177,12 +177,12 @@ function veldeke_tools_block_info() {
   );
   $blocks['dictionary'] = array(
       'info' => t('Veldeke tools: dictionary'),
-      'cache' => DRUPAL_CACHE_GLOBAL,
+      'cache' => DRUPAL_NO_CACHE,
   );
 
   $blocks['dictionary_toc'] = array(
       'info' => t('Veldeke tools: dictionary TOC'),
-      'cache' => DRUPAL_CACHE_GLOBAL,
+      'cache' => DRUPAL_NO_CACHE,
   );
 
   $blocks['dictionary_instruct'] = array(
