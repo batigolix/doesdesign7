@@ -354,9 +354,12 @@ function veldeke_tools_fetch_terms($lang, $letter) {
   }
   $data = array();
   foreach ($results as $result) {
+    $li_term  = html_entity_decode($result->li_term, ENT_QUOTES);
+    $nl_term  = html_entity_decode($result->nl_term, ENT_QUOTES);
+    $misc  = html_entity_decode($result->misc, ENT_QUOTES);
     $data[] = array(
-        'term' => $lang == 'li' ? $result->li_term : $result->nl_term,
-        'definitions' => $lang == 'li' ? $result->nl_term : theme('definition', array('definition' => $result->li_term, 'misc' => $result->misc)),
+        'term' => $lang == 'li' ? html_entity_decode($li_term) : $nl_term,
+        'definitions' => $lang == 'li' ? $nl_term : theme('definition', array('definition' => $li_term, 'misc' => $misc)),
     );
   }
   return $data;
