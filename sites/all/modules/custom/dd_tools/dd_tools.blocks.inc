@@ -6,24 +6,24 @@
  */
 function dd_tools_block_info() {
   $blocks['slideshow'] = array(
-      'info' => t('DD tools: Slideshow'),
-      'cache' => DRUPAL_CACHE_GLOBAL,
+    'info' => t('DD tools: Slideshow'),
+    'cache' => DRUPAL_CACHE_GLOBAL,
   );
   $blocks['news'] = array(
-      'info' => t('DD tools: News'),
-      'cache' => DRUPAL_CACHE_GLOBAL,
+    'info' => t('DD tools: News'),
+    'cache' => DRUPAL_CACHE_GLOBAL,
   );
   $blocks['categories'] = array(
-      'info' => t('DD tools: Categories'),
-      'cache' => DRUPAL_CACHE_GLOBAL,
+    'info' => t('DD tools: Categories'),
+    'cache' => DRUPAL_CACHE_GLOBAL,
   );
   $blocks['flickr'] = array(
-      'info' => t('DD tools: Flickr'),
-      'cache' => DRUPAL_CACHE_GLOBAL,
+    'info' => t('DD tools: Flickr'),
+    'cache' => DRUPAL_CACHE_GLOBAL,
   );
   $blocks['contact'] = array(
-      'info' => t('DD tools: Contact'),
-      'cache' => DRUPAL_CACHE_GLOBAL,
+    'info' => t('DD tools: Contact'),
+    'cache' => DRUPAL_CACHE_GLOBAL,
   );
   return $blocks;
 }
@@ -50,20 +50,20 @@ function dd_tools_block_view($delta = '') {
     case 'flickr':
       $blocks['subject'] = t('Photo\'s on Flickr');
       $blocks['content'] = array(
-          '#markup' => '<div id="flickr_images"> </div>',
-          '#attached' => array(
-              'js' => array(
-                  'data' => drupal_get_path('module', 'dd_tools') . '/js/flickr.js',
-                  array(
-                      'data' => array(
-                          'dd_tools' => array(
-                              'block_items' => variable_get('flickr_items', 13),
-                          ),
-                      ),
-                      'type' => 'setting',
-                  ),
+        '#markup' => '<div id="flickr_images"> </div>',
+        '#attached' => array(
+          'js' => array(
+            'data' => drupal_get_path('module', 'dd_tools') . '/js/flickr.js',
+            array(
+              'data' => array(
+                'dd_tools' => array(
+                  'block_items' => variable_get('flickr_items', 13),
+                ),
               ),
+              'type' => 'setting',
+            ),
           ),
+        ),
       );
       break;
     case 'contact':
@@ -78,9 +78,12 @@ function dd_tools_block_view($delta = '') {
  */
 function dd_tools_slideshow() {
   $items = variable_get('slideshow_items', 5);
+  $order = variable_get('slideshow_order', 'ASC');
+  $order_prop = variable_get('slideshow_order_prop', 'created');
   $query = db_select('node', 'n');
   $query->condition('n.promote', 1);
   $query->range(0, $items);
+  $query->orderBy('n.' . $order_prop, $order);
   $query->condition('n.status', 1);
   $query->condition('n.type', 'object');
   $query->fields('n', array('nid', 'title'));
@@ -91,25 +94,27 @@ function dd_tools_slideshow() {
   $nodes = node_load_multiple($nids);
   $items = array();
   foreach ($nodes as $node) {
+//    dsm(format_date($node->created, 'medium'));
+//    dsm(format_date($node->changed, 'medium'));
     $node_view = node_view($node, 'hero_teaser');
     $items[] = array('data' => drupal_render($node_view), 'class' => array('slide'));
   }
   $lib_path = libraries_get_path('responsiveslides');
   $rs_js = 'jQuery(function() {jQuery(".rslides").responsiveSlides({auto: true, timeout: 3000, speed: 500, pager: true, pauseControls: true, navContainer: ""});});';
   $build = array(
-      '#markup' => theme('item_list', array('items' => $items, 'title' => NULL, 'type' => 'ul', 'attributes' => array('class' => array('rslides')))),
-      '#attached' => array(
-          'js' => array(
-              array(
-                  'data' => $lib_path . '/responsiveslides.min.js',
-                  'type' => 'file',
-              ),
-              array(
-                  'data' => $rs_js,
-                  'type' => 'inline',
-              ),
-          ),
+    '#markup' => theme('item_list', array('items' => $items, 'title' => NULL, 'type' => 'ul', 'attributes' => array('class' => array('rslides')))),
+    '#attached' => array(
+      'js' => array(
+        array(
+          'data' => $lib_path . '/responsiveslides.min.js',
+          'type' => 'file',
+        ),
+        array(
+          'data' => $rs_js,
+          'type' => 'inline',
+        ),
       ),
+    ),
   );
   return $build;
 }
@@ -122,29 +127,43 @@ function dd_tools_block_configure($delta = '') {
   switch ($delta) {
     case 'slideshow' :
       $form['slideshow_items'] = array(
-          '#type' => 'select',
-          '#title' => t('Number of items'),
-          '#options' => array(3 => 3, 5 => 5, 7 => 7, 9 => 9, 11 => 11, 13 => 13, 15 => 15, 17 => 17),
-          '#description' => t('This number of items will be shown in the slideshow block'),
-          '#default_value' => variable_get('slideshow_items', 5),
+        '#type' => 'select',
+        '#title' => t('Number of items'),
+        '#options' => array(3 => 3, 5 => 5, 7 => 7, 9 => 9, 11 => 11, 13 => 13, 15 => 15, 17 => 17),
+        '#description' => t('This number of items will be shown in the slideshow block'),
+        '#default_value' => variable_get('slideshow_items', 5),
+      );
+      $form['slideshow_order'] = array(
+        '#type' => 'select',
+        '#title' => t('Order'),
+        '#options' => array('ASC ' => t('Ascending'), 'DESC' => t('Descending')),
+        '#description' => t('In what order the items will be shown in the slideshow block'),
+        '#default_value' => variable_get('slideshow_order', 'DESC'),
+      );
+      $form['slideshow_order_prop'] = array(
+        '#type' => 'select',
+        '#title' => t('Order by'),
+        '#options' => array('created ' => t('Creation date'), 'changed' => t('Date of last change')),
+        '#description' => t('By which date the items will be ordered in the slideshow block'),
+        '#default_value' => variable_get('slideshow_order_prop', 'DESC'),
       );
       break;
     case 'news' :
       $form['news_items'] = array(
-          '#type' => 'select',
-          '#title' => t('Number of items'),
-          '#options' => array(2 => 2, 5 => 5, 10 => 10),
-          '#description' => t('This number of items will be shown in the news block'),
-          '#default_value' => variable_get('news_items', 5),
+        '#type' => 'select',
+        '#title' => t('Number of items'),
+        '#options' => array(2 => 2, 5 => 5, 10 => 10),
+        '#description' => t('This number of items will be shown in the news block'),
+        '#default_value' => variable_get('news_items', 5),
       );
       break;
     case 'flickr' :
       $form['flickr_items'] = array(
-          '#type' => 'select',
-          '#title' => t('Number of items'),
-          '#options' => array(10 => 10, 12 => 12, 15 => 15, 16 => 16, 18 => 18, 20 => 20),
-          '#description' => t('This number of items will be shown in the Flickr block'),
-          '#default_value' => variable_get('flickr_items', 5),
+        '#type' => 'select',
+        '#title' => t('Number of items'),
+        '#options' => array(10 => 10, 12 => 12, 15 => 15, 16 => 16, 18 => 18, 20 => 20),
+        '#description' => t('This number of items will be shown in the Flickr block'),
+        '#default_value' => variable_get('flickr_items', 5),
       );
       break;
   }
@@ -158,6 +177,8 @@ function dd_tools_block_save($delta = '', $edit = array()) {
   switch ($delta) {
     case 'slideshow':
       variable_set('slideshow_items', $edit['slideshow_items']);
+      variable_set('slideshow_order', $edit['slideshow_order']);
+      variable_set('slideshow_order_prop', $edit['slideshow_order_prop']);
       break;
     case 'news':
       variable_set('news_items', $edit['news_items']);
@@ -171,11 +192,11 @@ function dd_tools_block_save($delta = '', $edit = array()) {
 function dd_tools_news() {
   $limit = variable_get('news_items', 5);
   $query = db_select('node', 'n')
-          ->fields('n')
-          ->condition('n.status', 1)
-          ->range(0, $limit)
-          ->orderBy('n.created', 'DESC')
-          ->condition('n.type', 'story');
+      ->fields('n')
+      ->condition('n.status', 1)
+      ->range(0, $limit)
+      ->orderBy('n.created', 'DESC')
+      ->condition('n.type', 'story');
   $results = $query->execute();
   $items = array();
   foreach ($results as $result) {
@@ -183,9 +204,9 @@ function dd_tools_news() {
   }
   $result = $query->execute();
   $build['news_list'] = array(
-      '#theme' => 'item_list',
-      '#items' => $items,
-      '#attrinutes' => array('class' => array('news-list')),
+    '#theme' => 'item_list',
+    '#items' => $items,
+    '#attrinutes' => array('class' => array('news-list')),
   );
   $build['more'] = array('#markup' => l(t('More'), 'nieuws'));
   return $build;
@@ -199,9 +220,9 @@ function dd_tools_categories() {
     $items[] = array('data' => l($term->name, drupal_get_path_alias('taxonomy/term/' . $term->tid)));
   }
   $build['category_list'] = array(
-      '#theme' => 'item_list',
-      '#items' => $items,
-      '#attributes' => array('class' => array('category-list')),
+    '#theme' => 'item_list',
+    '#items' => $items,
+    '#attributes' => array('class' => array('category-list')),
   );
 //  $build['more'] = array('#markup' => l(t('More'),'nieuws'));
   return $build;
@@ -214,66 +235,66 @@ function dd_tools_contact() {
    */
 
   $socials = array(
-      array(
-          'name' => 'Facebook',
-          'img' => 'facebook-logo.png',
-          'cta' => t('Visit Doesdesign at Facebook'),
-          'url' => 'https://www.facebook.com/Doesdesign.nl',
-          'class' => 'facebook',
-      ),
-      array(
-          'name' => 'Linkedin',
-          'img' => 'linkedin-logo.png',
-          'cta' => t('Visit Birigit at Linkedin'),
-          'url' => 'http://nl.linkedin.com/in/birgitdoesborg',
-          'class' => 'linkedin',
-      ),
-      array(
-          'name' => 'Twitter',
-          'img' => 'twitter-logo.png',
-          'cta' => t('Tweet Birigit'),
-          'url' => 'http://twitter.com/#!/Doesdesign_nl',
-          'class' => 'twitter',
-      ),
-      array(
-          'name' => 'YouTube',
-          'cta' => t('Visit YouTube page'),
-          'img' => 'youtube-logo.png',
-          'url' => 'http://www.youtube.com/user/metalartcreations',
-          'class' => 'youtube',
-      ),
+    array(
+      'name' => 'Facebook',
+      'img' => 'facebook-logo.png',
+      'cta' => t('Visit Doesdesign at Facebook'),
+      'url' => 'https://www.facebook.com/Doesdesign.nl',
+      'class' => 'facebook',
+    ),
+    array(
+      'name' => 'Linkedin',
+      'img' => 'linkedin-logo.png',
+      'cta' => t('Visit Birigit at Linkedin'),
+      'url' => 'http://nl.linkedin.com/in/birgitdoesborg',
+      'class' => 'linkedin',
+    ),
+    array(
+      'name' => 'Twitter',
+      'img' => 'twitter-logo.png',
+      'cta' => t('Tweet Birigit'),
+      'url' => 'http://twitter.com/#!/Doesdesign_nl',
+      'class' => 'twitter',
+    ),
+    array(
+      'name' => 'YouTube',
+      'cta' => t('Visit YouTube page'),
+      'img' => 'youtube-logo.png',
+      'url' => 'http://www.youtube.com/user/metalartcreations',
+      'class' => 'youtube',
+    ),
   );
   $img_path = drupal_get_path('module', 'dd_tools') . '/images/';
   $items = array();
   foreach ($socials as $social) {
 
     $img = theme('image', array(
-        'path' => $img_path . $social['img'], 'attributes' => array(
-            'title' => $social['cta'],
-            'alt' => $social['name'],
-        )
+      'path' => $img_path . $social['img'], 'attributes' => array(
+        'title' => $social['cta'],
+        'alt' => $social['name'],
+      )
     ));
     $items[] = array(
-        'data' => l($img, $social['url'], array('html' => TRUE, 'attributes' => array('class' => array('social', $social['class']), 'alt' => $social['cta']))),
+      'data' => l($img, $social['url'], array('html' => TRUE, 'attributes' => array('class' => array('social', $social['class']), 'alt' => $social['cta']))),
     );
   }
   $build['doespic'] = array(
-      '#theme' => 'image',
-      '#path' => $img_path . 'Doesklein.jpg',
-      '#attributes' => array(
-          'class' => array(
-              'doespic'
-          ),
-          'title' => 'Birgit Doesborg',
-          'alt' => 'Foto Birgit Doesborg',
+    '#theme' => 'image',
+    '#path' => $img_path . 'Doesklein.jpg',
+    '#attributes' => array(
+      'class' => array(
+        'doespic'
       ),
+      'title' => 'Birgit Doesborg',
+      'alt' => 'Foto Birgit Doesborg',
+    ),
   );
   $build['about']['#markup'] = '<div class="about"><strong>' . l('Birgit Doesborg', 'about') . '</strong>, Goud- en zilversmid.</div>';
   $build['contact_link']['#markup'] = '<div class="contact"><strong>' . l('Contact', 'contact') . '</strong></div>';
   $build['social'] = array(
-      '#theme' => 'item_list',
-      '#items' => $items,
-      '#attributes' => array('class' => array('socialist')),
+    '#theme' => 'item_list',
+    '#items' => $items,
+    '#attributes' => array('class' => array('socialist')),
   );
   return $build;
 }
