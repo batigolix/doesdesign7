@@ -78,3 +78,5 @@ www/sites/default/tmp/.htaccess
 # development modules #
 #######################
 sites/all/modules/development
+
+.idea
