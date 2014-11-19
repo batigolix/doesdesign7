@@ -2,38 +2,41 @@
 
 /**
  * @file
- * TODO Auto generated file, add description.
+ * Theme functions for dictionary.
  */
 
 /**
  * Implements hook_theme().
- *
  */
-function veldeke_tools_theme() {
+function veldeke_dictionary_theme($existing, $type, $theme, $path) {
   $theme = array();
 
   $theme['definition_list'] = array(
-      'variables' => array(
-          'title' => NULL,
-          'items' => NULL,
-//          'table' => NULL,
-//          'pager' => NULL,
-      ),
+    'variables' => array(
+      'title' => NULL,
+      'items' => NULL,
+    ),
   );
 
   $theme['definition'] = array(
-      'variables' => array(
-          'definition' => NULL,
-          'misc' => NULL,
-      ),
+    'variables' => array(
+      'definition' => NULL,
+      'misc' => NULL,
+    ),
+  );
+
+  $theme['node__dictionary_entry'] = array(
+    'render element' => 'content',
+    'base hook' => 'node',
+    'template' => 'node--dictionary_entry',
+    'path' => drupal_get_path('module', 'veldeke_dictionary') . '/templates',
   );
 
   return $theme;
 }
+
 /**
- * 
- * @param type $vars
- * @return string
+ * Sets markup for defintion list.
  */
 function theme_definition(&$vars) {
   $output = "<div class='definition'>";
@@ -44,10 +47,9 @@ function theme_definition(&$vars) {
   $output .= '</div>';
   return $output;
 }
+
 /**
- * 
- * @param type $vars
- * @return string
+ * Sets markup for defintion list.
  */
 function theme_definition_list(&$vars) {
   $filter = TRUE;
@@ -63,7 +65,8 @@ function theme_definition_list(&$vars) {
     foreach ($items as $item) {
       if (is_string($item['term'])) {
         $output .= '  <dt>' . ($filter ? check_plain($item['term']) : $item['term']) . '</dt>';
-      } elseif (is_array($item['term'])) {
+      }
+      elseif (is_array($item['term'])) {
         foreach ($item['term'] as $term) {
           $output .= '  <dt>' . ($filter ? check_plain($term) : $term) . "</dt>\n";
         }
@@ -71,7 +74,8 @@ function theme_definition_list(&$vars) {
 
       if (is_string($item['definitions'])) {
         $output .= '  <dd>' . ($filter ? filter_xss($item['definitions']) : $item['definitions']) . '</dd>';
-      } elseif (is_array($item['definitions'])) {
+      }
+      elseif (is_array($item['definitions'])) {
         foreach ($item['definitions'] as $definition) {
           $output .= '  <dd>' . ($filter ? filter_xss($definition) : $definition) . "</dd>\n";
         }

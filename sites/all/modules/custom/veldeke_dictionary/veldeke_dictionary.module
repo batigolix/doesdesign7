@@ -1,0 +1,201 @@
+<?php
+
+/**
+ * @file
+ * Code for the veldeke_dictionary module.
+ */
+
+include_once 'veldeke_dictionary.features.inc';
+require_once 'veldeke_dictionary.forms.inc';
+require_once 'veldeke_dictionary.theme.inc';
+require_once 'veldeke_dictionary.blocks.inc';
+
+/**
+ * Implements hook_migrate_api().
+ */
+function veldeke_dictionary_migrate_api() {
+  $api = array(
+    'api' => 2,
+    'migrations' => array(
+      'VeldekeDictionary' => array(
+        'class_name' => 'VeldekeDictionaryMigration',
+      ),
+    ),
+  );
+  return $api;
+}
+
+/**
+ * Implements hook_menu().
+ */
+function veldeke_dictionary_menu() {
+  $menu = array();
+  $menu['veldeke_dictionary/test'] = array(
+    'title' => 'Test',
+    'description' => '',
+    'page callback' => 'veldeke_dictionary_test',
+    'access arguments' => array('access content'),
+    'file' => 'veldeke_dictionary.pages.inc',
+    'type' => MENU_NORMAL_ITEM,
+    'weight' => 0,
+  );
+
+  $menu['terms/search_terms_autocomplete_callback'] = array(
+    'page callback' => 'veldeke_dictionary_search_terms_autocomplete_callback',
+    'type' => MENU_CALLBACK,
+    'access arguments' => array('access content'),
+  );
+
+  $menu['terms/%/%'] = array(
+    'title' => 'Terms',
+    'description' => 'View terms',
+    'page callback' => 'veldeke_dictionary_entries',
+    'page arguments' => array(1, 2),
+    'access arguments' => array('access content'),
+    'file' => 'veldeke_dictionary.pages.inc',
+    'type' => MENU_NORMAL_ITEM,
+    'weight' => 0,
+  );
+
+  $menu['veldeke_dictionary/search_terms_autocomplete_callback'] = array(
+    'page callback' => 'search_terms_autocomplete_callback',
+    'type' => MENU_CALLBACK,
+    'access arguments' => array('access content'),
+  );
+
+  return $menu;
+}
+
+/**
+ * Returns dictionary entries.
+ */
+function veldeke_dictionary_fetch_entries($lang, $letter) {
+  $query = new EntityFieldQuery();
+  $query->entityCondition('entity_type', 'node')
+    ->entityCondition('bundle', 'dictionary_entry')
+    ->propertyCondition('status', 1);
+  if ($lang == 'li') {
+    $query->fieldCondition('field_1st_char_translation', 'value', $letter);
+    $query->fieldOrderBy('field_translation', 'value', 'ASC');
+  }
+  else {
+    $query->fieldCondition('field_1st_char_head_word', 'value', $letter);
+    $query->fieldOrderBy('field_head_word', 'value', 'ASC');
+  }
+  $result = $query->execute();
+  if (isset($result['node'])) {
+    $nids = array_keys($result['node']);
+    $terms = entity_load('node', $nids);
+  }
+  return $terms;
+}
+
+/**
+ * Downloads a file.
+ */
+function download_external_file($url, $uri, $save_mode = FILE_EXISTS_REPLACE, $manage_file = TRUE) {
+
+  $uri_target = file_uri_target($uri);
+  $uri_scheme = file_uri_scheme($uri);
+  $uri_path_info = pathinfo($uri_target);
+  $directory = file_stream_wrapper_uri_normalize($uri_scheme . "://" . $uri_path_info['dirname']);
+
+  if (file_prepare_directory($directory, FILE_CREATE_DIRECTORY)) {
+    $drupal_result = drupal_http_request($url);
+    if (!empty($drupal_result->data)) {
+      $path = file_stream_wrapper_uri_normalize($uri);
+      if ($manage_file) {
+        $new_file = file_save_data($drupal_result->data, $path, $save_mode);
+        $link = l($new_file->filename, file_create_url($new_file->uri));
+        drupal_set_message(t("File !name downloaded.", array('!name' => $link)), 'status');
+
+      }
+      else {
+        return file_unmanaged_save_data($drupal_result->data, $path, $save_mode);
+      }
+    }
+    else {
+      drupal_set_message("Error downloading file, no data recieved for " . $url);
+      return FALSE;
+    }
+
+    $new_file->display = 1;
+    return (array) $new_file;
+  }
+  else {
+    drupal_set_message("Could not create directory");
+  }
+}
+
+/**
+ * Removes accents.
+ */
+function _remove_accents($str) {
+  $from = array(
+    "á", "à", "â", "ã", "ä", "é", "è", "ê", "ë", "í", "ì", "î", "ï",
+    "ó", "ò", "ô", "õ", "ö", "ú", "ù", "û", "ü", "ç", "Á", "À", "Â",
+    "Ã", "Ä", "É", "È", "Ê", "Ë", "Í", "Ì", "Î", "Ï", "Ó", "Ò", "Ô",
+    "Õ", "Ö", "Ú", "Ù", "Û", "Ü", "Ç",
+  );
+  $to = array(
+    "a", "a", "a", "a", "a", "e", "e", "e", "e", "i", "i", "i", "i",
+    "o", "o", "o", "o", "o", "u", "u", "u", "u", "c", "A", "A", "A",
+    "A", "A", "E", "E", "E", "E", "I", "I", "I", "I", "O", "O", "O",
+    "O", "O", "U", "U", "U", "U", "C",
+  );
+  $str = str_replace($from, $to, $str);
+  return $str;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function veldeke_dictionary_permission() {
+  return array(
+    'administer veldeke dictionary' => array(
+      'title' => t('Administer Veldeke dictionary'),
+      'description' => t('Do dictionary administration for Veldeke'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_process_HOOK().
+ */
+function veldeke_dictionary_process_page(&$variables) {
+  $wrnode = entity_metadata_wrapper('node', $variables['node']);
+  if ($wrnode->__isset('field_translation')) {
+    $tran = $wrnode->field_translation->value();
+    $variables['title'] = "{$wrnode->title->value()} / {$wrnode->field_translation->value()}";
+  }
+}
+
+/**
+ * Provides a callback for themenu item.
+ *
+ * Return a json formatted search result.
+ */
+function search_terms_autocomplete_callback($string = "") {
+  $matches = array();
+  if ($string) {
+    $or = db_or();
+    $or->condition('fdfhw.field_head_word_value', db_like($string) . '%', 'LIKE');
+    $or->condition('fdft.field_translation_value', db_like($string) . '%', 'LIKE');
+    $query = db_select('node', 'n')
+      ->fields('n', array('nid', 'title'))
+      ->condition($or)
+      ->range(0, 10);
+
+    $query->leftJoin('field_data_field_head_word', 'fdfhw', 'fdfhw.entity_id = n.nid');
+    $query->fields('fdfhw', array('field_head_word_value'));
+    $query->leftJoin('field_data_field_translation', 'fdft', 'fdft.entity_id = n.nid');
+    $query->fields('fdft', array('field_translation_value'));
+
+    $results = $query->execute();
+    foreach ($results as $term) {
+      $display = check_plain($term->field_head_word_value) . ' - ' . check_plain($term->field_translation_value);
+      $matches["{$display} [{$term->nid}]"] = $display;
+    }
+  }
+  drupal_json_output($matches);
+}

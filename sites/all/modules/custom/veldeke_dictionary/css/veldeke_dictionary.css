@@ -1,0 +1,55 @@
+.page-terms .lang-nav li,
+.page-terms .az-browser {
+    clear: both;
+}
+
+#block-veldeke_tools-dictionary .lang-nav li,
+#block-veldeke_tools-dictionary .az-browser li,
+.BlockContent-body .lang-nav li,
+.BlockContent-body .az-browser li,
+.page-terms .lang-nav li,
+.page-terms .az-browser li {
+    background-image: none;
+    display: inline;
+    list-style-type: none;
+    padding: 0.2em;
+}
+
+.page-terms .lang-nav li a,
+.page-terms .az-browser li a {
+    padding: 0.3em;
+}
+
+.page-terms .definition .misc {
+    /**/
+}
+
+.BlockContent-body h3 {
+    font-size: 110%;
+}
+
+.page-terms dl, .page-terms dd, .page-terms dt {
+    margin: 0;
+    padding: 0;
+    display: block;
+}
+
+.page-terms dd, .page-terms dt {
+    border-top: #ccc solid 1px;
+    padding: 3px 0;
+}
+
+.page-terms dt {
+    width: 33%;
+    float: left;
+}
+
+.page-terms dd {
+    width: 66%;
+    float: left;
+}
+
+#veldeke-tools-import-dictionary-form .form-item-letters .form-item {
+    display: inline;
+    padding: 6px 18px 0 0;
+}
