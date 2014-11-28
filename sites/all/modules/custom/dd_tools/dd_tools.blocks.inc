@@ -281,6 +281,8 @@ function dd_tools_contact() {
   $build['doespic'] = array(
     '#theme' => 'image',
     '#path' => $img_path . 'Doesklein.jpg',
+    '#width' => '75',
+    '#height' => '100',
     '#attributes' => array(
       'class' => array(
         'doespic'
