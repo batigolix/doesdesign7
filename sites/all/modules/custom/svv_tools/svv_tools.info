@@ -3,4 +3,4 @@ description = Custom tools for SVV
 package = Custom
 version = 7.x-1.dev
 core = 7.x
-dependencies[]=devel
+;dependencies[]=devel
