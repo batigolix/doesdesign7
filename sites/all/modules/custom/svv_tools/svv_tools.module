@@ -1,5 +1,7 @@
 <?php
 
+include_once 'svv_tools.features.inc';
+
 /**
  * Implements hook_wysiwyg_editor_settings_alter().
  *
