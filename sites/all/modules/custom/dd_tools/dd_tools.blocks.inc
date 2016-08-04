@@ -21,6 +21,10 @@ function dd_tools_block_info() {
     'info' => t('DD tools: Flickr'),
     'cache' => DRUPAL_CACHE_GLOBAL,
   );
+  $blocks['twitter'] = array(
+    'info' => t('DD tools: Twitter'),
+    'cache' => DRUPAL_CACHE_GLOBAL,
+  );
   $blocks['contact'] = array(
     'info' => t('DD tools: Contact'),
     'cache' => DRUPAL_CACHE_GLOBAL,
@@ -69,6 +73,9 @@ function dd_tools_block_view($delta = '') {
     case 'contact':
       $blocks['content'] = dd_tools_contact();
       break;
+    case 'twitter':
+      $blocks['content'] = dd_tools_twitter();
+      break;
   }
   return $blocks;
 }
@@ -97,12 +104,20 @@ function dd_tools_slideshow() {
 //    dsm(format_date($node->created, 'medium'));
 //    dsm(format_date($node->changed, 'medium'));
     $node_view = node_view($node, 'hero_teaser');
-    $items[] = array('data' => drupal_render($node_view), 'class' => array('slide'));
+    $items[] = array(
+      'data' => drupal_render($node_view),
+      'class' => array('slide')
+    );
   }
   $lib_path = libraries_get_path('responsiveslides');
   $rs_js = 'jQuery(function() {jQuery(".rslides").responsiveSlides({auto: true, timeout: 3000, speed: 500, pager: true, pauseControls: true, navContainer: ""});});';
   $build = array(
-    '#markup' => theme('item_list', array('items' => $items, 'title' => NULL, 'type' => 'ul', 'attributes' => array('class' => array('rslides')))),
+    '#markup' => theme('item_list', array(
+      'items' => $items,
+      'title' => NULL,
+      'type' => 'ul',
+      'attributes' => array('class' => array('rslides'))
+    )),
     '#attached' => array(
       'js' => array(
         array(
@@ -129,21 +144,36 @@ function dd_tools_block_configure($delta = '') {
       $form['slideshow_items'] = array(
         '#type' => 'select',
         '#title' => t('Number of items'),
-        '#options' => array(3 => 3, 5 => 5, 7 => 7, 9 => 9, 11 => 11, 13 => 13, 15 => 15, 17 => 17),
+        '#options' => array(
+          3 => 3,
+          5 => 5,
+          7 => 7,
+          9 => 9,
+          11 => 11,
+          13 => 13,
+          15 => 15,
+          17 => 17
+        ),
         '#description' => t('This number of items will be shown in the slideshow block'),
         '#default_value' => variable_get('slideshow_items', 5),
       );
       $form['slideshow_order'] = array(
         '#type' => 'select',
         '#title' => t('Order'),
-        '#options' => array('ASC ' => t('Ascending'), 'DESC' => t('Descending')),
+        '#options' => array(
+          'ASC ' => t('Ascending'),
+          'DESC' => t('Descending')
+        ),
         '#description' => t('In what order the items will be shown in the slideshow block'),
         '#default_value' => variable_get('slideshow_order', 'DESC'),
       );
       $form['slideshow_order_prop'] = array(
         '#type' => 'select',
         '#title' => t('Order by'),
-        '#options' => array('created ' => t('Creation date'), 'changed' => t('Date of last change')),
+        '#options' => array(
+          'created ' => t('Creation date'),
+          'changed' => t('Date of last change')
+        ),
         '#description' => t('By which date the items will be ordered in the slideshow block'),
         '#default_value' => variable_get('slideshow_order_prop', 'DESC'),
       );
@@ -161,9 +191,36 @@ function dd_tools_block_configure($delta = '') {
       $form['flickr_items'] = array(
         '#type' => 'select',
         '#title' => t('Number of items'),
-        '#options' => array(10 => 10, 12 => 12, 15 => 15, 16 => 16, 18 => 18, 20 => 20),
+        '#options' => array(
+          10 => 10,
+          12 => 12,
+          15 => 15,
+          16 => 16,
+          18 => 18,
+          20 => 20
+        ),
         '#description' => t('This number of items will be shown in the Flickr block'),
         '#default_value' => variable_get('flickr_items', 5),
+      );
+      break;
+    case 'twitter' :
+      $form['twitter_items'] = array(
+        '#type' => 'select',
+        '#title' => t('Number of items'),
+        '#options' => array(
+          '#options' => array(
+            3 => 3,
+            5 => 5,
+            7 => 7,
+            9 => 9,
+            11 => 11,
+            13 => 13,
+            15 => 15,
+            17 => 17
+          ),
+        ),
+        '#description' => t('This number of items will be shown in the twitter block'),
+        '#default_value' => variable_get('twitter_items', 5),
       );
       break;
   }
@@ -186,17 +243,20 @@ function dd_tools_block_save($delta = '', $edit = array()) {
     case 'flickr':
       variable_set('flickr_items', $edit['flickr_items']);
       break;
+    case 'twitter':
+      variable_set('twitter_items', $edit['twitter_items']);
+      break;
   }
 }
 
 function dd_tools_news() {
   $limit = variable_get('news_items', 5);
   $query = db_select('node', 'n')
-      ->fields('n')
-      ->condition('n.status', 1)
-      ->range(0, $limit)
-      ->orderBy('n.created', 'DESC')
-      ->condition('n.type', 'story');
+    ->fields('n')
+    ->condition('n.status', 1)
+    ->range(0, $limit)
+    ->orderBy('n.created', 'DESC')
+    ->condition('n.type', 'story');
   $results = $query->execute();
   $items = array();
   foreach ($results as $result) {
@@ -269,13 +329,20 @@ function dd_tools_contact() {
   foreach ($socials as $social) {
 
     $img = theme('image', array(
-      'path' => $img_path . $social['img'], 'attributes' => array(
+      'path' => $img_path . $social['img'],
+      'attributes' => array(
         'title' => $social['cta'],
         'alt' => $social['name'],
       )
     ));
     $items[] = array(
-      'data' => l($img, $social['url'], array('html' => TRUE, 'attributes' => array('class' => array('social', $social['class']), 'alt' => $social['cta']))),
+      'data' => l($img, $social['url'], array(
+        'html' => TRUE,
+        'attributes' => array(
+          'class' => array('social', $social['class']),
+          'alt' => $social['cta']
+        )
+      )),
     );
   }
   $build['doespic'] = array(
@@ -310,3 +377,11 @@ function dd_tools_contact() {
 
 
 */
+
+function dd_tools_twitter() {
+  $nr_items = variable_get('twitter_items', 5);
+  $build = array();
+  $build['link']['#markup'] = '<a class="twitter-timeline" data-tweet-limit="' . $nr_items . '" href="https://twitter.com/Doesdesign_nl">Tweets by Doesdesign_nl</a>';
+  $build['script']['#markup'] = '<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>';
+  return $build;
+}
