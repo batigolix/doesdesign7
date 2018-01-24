@@ -33,7 +33,7 @@ function doesdesign_taxonomy_default_vocabularies() {
       ),
     ),
     'vocabulary_7' => array(
-      'name' => 'Sieraden en objecten',
+      'name' => 'Collectie sieraden en objecten',
       'machine_name' => 'vocabulary_7',
       'description' => 'Sieraden en objecten met als specialiteit Mokume-gane',
       'hierarchy' => '0',

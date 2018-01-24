@@ -25,91 +25,12 @@ function doesdesign_image_default_styles() {
         'module' => 'image',
         'name' => 'image_scale_and_crop',
         'data' => array(
-          'width' => '500',
+          'width' => '400',
           'height' => '400',
         ),
         'weight' => '1',
       ),
     ),
-  );
-
-  // Exported image style: micro.
-  $styles['micro'] = array(
-    'name' => 'micro',
-    'effects' => array(
-      2 => array(
-        'label' => 'Scale and crop',
-        'help' => 'Scale and crop will maintain the aspect-ratio of the original image, then crop the larger dimension. This is most useful for creating perfectly square thumbnails without stretching the image.',
-        'effect callback' => 'image_scale_and_crop_effect',
-        'dimensions callback' => 'image_resize_dimensions',
-        'form callback' => 'image_resize_form',
-        'summary theme' => 'image_resize_summary',
-        'module' => 'image',
-        'name' => 'image_scale_and_crop',
-        'data' => array(
-          'width' => '64',
-          'height' => '64',
-        ),
-        'weight' => '1',
-      ),
-      3 => array(
-        'label' => 'Desaturate',
-        'help' => 'Desaturate converts an image to grayscale.',
-        'effect callback' => 'image_desaturate_effect',
-        'dimensions passthrough' => TRUE,
-        'module' => 'image',
-        'name' => 'image_desaturate',
-        'data' => array(),
-        'weight' => '2',
-      ),
-    ),
-    'label' => 'micro',
-  );
-
-  // Exported image style: square-thumb.
-  $styles['square-thumb'] = array(
-    'name' => 'square-thumb',
-    'effects' => array(
-      5 => array(
-        'label' => 'Scale and crop',
-        'help' => 'Scale and crop will maintain the aspect-ratio of the original image, then crop the larger dimension. This is most useful for creating perfectly square thumbnails without stretching the image.',
-        'effect callback' => 'image_scale_and_crop_effect',
-        'dimensions callback' => 'image_resize_dimensions',
-        'form callback' => 'image_resize_form',
-        'summary theme' => 'image_resize_summary',
-        'module' => 'image',
-        'name' => 'image_scale_and_crop',
-        'data' => array(
-          'width' => '130',
-          'height' => '130',
-        ),
-        'weight' => '1',
-      ),
-    ),
-    'label' => 'square-thumb',
-  );
-
-  // Exported image style: square-thumb-medium.
-  $styles['square-thumb-medium'] = array(
-    'name' => 'square-thumb-medium',
-    'effects' => array(
-      6 => array(
-        'label' => 'Scale and crop',
-        'help' => 'Scale and crop will maintain the aspect-ratio of the original image, then crop the larger dimension. This is most useful for creating perfectly square thumbnails without stretching the image.',
-        'effect callback' => 'image_scale_and_crop_effect',
-        'dimensions callback' => 'image_resize_dimensions',
-        'form callback' => 'image_resize_form',
-        'summary theme' => 'image_resize_summary',
-        'module' => 'image',
-        'name' => 'image_scale_and_crop',
-        'data' => array(
-          'width' => '220',
-          'height' => '220',
-        ),
-        'weight' => '1',
-      ),
-    ),
-    'label' => 'square-thumb-medium',
   );
 
   // Exported image style: x-medium.

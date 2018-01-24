@@ -124,7 +124,7 @@ function doesdesign_field_default_fields() {
       'bundle' => 'object',
       'default_value' => array(
         0 => array(
-          'value' => '',
+          'value' => '0',
         ),
       ),
       'deleted' => '0',
@@ -194,7 +194,7 @@ function doesdesign_field_default_fields() {
       'entity_type' => 'node',
       'field_name' => 'field_gewicht',
       'label' => 'Gewicht',
-      'required' => FALSE,
+      'required' => 0,
       'settings' => array(
         'max' => '',
         'min' => '',
@@ -204,7 +204,7 @@ function doesdesign_field_default_fields() {
       ),
       'weight' => '-1',
       'widget' => array(
-        'active' => '0',
+        'active' => 0,
         'module' => 'number',
         'settings' => array(),
         'type' => 'number',

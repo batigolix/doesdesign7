@@ -56,5 +56,6 @@
 
 $sites['svv.val'] = 'svv';
 $sites['veldense-volkscultuur.nl'] = 'svv';
-$sites['dd.val'] = 'doesdesign';
-$sites['doesdesign.nl'] = 'doesdesign';
+$sites['dd.val'] = 'doesdesign.nl';
+$sites['doesdesign.nl'] = 'doesdesign.nl';
+$sites['dd7.drupalvm.test'] = 'doesdesign.nl';
