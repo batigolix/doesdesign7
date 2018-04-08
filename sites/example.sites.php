@@ -53,12 +53,3 @@
  * @see conf_path()
  * @see http://drupal.org/documentation/install/multi-site
  */
-
-// $sites['svv.val'] = 'svv';
-// $sites['veldense-volkscultuur.nl'] = 'svv';
-$sites['dd7.val'] = 'doesdesign.nl';
-$sites['dd.val'] = 'doesdesign.nl';
-$sites['doesdesign.nl'] = 'doesdesign.nl';
-$sites['dd7.drupalvm.test'] = 'doesdesign.nl';
-$sites['dd7.drupalvmk.test'] = 'doesdesign.nl';
-
