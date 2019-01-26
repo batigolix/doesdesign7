@@ -131,10 +131,10 @@ function webform_submission_insert($node, $submission) {
 /**
  * Delete a single submission.
  *
- * @param $nid
- *   ID of node for which this webform was submitted.
- * @param $sid
- *   ID of submission to be deleted (from webform_submitted_data).
+ * @param $node
+ *   The node object containing the current webform.
+ * @param $submission
+ *   The webform submission object to be deleted from the database.
  */
 function webform_submission_delete($node, $submission) {
   // Iterate through all components and let each do cleanup if necessary.
@@ -456,14 +456,14 @@ function webform_submission_resend($form, $form_state, $node, $submission) {
       '#markup' => implode('<br />', $email_addresses),
     );
     if (!$valid_email) {
-      $form['emails'][$eid]['email']['#value'] .= ' (' . t('empty') . ')';
+      $form['emails'][$eid]['email']['#markup'] .= ' (' . t('empty') . ')';
     }
     $form['emails'][$eid]['subject'] = array(
       '#markup' => check_plain(webform_format_email_subject($email['subject'], $node, $submission)),
     );
 
     $form['actions'] = array('#type' => 'actions');
-    $form['actions']['resend'] = array(
+    $form['actions']['submit'] = array(
       '#type' => 'submit',
       '#value' => t('Resend e-mails'),
     );
@@ -611,7 +611,7 @@ function webform_get_submissions($filters = array(), $header = NULL, $pager_coun
 
   // No need to find SIDs if it was given to us.
   if (isset($filters['sid'])) {
-    $sids = array($filters['sid']);
+    $sids = (array) $filters['sid'];
   }
   // Build the list of SIDs that need to be retrieved.
   else {
@@ -664,14 +664,24 @@ function webform_get_submissions($filters = array(), $header = NULL, $pager_coun
   }
 
   // Query the required submission data.
-  $query = db_select('webform_submitted_data', 'sd');
-  $query->leftJoin('webform_submissions', 's', 's.sid = sd.sid');
+  $query = db_select('webform_submissions', 's');
   $query->leftJoin('users', 'u', 'u.uid = s.uid');
   $query
     ->fields('s')
-    ->fields('sd', array('cid', 'no', 'data'))
     ->fields('u', array('name'))
-    ->condition('sd.sid', $sids, 'IN')
+    ->condition('s.sid', $sids, 'IN');
+
+  $submissions = $query->execute()->fetchAllAssoc('sid');
+
+  foreach ($submissions as $sid => $submission) {
+    $submissions[$sid]->data = array();
+  }
+
+  // Query the required submission data.
+  $query = db_select('webform_submitted_data', 'sd');
+  $query
+    ->fields('sd', array('sid', 'cid', 'no', 'data'))
+    ->condition('sd.sid', array_keys($submissions), 'IN')
     ->orderBy('sd.sid', 'ASC')
     ->orderBy('sd.cid', 'ASC')
     ->orderBy('sd.no', 'ASC');
@@ -682,27 +692,12 @@ function webform_get_submissions($filters = array(), $header = NULL, $pager_coun
     $query->condition('sd.nid', $filters['nid']);
   }
 
-  $result = $query->execute();
-
-  // Convert the queried rows into submissions.
-  $previous = 0;
-  foreach ($result as $row) {
-    if ($row->sid != $previous) {
-      $submissions[$row->sid] = new stdClass();
-      $submissions[$row->sid]->sid = $row->sid;
-      $submissions[$row->sid]->nid = $row->nid;
-      $submissions[$row->sid]->submitted = $row->submitted;
-      $submissions[$row->sid]->remote_addr = $row->remote_addr;
-      $submissions[$row->sid]->uid = $row->uid;
-      $submissions[$row->sid]->name = $row->name;
-      $submissions[$row->sid]->is_draft = $row->is_draft;
-      $submissions[$row->sid]->data = array();
-    }
-    // CID may be NULL if this submission does not actually contain any data.
-    if ($row->cid) {
+  if ($submissions) {
+    $result = $query->execute();
+    // Convert the queried rows into submission data.
+    foreach ($result as $row) {
       $submissions[$row->sid]->data[$row->cid]['value'][$row->no] = $row->data;
     }
-    $previous = $row->sid;
   }
 
   foreach (module_implements('webform_submission_load') as $module) {
@@ -710,7 +705,12 @@ function webform_get_submissions($filters = array(), $header = NULL, $pager_coun
     $function($submissions);
   }
 
-  return $submissions;
+  // Reorder submissions to reflect table header sorting.
+  $ordered_submissions = array();
+  foreach($sids as $sid) {
+    $ordered_submissions[$sid] = $submissions[$sid];
+  }
+  return $ordered_submissions;
 }
 
 /**
@@ -801,6 +801,7 @@ function _webform_submission_user_limit_check($node) {
 
   // Retrieve submission data for this IP address or username from the database.
   $query = db_select('webform_submissions')
+    ->addTag('webform_submission_user_limit_check')
     ->condition('nid', $node->nid)
     ->condition('is_draft', 0);
 
@@ -865,6 +866,7 @@ function _webform_submission_total_limit_check($node) {
 
   // Retrieve submission data from the database.
   $query = db_select('webform_submissions')
+    ->addTag('webform_submission_total_limit_check')
     ->condition('nid', $node->nid)
     ->condition('is_draft', 0);
 
