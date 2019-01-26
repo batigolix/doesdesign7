@@ -15,15 +15,18 @@ define('FILEFIELD_SOURCE_REMOTE_HINT_TEXT', 'http://example.com/files/file.png')
  * Implements hook_filefield_source_info().
  */
 function filefield_source_remote_info() {
-  $source = array();
-  $source['remote'] = array(
-    'name' => t('Remote URL textfield'),
-    'label' => t('Remote URL'),
-    'description' => t('Download a file from a remote server.'),
-    'process' => 'filefield_source_remote_process',
-    'value' => 'filefield_source_remote_value',
-  );
-  return $source;
+  if (filefield_sources_curl_enabled()) {
+    $source = array();
+    $source['remote'] = array(
+      'name'        => t('Remote URL textfield'),
+      'label'       => t('Remote URL'),
+      'description' => t('Download a file from a remote server.'),
+      'process'     => 'filefield_source_remote_process',
+      'value'       => 'filefield_source_remote_value',
+      'file'        => 'sources/remote.inc',
+    );
+    return $source;
+  }
 }
 
 /**
@@ -35,7 +38,7 @@ function filefield_source_remote_menu() {
   $items['file/remote/progress/%/%/%/%'] = array(
     'page callback' => 'filefield_source_remote_progress',
     'page arguments' => array(3, 4, 5, 6),
-    'access arguments' => array('access content'),
+    'access callback' => TRUE,
     'file' => 'sources/remote.inc',
     'type' => MENU_CALLBACK,
   );
@@ -61,6 +64,9 @@ function filefield_source_remote_settings($op, $instance) {
   $return = array();
 
   // Add settings to the FileField widget form.
+  if (!filefield_sources_curl_enabled()) {
+    drupal_set_message(t('<strong>Filefield sources:</strong> remote plugin will be disabled without php-curl extension.'), 'warning');
+  }
 
   return $return;
 
@@ -93,7 +99,7 @@ function filefield_source_remote_process($element, &$form_state, $form) {
     '#limit_validation_errors' => array($element['#parents']),
     '#ajax' => array(
       'path' => 'file/ajax/' . implode('/', $element['#array_parents']) . '/' . $form['form_build_id']['#value'],
-      'wrapper' => $element['#id'] . '-ajax-wrapper',
+      'wrapper' => $element['upload_button']['#ajax']['wrapper'],
       'effect' => 'fade',
       'progress' => array(
         'type' => 'bar',
@@ -124,7 +130,11 @@ function filefield_source_remote_value($element, &$item) {
 
     // Check that the destination is writable.
     $directory = $element['#upload_location'];
-    if (!file_prepare_directory($directory, FILE_CREATE_DIRECTORY)) {
+    $mode = variable_get('file_chmod_directory', 0775);
+
+    // This first chmod check is for other systems such as S3, which don't work
+    // with file_prepare_directory().
+    if (!drupal_chmod($directory, $mode) && !file_prepare_directory($directory, FILE_CREATE_DIRECTORY)) {
       watchdog('file', 'File %file could not be copied, because the destination directory %destination is not configured correctly.', array('%file' => $url, '%destination' => drupal_realpath($directory)));
       drupal_set_message(t('The specified file %file could not be copied, because the destination directory is not properly configured. This may be caused by a problem with file or directory permissions. More information is available in the system log.', array('%file' => $url)), 'error');
       return;
@@ -139,20 +149,28 @@ function filefield_source_remote_value($element, &$item) {
     curl_setopt($ch, CURLOPT_HEADERFUNCTION, '_filefield_source_remote_parse_header');
     // Causes a warning if PHP safe mode is on.
     @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+    // Set a user agent - some hosts block requests unless header is present.
+    $curl_version = curl_version();
+    curl_setopt($ch,CURLOPT_USERAGENT,'PHP-curl/' . $curl_version['version']);
     curl_exec($ch);
     $info = curl_getinfo($ch);
+    if ($info['http_code'] != 200) {
+      curl_setopt($ch, CURLOPT_HTTPGET, TRUE);
+      $file_contents = curl_exec($ch);
+      $info = curl_getinfo($ch);
+    }
     curl_close($ch);
 
     if ($info['http_code'] != 200) {
       switch ($info['http_code']) {
         case 403:
-          form_error($element, t('The remote file could not be transfered because access to the file was denied.'));
+          form_error($element, t('The remote file could not be transferred because access to the file was denied.'));
           break;
         case 404:
-          form_error($element, t('The remote file could not be transfered because it was not found.'));
+          form_error($element, t('The remote file could not be transferred because it was not found.'));
           break;
         default:
-          form_error($element, t('The remote file could not be transfered due to an HTTP error (@code).', array('@code' => $info['http_code'])));
+          form_error($element, t('The remote file could not be transferred due to an HTTP error (@code).', array('@code' => $info['http_code'])));
       }
       return;
     }
@@ -174,6 +192,13 @@ function filefield_source_remote_value($element, &$item) {
     }
 
     $pathinfo = pathinfo($filename);
+
+    // Create the file extension from the MIME header if all else has failed.
+    if (empty($pathinfo['extension']) && $extension = _filefield_source_remote_mime_extension()) {
+      $filename = $filename . '.' . $extension;
+      $pathinfo = pathinfo($filename);
+    }
+
     $filename = filefield_sources_clean_filename($filename, $field['settings']['file_extensions']);
     $filepath = file_create_filename($filename, $temporary_directory);
 
@@ -207,34 +232,57 @@ function filefield_source_remote_value($element, &$item) {
     );
     filefield_source_remote_set_transfer_options($options);
 
-    // Then make the actual request to download the file.
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_HEADER, FALSE);
-    curl_setopt($ch, CURLOPT_WRITEFUNCTION, 'filefield_source_remote_curl_write');
-    // Causes a warning if PHP safe mode is on.
-    @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-    if (curl_exec($ch) && $file = filefield_sources_save_file($filepath, $element['#upload_validators'], $element['#upload_location'])) {
+    $transfer_success = FALSE;
+    // If we've already downloaded the entire file because the header-retrieval
+    // failed, just ave the contents we have.
+    if (isset($file_contents)) {
+      if ($fp = @fopen($filepath, 'w')) {
+        fwrite($fp, $file_contents);
+        fclose($fp);
+        $transfer_success = TRUE;
+      }
+    }
+    // If we don't have the file contents, download the actual file.
+    else {
+      $ch = curl_init();
+      curl_setopt($ch, CURLOPT_URL, $url);
+      curl_setopt($ch, CURLOPT_HEADER, FALSE);
+      curl_setopt($ch, CURLOPT_WRITEFUNCTION, 'filefield_source_remote_curl_write');
+      // Causes a warning if PHP safe mode is on.
+      @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+      // Set a user agent - some hosts block requests unless header is present.
+      $curl_version = curl_version();
+      curl_setopt($ch,CURLOPT_USERAGENT,'PHP-curl/' . $curl_version['version']);
+      $transfer_success = curl_exec($ch);
+      curl_close($ch);
+    }
+    if ($transfer_success && $file = filefield_sources_save_file($filepath, $element['#upload_validators'], $element['#upload_location'])) {
       $item = array_merge($item, (array) $file);
     }
-    curl_close($ch);
 
     // Delete the temporary file.
-    @unlink($filepath);
+    if ($filepath !== $item['uri']) {
+      @unlink($filepath);
+    }
   }
 }
 
 /**
  * Parse cURL header and record the filename specified in Content-Disposition.
  */
-function _filefield_source_remote_parse_header(&$ch, $header) {
-  if (preg_match('/Content-Disposition:.*?filename="(.+?)"/', $header, $matches)) {
+function _filefield_source_remote_parse_header($ch, $header) {
+  if (preg_match('/Content-Disposition:.*?filename="(.+?)"/i', $header, $matches)) {
     // Content-Disposition: attachment; filename="FILE NAME HERE"
     _filefield_source_remote_filename($matches[1]);
   }
-  elseif (preg_match('/Content-Disposition:.*?filename=([^; ]+)/', $header, $matches)) {
+  elseif (preg_match('/Content-Disposition:.*?filename=([^; ]+)/i', $header, $matches)) {
     // Content-Disposition: attachment; filename=file.ext
-    _filefield_source_remote_filename($matches[1]);
+    $uri = trim($matches[1]);
+    _filefield_source_remote_filename($uri);
+  }
+  elseif (preg_match('/Content-Type:[ ]*([a-z0-9_\-]+\/[a-z0-9_\-]+)/i', $header, $matches)) {
+    $mime_type = $matches[1];
+    _filefield_source_remote_mime_extension($mime_type);
   }
 
   // This is required by cURL.
@@ -253,6 +301,29 @@ function _filefield_source_remote_filename($curl_filename = NULL) {
 }
 
 /**
+ * Get/set the remote file extension in a static variable.
+ */
+function _filefield_source_remote_mime_extension($curl_mime_type = NULL) {
+  static $extension = NULL;
+  if (isset($curl_mime_type)) {
+    include_once DRUPAL_ROOT . '/includes/file.mimetypes.inc';
+    $curl_mime_type = drupal_strtolower($curl_mime_type);
+    $mapping = file_mimetype_mapping();
+    // See if this matches a known MIME type.
+    $map_id = array_search($curl_mime_type, $mapping['mimetypes']);
+    if ($map_id !== FALSE) {
+      // If we have a match, get this list of likely extensions. For some reason
+      // Drupal lists the "most common" extension last for most file types
+      // including php, jpg, and doc.
+      if ($extensions = array_keys($mapping['extensions'], $map_id)) {
+        $extension = end($extensions);
+      }
+    }
+  }
+  return $extension;
+}
+
+/**
  * Menu callback; progress.js callback to return upload progress.
  */
 function filefield_source_remote_progress($entity_type, $bundle_name, $field_name, $delta) {
@@ -265,7 +336,7 @@ function filefield_source_remote_progress($entity_type, $bundle_name, $field_nam
   if ($cache = cache_get('filefield_transfer:'. session_id() . ':' . $key)) {
     $current = $cache->data['current'];
     $total = $cache->data['total'];
-    $progress['message'] = t('Transfering... (@current of @total)', array('@current' => format_size($current), '@total' => format_size($total)));
+    $progress['message'] = t('Transferring... (@current of @total)', array('@current' => format_size($current), '@total' => format_size($total)));
     $progress['percentage'] = round(100 * $current / $total);
   }
 
@@ -336,3 +407,9 @@ function theme_filefield_source_remote_element($variables) {
   return '<div class="filefield-source filefield-source-remote clear-block">' . drupal_render($element['url']) . '</div>';
 }
 
+/**
+ * Check for CURL extension enabled.
+ */
+function filefield_sources_curl_enabled() {
+  return function_exists('curl_version');
+}

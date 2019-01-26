@@ -46,6 +46,30 @@ function hook_filefield_sources_info() {
     // file locally. For an example, see filefield_source_remote_value().
     'value' => 'mymodule_filefield_source_flickr_value',
     'weight' => 3,
+    // This optional setting will ensure that your code is included when needed
+    // if your value, process, or other callbacks are located in a file other
+    // than your .module file.
+    'file' => 'include/mymodule.flickr_source.inc',
   );
   return $sources;
+}
+
+/**
+ * Allows altering the sources available on a field.
+ *
+ * This hook allows other modules to modify the sources available to a user.
+ *
+ * @param array $sources
+ *   List of filefiled sources plugins.
+ * 
+ * @param mixed $context
+ *   Contains 'enabled_sources', 'element', 'form_state'.
+ */
+function hook_filefield_sources_sources_alter(&$sources, $context) {
+  // This example will exclude sources the user doesn't have access to.
+  foreach (array_keys($sources) as $type) {
+    if (!user_access("use $type filefield source")) {
+      unset($sources[$type]);
+    }
+  }
 }

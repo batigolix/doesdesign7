@@ -23,6 +23,7 @@ function filefield_source_reference_info() {
     'process' => 'filefield_source_reference_process',
     'value' => 'filefield_source_reference_value',
     'weight' => 1,
+    'file' => 'sources/reference.inc',
   );
   return $source;
 }
@@ -83,7 +84,17 @@ function filefield_source_reference_settings($op, $instance) {
         '1' => t('Contains string'),
       ),
       '#type' => 'radios',
-      '#default_value' => isset($settings['source_reference']['autocomplete']) ? $settings['source_reference']['autocomplete'] : '0', 
+      '#default_value' => isset($settings['source_reference']['autocomplete']) ? $settings['source_reference']['autocomplete'] : '0',
+    );
+
+    $return['source_reference']['search_all_fields'] = array(
+      '#title' => t('Search all file fields'),
+      '#options' => array(
+        '0' => t('No (only fields with the same field base will be searched)'),
+        '1' => t('Yes (all file fields will be searched, regardless of type)'),
+      ),
+      '#type' => 'radios',
+      '#default_value' => isset($settings['source_reference']['search_all_fields']) ? $settings['source_reference']['search_all_fields'] : '0',
     );
   }
   elseif ($op == 'save') {
@@ -121,7 +132,7 @@ function filefield_source_reference_process($element, &$form_state, $form) {
     '#limit_validation_errors' => array($element['#parents']),
     '#ajax' => array(
       'path' => 'file/ajax/' . implode('/', $element['#array_parents']) . '/' . $form['form_build_id']['#value'],
-      'wrapper' => $element['#id'] . '-ajax-wrapper',
+      'wrapper' => $element['upload_button']['#ajax']['wrapper'],
       'effect' => 'fade',
     ),
   );
@@ -139,12 +150,16 @@ function filefield_source_reference_value($element, &$item) {
       $fid = $matches[1];
       if ($file = file_load($fid)) {
 
-        // Run all the normal validations, minus file size restrictions.
+        // Remove file size restrictions, since the file already exists on disk.
         if (isset($element['#upload_validators']['file_validate_size'])) {
           unset($element['#upload_validators']['file_validate_size']);
         }
 
-        if (filefield_sources_element_validate($element, (object) $file)) {
+        // Check that the user has access to this file through hook_download().
+        if (!filefield_sources_file_access($file->uri)) {
+          form_error($element, t('You do not have permission to use the selected file.'));
+        }
+        elseif (filefield_sources_element_validate($element, (object) $file)) {
           $item = array_merge($item, (array) $file);
         }
       }
@@ -167,7 +182,9 @@ function filefield_source_reference_autocomplete($entity_type, $bundle_name, $fi
   if (!empty($field)) {
     $files = filefield_source_reference_get_files($filename, $field);
     foreach ($files as $fid => $file) {
-      $items[$file->filename ." [fid:$fid]"] = theme('filefield_source_reference_autocomplete_item', array('file' => $file));
+      if (filefield_sources_file_access($file->uri)) {
+        $items[$file->filename ." [fid:$fid]"] = theme('filefield_source_reference_autocomplete_item', array('file' => $file));
+      }
     }
   }
 
@@ -182,7 +199,7 @@ function theme_filefield_source_reference_autocomplete_item($variables) {
 
   $output = '';
   $output .= '<div class="filefield-source-reference-item">';
-  $output .= '<span class="filename">' . $file->filename . '</span> <span class="filesize">(' . format_size($file->filesize) . ')</span>';
+  $output .= '<span class="filename">' . check_plain($file->filename) . '</span> <span class="filesize">(' . format_size($file->filesize) . ')</span>';
   $output .= '</div>';
   return $output;
 }
@@ -206,8 +223,14 @@ function theme_filefield_source_reference_element($variables) {
  *   Optional. A CCK field array for which to filter returned files.
  */
 function filefield_source_reference_get_files($filename, $instance = NULL) {
+  if (isset($instance)) {
+    // If we are looking at a single field, cache its settings, in case we want to search all fields.
+    $setting_autocomplete = empty($instance['widget']['settings']['filefield_sources']['source_reference']['autocomplete']) ? 0 : 1;
+    $setting_search_all_fields = empty($instance['widget']['settings']['filefield_sources']['source_reference']['search_all_fields']) ? 0 : 1;
+  }
+
   $instances = array();
-  if (!isset($instance)) {
+  if (!isset($instance) || $setting_search_all_fields) {
     foreach (field_info_fields() as $instance) {
       if ($instance['type'] == 'file' || $instance['type'] == 'image') {
         $instances[] = $instance;
@@ -228,8 +251,13 @@ function filefield_source_reference_get_files($filename, $instance = NULL) {
       continue;
     }
 
+    // If we are searching all fields, use the autocomplete settings from the source field.
+    if (!empty($setting_search_all_fields)) {
+      $instance['widget']['settings']['filefield_sources']['source_reference']['autocomplete'] = empty($setting_autocomplete) ? 0 : 1;
+    }
+
     // 1 == contains, 0 == starts with.
-    $like = empty($instance['widget']['settings']['filefield_sources']['source_reference']['autocomplete']) ? ($filename . '%') : ('%' . $filename . '%');
+    $like = empty($instance['widget']['settings']['filefield_sources']['source_reference']['autocomplete']) ? (db_like($filename) . '%') : ('%' . db_like($filename) . '%');
 
     $table_info = reset($field['storage']['details']['sql']['FIELD_LOAD_CURRENT']);
     $table = key($field['storage']['details']['sql']['FIELD_LOAD_CURRENT']);
@@ -239,7 +267,9 @@ function filefield_source_reference_get_files($filename, $instance = NULL) {
     $query->condition('f.status', 1);
     $query->condition('f.filename', $like, 'LIKE');
     $query->orderBy('f.timestamp', 'DESC');
+    $query->groupBy('f.fid');
     $query->range(0, 30);
+    $query->addTag('filefield_source_reference_list');
     $result = $query->execute();
 
     foreach ($result as $file) {
