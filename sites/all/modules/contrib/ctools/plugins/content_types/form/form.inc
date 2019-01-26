@@ -1,11 +1,13 @@
 <?php
 
 /**
+ * @file
  * Plugins are described by creating a $plugin array which will be used
  * by the system that includes this file.
  */
+
 $plugin = array(
-  // only provides a single content type
+  // Only provides a single content type.
   'single' => TRUE,
   'render last' => TRUE,
   'title' => t('General form'),
@@ -24,6 +26,15 @@ function ctools_form_content_type_render($subtype, $conf, $panel_args, &$context
   $block->module = 'form';
 
   if (isset($context->form)) {
+    if (isset($context->form['#pre_render'])) {
+      foreach ($context->form['#pre_render'] as $function) {
+        if (function_exists($function)) {
+          $context->form = $function($context->form);
+        }
+      }
+      unset($context->form['#pre_render']);
+    }
+
     $block->title = $context->form_title;
     $block->content = array();
     foreach (element_children($context->form) as $element) {
@@ -34,7 +45,7 @@ function ctools_form_content_type_render($subtype, $conf, $panel_args, &$context
     $block->delta = $context->form_id;
   }
   else {
-    $block->title = t('Form');
+    $block->title   = t('Form');
     $block->content = t('Form goes here.');
     $block->delta   = 'unknown';
   }
@@ -47,7 +58,7 @@ function ctools_form_content_type_admin_title($subtype, $conf, $context) {
 }
 
 function ctools_form_content_type_edit_form($form, &$form_state) {
-  // provide a blank form so we have a place to override title
+  // Provide a blank form so we have a place to override title
   // and stuff.
   return $form;
 }

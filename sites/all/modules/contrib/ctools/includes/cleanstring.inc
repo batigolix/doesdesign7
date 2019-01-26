@@ -1,5 +1,4 @@
 <?php
-// $Id $
 
 /**
  * @file
@@ -21,7 +20,7 @@
 /**
  * Matches Unicode character classes.
  *
- * See: http://www.unicode.org/Public/UNIDATA/UCD.html#General_Category_Values
+ * See: http://www.unicode.org/Public/UNIDATA/UCD.html#General_Category_Values.
  *
  * The index only contains the following character classes:
  *   Lu  Letter, Uppercase
@@ -58,10 +57,9 @@ define('CTOOLS_PREG_CLASS_ALNUM',
 '\x{2ce5}-\x{2cff}\x{2d6f}\x{2e00}-\x{3005}\x{3007}-\x{303b}\x{303d}-\x{303f}' .
 '\x{3099}-\x{309e}\x{30a0}\x{30fb}-\x{30fe}\x{3190}-\x{319f}\x{31c0}-\x{31cf}' .
 '\x{3200}-\x{33ff}\x{4dc0}-\x{4dff}\x{a015}\x{a490}-\x{a716}\x{a802}\x{a806}' .
-'\x{a80b}\x{a823}-\x{a82b}\x{d800}-\x{f8ff}\x{fb1e}\x{fb29}\x{fd3e}\x{fd3f}' .
+'\x{a80b}\x{a823}-\x{a82b}\x{e000}-\x{f8ff}\x{fb1e}\x{fb29}\x{fd3e}\x{fd3f}' .
 '\x{fdfc}-\x{fe6b}\x{feff}-\x{ff0f}\x{ff1a}-\x{ff20}\x{ff3b}-\x{ff40}\x{ff5b}-' .
 '\x{ff65}\x{ff70}\x{ff9e}\x{ff9f}\x{ffe0}-\x{fffd}');
-
 
 /**
  * Clean up a string value provided by a module.
@@ -130,13 +128,13 @@ function ctools_cleanstring($string, $settings = array()) {
     $output = transliteration_get($output);
   }
 
-  // Reduce to the subset of ASCII96 letters and numbers
+  // Reduce to the subset of ASCII96 letters and numbers.
   if ($settings['reduce ascii']) {
     $pattern = '/[^a-zA-Z0-9\/]+/';
     $output = preg_replace($pattern, $settings['separator'], $output);
   }
 
-  // Get rid of words that are on the ignore list
+  // Get rid of words that are on the ignore list.
   if (!empty($settings['ignore words'])) {
     $ignore_re = '\b' . preg_replace('/,/', '\b|\b', $settings['ignore words']) . '\b';
 
@@ -160,14 +158,14 @@ function ctools_cleanstring($string, $settings = array()) {
     else {
       $seppattern = '\\' . $settings['separator'];
     }
-    // Trim any leading or trailing separators (note the need to
+    // Trim any leading or trailing separators (note the need to.
     $output = preg_replace("/^$seppattern+|$seppattern+$/", '', $output);
 
-    // Replace multiple separators with a single one
+    // Replace multiple separators with a single one.
     $output = preg_replace("/$seppattern+/", $settings['separator'], $output);
   }
 
-  // Enforce the maximum component length
+  // Enforce the maximum component length.
   if (!empty($settings['max length'])) {
     $output = ctools_cleanstring_truncate($output, $settings['max length'], $settings['separator']);
   }
@@ -189,12 +187,14 @@ function ctools_cleanstring($string, $settings = array()) {
  *   A string which contains the word boundary such as - or _.
  *
  * @return
- *  The string truncated below the maxlength.
+ *   The string truncated below the maxlength.
  */
 function ctools_cleanstring_truncate($string, $length, $separator) {
   if (drupal_strlen($string) > $length) {
-    $string = drupal_substr($string, 0, $length + 1); // leave one more character
-    if ($last_break = strrpos($string, $separator)) { // space exists AND is not on position 0
+    // Leave one more character.
+    $string = drupal_substr($string, 0, $length + 1);
+    // Space exists AND is not on position 0.
+    if ($last_break = strrpos($string, $separator)) {
       $string = substr($string, 0, $last_break);
     }
     else {

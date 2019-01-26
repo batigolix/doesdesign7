@@ -25,13 +25,14 @@ function page_manager_page_page_manager_tasks() {
     'subtask callback' => 'page_manager_page_subtask',
     'subtasks callback' => 'page_manager_page_subtasks',
     'save subtask callback' => 'page_manager_page_save_subtask',
+    'access callback' => 'page_manager_page_access_check',
     'hook menu' => array(
       'file' => 'page.admin.inc',
       'path' => drupal_get_path('module', 'page_manager') . '/plugins/tasks',
       'function' => 'page_manager_page_menu',
     ),
     'hook theme' => 'page_manager_page_theme',
-    // page only items
+    // Page only items.
     'task type' => 'page',
     'page operations' => array(
       array(
@@ -48,7 +49,7 @@ function page_manager_page_page_manager_tasks() {
     ),
     'page type' => 'custom',
 
-    // context only items
+    // Context only items.
     'handler type' => 'context',
     'get arguments' => array(
       'file' => 'page.admin.inc',
@@ -111,7 +112,7 @@ function page_manager_page_save_subtask($subtask) {
     }
   }
   page_manager_page_recalculate_arguments($page);
-  // Create a real object from the cache
+  // Create a real object from the cache.
   page_manager_page_save($page);
 
   // Check to see if we should make this the site frontpage.
@@ -190,7 +191,7 @@ function page_manager_page_build_subtask($task, $page) {
       'form' => 'page_manager_page_form_delete',
     );
   }
-  else if ($page->export_type != EXPORT_IN_CODE) {
+  elseif ($page->export_type != EXPORT_IN_CODE) {
     $operations['actions']['children']['delete'] = array(
       'title' => t('Delete'),
       'description' => t('Remove this page from your system completely.'),
@@ -215,11 +216,11 @@ function page_manager_page_build_subtask($task, $page) {
     'row class' => empty($page->disabled) ? 'page-manager-enabled' : 'page-manager-disabled',
     'storage' => $page->type == t('Default') ? t('In code') : $page->type,
     'disabled' => !empty($page->disabled),
-    // This works for both enable AND disable
+    // This works for both enable AND disable.
     'enable callback' => 'page_manager_page_enable',
   );
 
-  // default handlers may appear from a default subtask.
+  // Default handlers may appear from a default subtask.
   if (isset($page->default_handlers)) {
     $subtask['default handlers'] = $page->default_handlers;
   }
@@ -246,8 +247,7 @@ function page_manager_page_theme(&$items, $task) {
 }
 
 // --------------------------------------------------------------------------
-// Page execution functions
-
+// Page execution functions.
 /**
  * Execute a page task.
  *
@@ -273,7 +273,7 @@ function page_manager_page_execute($subtask_id) {
       $contexts[$arg->id] = $arg;
       $args[] = $arg->original_argument;
     }
-    else if ($count) {
+    elseif ($count) {
       $args[] = $arg;
     }
   }
@@ -301,9 +301,9 @@ function page_manager_page_execute($subtask_id) {
           $context = ctools_context_get_context_from_argument($argument, $value);
         }
         else {
-          // make sure there is a placeholder context for missing optional contexts.
+          // Make sure there is a placeholder context for missing optional contexts.
           $context = ctools_context_get_context_from_argument($argument, NULL, TRUE);
-          // Force the title to blank for replacements
+          // Force the title to blank for replacements.
         }
         if ($context) {
           $contexts[$context->id] = $context;
@@ -320,15 +320,14 @@ function page_manager_page_execute($subtask_id) {
   ctools_include('context-task-handler');
   $output = ctools_context_handler_render($task, $subtask, $contexts, $args);
   if ($output === FALSE) {
-    return drupal_not_found();
+    return MENU_NOT_FOUND;
   }
 
   return $output;
 }
 
 // --------------------------------------------------------------------------
-// Context type callbacks
-
+// Context type callbacks.
 /**
  * Return a list of arguments used by this task.
  */
@@ -499,7 +498,7 @@ function page_manager_page_get_named_arguments($path) {
   $bits = explode('/', $path);
   foreach ($bits as $position => $bit) {
     if ($bit && ($bit[0] == '%' || $bit[0] == '!')) {
-      // special handling for duplicate path items and substr to remove the %
+      // Special handling for duplicate path items and substr to remove the %.
       $arguments[substr($bit, 1)] = isset($arguments[$bit]) ? -1 : $position;
     }
   }
@@ -546,7 +545,7 @@ function _pm_arg_load($value, $subtask, $argument) {
   ctools_include('context');
   $context = ctools_context_get_context_from_argument($page->arguments[$keyword], $value);
 
-  // convert false equivalents to false.
+  // Convert false equivalents to false.
   return $context ? $context : FALSE;
 }
 
@@ -582,7 +581,6 @@ function page_manager_page_admin_summary($task, $subtask) {
     array('class' => array('page-summary-operation'), 'data' => $link),
   );
 
-
   $path = array();
   foreach (explode('/', $page->path) as $bit) {
     if ($bit[0] != '!') {
@@ -598,7 +596,7 @@ function page_manager_page_admin_summary($task, $subtask) {
   if ($path == $front) {
     $message = t('This is your site home page.');
   }
-  else if (!empty($page->make_frontpage)) {
+  elseif (!empty($page->make_frontpage)) {
     $message = t('This page is set to become your site home page.');
   }
 
@@ -659,6 +657,7 @@ function page_manager_page_admin_summary($task, $subtask) {
         case 'default tab':
           $menu .= ' ' . t('Parent title: %title.', array('%title' => $page->menu['parent']['title']));
           break;
+
         case 'normal':
           if (module_exists('menu')) {
             $menus = menu_get_menus();
@@ -749,7 +748,7 @@ function page_manager_page_new_page_cache(&$page, &$cache) {
   $cache->subtask = page_manager_page_build_subtask($cache->task, $page);
 
   if (isset($cache->handlers)) {
-    foreach($cache->handlers as $id => $handler) {
+    foreach ($cache->handlers as $id => $handler) {
       $cache->handler_info[$id]['changed'] = PAGE_MANAGER_CHANGED_DELETED;
     }
   }
@@ -766,4 +765,22 @@ function page_manager_page_new_page_cache(&$page, &$cache) {
 
   $cache->locked = FALSE;
   $cache->changed = TRUE;
+}
+
+/**
+ * Callback to determine if a page is accessible.
+ *
+ * @param $task
+ *   The task plugin.
+ * @param $subtask_id
+ *   The subtask id
+ * @param $contexts
+ *   The contexts loaded for the task.
+ *
+ * @return
+ *   TRUE if the current user can access the page.
+ */
+function page_manager_page_access_check($task, $subtask_id, $contexts) {
+  $page = page_manager_page_load($subtask_id);
+  return ctools_access($page->access, $contexts);
 }

@@ -1,9 +1,11 @@
 <?php
 
 /**
+ * @file
  * Plugins are described by creating a $plugin array which will be used
  * by the system that includes this file.
  */
+
 $plugin = array(
   'single' => TRUE,
   'title' => t('Term description'),
@@ -14,25 +16,26 @@ $plugin = array(
 );
 
 function ctools_term_description_content_type_render($subtype, $conf, $panel_args, $context) {
-  $term = isset($context->data) ? clone($context->data) : NULL;
+  $term = isset($context->data) ? clone $context->data : NULL;
   $block = new stdClass();
   $block->module = 'node_type';
 
-  $block->title = $term->name;
-  if ($term) {
-    $block->content = _filter_autop(filter_xss_admin($term->description));
+  if (!empty($term)) {
+    $block->title = $term->name;
+    $block->content = check_markup($term->description, $term->format, '', TRUE);
     $block->delta = $term->tid;
 
     if (user_access('administer taxonomy')) {
       $block->admin_links['update'] = array(
         'title' => t('Edit term'),
         'alt' => t("Edit this term"),
-        'href' => "admin/content/taxonomy/edit/term/$term->tid",
+        'href' => "taxonomy/term/$term->tid/edit",
         'query' => drupal_get_destination(),
       );
     }
   }
   else {
+    $block->title = '';
     $block->content = t('Term description goes here.');
     $block->delta = 'unknown';
   }
@@ -45,6 +48,6 @@ function ctools_term_description_content_type_admin_title($subtype, $conf, $cont
 }
 
 function ctools_term_description_content_type_edit_form($form, &$form_state) {
-  // provide a blank form so we have a place to have context setting.
+  // Provide a blank form so we have a place to have context setting.
   return $form;
 }

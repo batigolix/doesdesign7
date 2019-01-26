@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @file
+ */
+
 if (module_exists('path')) {
   /**
    * Plugins are described by creating a $plugin array which will be used
@@ -28,7 +32,7 @@ function ctools_node_form_path_content_type_render($subtype, $conf, $panel_args,
       unset($block->content['path']['#pre_render']);
       unset($block->content['path']['#theme_wrappers']);
       $block->content['path']['#type'] = '';
-      $block->content['path']['path']['#size'] /= 2;
+      $block->content['path']['alias']['#size'] /= 2;
 
       // Set access to false on the original rather than removing so that
       // vertical tabs doesn't clone it. I think this is due to references.
@@ -46,6 +50,6 @@ function ctools_node_form_path_content_type_admin_title($subtype, $conf, $contex
 }
 
 function ctools_node_form_path_content_type_edit_form($form, &$form_state) {
-  // provide a blank form so we have a place to have context setting.
+  // Provide a blank form so we have a place to have context setting.
   return $form;
 }
