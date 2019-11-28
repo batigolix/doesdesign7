@@ -9,7 +9,7 @@
         // of the most recent 20 images
         // flickr id batigollix 62546836@N00
         //$.getJSON("http://api.flickr.com/services/feeds/groups_pool.gne?id=998875@N22&lang=en-us&format=json&jsoncallback=?", displayImages);
-        $.getJSON("http://api.flickr.com/services/feeds/photos_public.gne?id=23406248@N05&lang=en-en&format=json&jsoncallback=?", displayImages);
+        $.getJSON("https://api.flickr.com/services/feeds/photos_public.gne?id=23406248@N05&lang=en-en&format=json&jsoncallback=?", displayImages);
         function displayImages(data) {
           // Start putting together the HTML string
           var htmlString = "<ul>";
