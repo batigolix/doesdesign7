@@ -306,21 +306,21 @@ function dd_tools_contact() {
       'name' => 'Linkedin',
       'img' => 'linkedin-logo.png',
       'cta' => t('Visit Birigit at Linkedin'),
-      'url' => 'http://nl.linkedin.com/in/birgitdoesborg',
+      'url' => 'https://nl.linkedin.com/in/birgitdoesborg',
       'class' => 'linkedin',
     ),
     array(
       'name' => 'Twitter',
       'img' => 'twitter-logo.png',
       'cta' => t('Tweet Birigit'),
-      'url' => 'http://twitter.com/#!/Doesdesign_nl',
+      'url' => 'https://twitter.com/#!/Doesdesign_nl',
       'class' => 'twitter',
     ),
     array(
       'name' => 'YouTube',
       'cta' => t('Visit YouTube page'),
       'img' => 'youtube-logo.png',
-      'url' => 'http://www.youtube.com/user/metalartcreations',
+      'url' => 'https://www.youtube.com/user/metalartcreations',
       'class' => 'youtube',
     ),
   );
@@ -369,8 +369,8 @@ function dd_tools_contact() {
 }
 
 /*    height: 80px;
- * 
- * 
+ *
+ *
  * <div><a href="/about"><img alt="" src="/sites/doesdesign.nl/files/Doesklein.jpg" style="float:left; height:100px; margin-left:0px; margin-right:10px; width:75px" /></a><strong><a href="/about">Birgit Doesborg</a>, </strong>Goud- en zilversmid<strong> </strong></div>
 
 <div><strong><a href="/contact">Contact</a></strong></div>
