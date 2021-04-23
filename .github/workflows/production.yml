@@ -1,4 +1,4 @@
-name: Build & deploy production
+name: Deploy production
 on:
   push:
     branches:
@@ -18,8 +18,8 @@ jobs:
           debug: true
           script: |
             cd ${{ secrets.PRODUCTION_DIR }}
-            chmod a+w ${{ secrets.SITE_DIR }}
-            chmod a+w ${{ secrets.SITE_DIR }}/settings.php
+            chmod a+w sites/${{ secrets.SITE_DIR }}
+            chmod a+w sites/${{ secrets.SITE_DIR }}/settings.php
             git pull origin master
             chmod a-w ${{ secrets.SITE_DIR }}
             chmod a-w ${{ secrets.SITE_DIR }}/settings.php

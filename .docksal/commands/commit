@@ -1,0 +1,28 @@
+
+#!/usr/bin/env bash
+
+# provides actions to reset the the website to the state of the development
+# branch.
+# also to be used after the production db has been imported
+
+#-------------------------- Settings --------------------------------
+
+# PROJECT_ROOT and DOCROOT are set as env variables in cli
+SITE_DIRECTORY="default"
+DOCROOT_PATH="${PROJECT_ROOT}/${DOCROOT}"
+SITEDIR_PATH="${DOCROOT_PATH}/sites/${SITE_DIRECTORY}"
+DOW=$(date +%u)
+DRUSH="fin drush"
+COMPOSER="fin composer"
+DT=`date '+%Y%m%d-%H%M%S'`
+
+#-------------------------- END: Settings --------------------------------
+
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+echo $BRANCH
+
+git add .github
+git add .docksal
+git commit -m "Add github actions, docksal changes"
+git push origin $BRANCH
+
