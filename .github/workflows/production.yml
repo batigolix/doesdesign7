@@ -18,10 +18,10 @@ jobs:
           debug: true
           script: |
             cd ${{ secrets.PRODUCTION_DIR }}
-            chmod a+w web/sites/default
-            chmod a+w web/sites/default/settings.php
+            chmod a+w ${{ secrets.SITE_DIR }}
+            chmod a+w ${{ secrets.SITE_DIR }}/settings.php
             git pull origin master
-            chmod a-w web/sites/default
-            chmod a-w web/sites/default/settings.php
+            chmod a-w ${{ secrets.SITE_DIR }}
+            chmod a-w ${{ secrets.SITE_DIR }}/settings.php
             bin/drush updb
             bin/drush st
