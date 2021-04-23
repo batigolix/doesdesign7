@@ -24,6 +24,5 @@ jobs:
             chmod a-w sites/${{ secrets.SITE_DIR }}
             chmod a-w sites/${{ secrets.SITE_DIR }}/settings.php
             cd sites/${{ secrets.SITE_DIR }}
-            drush updb --y --root=${{ secrets.PRODUCTION_DIR }}
-            drush st --root=${{ secrets.PRODUCTION_DIR }}
-
+            drush updb --y --root=${{ secrets.PRODUCTION_DIR }} -uri=${{ secrets.URI }}
+            drush st --root=${{ secrets.PRODUCTION_DIR }} -uri=${{ secrets.URI }}
