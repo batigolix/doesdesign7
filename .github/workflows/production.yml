@@ -23,3 +23,5 @@ jobs:
             git pull origin master
             chmod a-w sites/${{ secrets.SITE_DIR }}
             chmod a-w sites/${{ secrets.SITE_DIR }}/settings.php
+            drush updb --y --root=${{ secrets.PRODUCTION_DIR }}
+            drush st --root=${{ secrets.PRODUCTION_DIR }}
