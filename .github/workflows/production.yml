@@ -1,0 +1,27 @@
+name: Build & deploy production
+on:
+  push:
+    branches:
+      - 'master'
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy using SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          port: 7822
+          script_stop: true
+          debug: true
+          script: |
+            cd ${{ secrets.PRODUCTION_DIR }}
+            chmod a+w web/sites/default
+            chmod a+w web/sites/default/settings.php
+            git pull origin master
+            chmod a-w web/sites/default
+            chmod a-w web/sites/default/settings.php
+            bin/drush updb
+            bin/drush st
