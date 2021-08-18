@@ -820,5 +820,12 @@ function webform_number_standardize($value, $point) {
  * See https://drupal.org/node/1601968.
  */
 function webform_modulo($a, $b) {
+  // Ensure values are either int or float.
+  if (!is_numeric($a) || !is_numeric($b)) {
+    return 0.0;
+  }
+  $a = +$a;
+  $b = +$b;
+
   return $a - $b * (($b < 0) ? ceil($a / $b) : floor($a / $b));
 }
