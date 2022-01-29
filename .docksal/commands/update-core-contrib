@@ -14,6 +14,8 @@ git add misc/*
 git add modules/*
 git add themes/*
 git add includes/*
+git add sites/all/modules/*
+git add sites/all/themes/*
 git commit --allow-empty -m "updating core & contrib packages"
 git push origin master
 
