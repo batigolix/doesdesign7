@@ -1,16 +1,20 @@
 #!/usr/bin/env bash
 
+fin up
+git stash clear
 git stash
 git checkout master
 git pull origin master
 
+fin drush sqlq "truncate table cache_update"
+fin drush cc drush
 fin drush up -y;
 
 git add misc/*
 git add modules/*
 git add themes/*
 git add includes/*
-git commit -m "updating core & contrib packages"
+git commit --allow-empty -m "updating core & contrib packages"
 git push origin master
 
 git stash pop
