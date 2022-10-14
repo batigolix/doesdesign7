@@ -11,9 +11,9 @@ git stash
 git checkout master
 git pull origin master
 
-ddev drush sqlq "truncate table cache_update"
-ddev drush cc drush
-ddev drush up -y;
+ddev exec drush sqlq "truncate table cache_update"
+ddev exec drush cc drush
+ddev exec drush up -y;
 
 git add misc/*
 git add modules/*
