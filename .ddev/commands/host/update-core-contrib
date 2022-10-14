@@ -1,0 +1,36 @@
+#!/bin/bash
+
+## Description: Update core contrib
+## Usage: update-core-contrib
+## Example: "ddev update-core-contrib"
+
+#ddev start
+
+git stash clear
+git stash
+git checkout master
+git pull origin master
+
+ddev drush sqlq "truncate table cache_update"
+ddev drush cc drush
+ddev drush up -y;
+
+git add misc/*
+git add modules/*
+git add themes/*
+git add includes/*
+git add sites/all/modules/*
+git add sites/all/themes/*
+git commit --allow-empty -m "updating core & contrib packages"
+git push origin master
+
+#git stash pop
+
+#echo "printing dev login link"
+#ddev drush @ddev uli
+#echo "printing stage login link"
+#ddev drush @stage uli
+#echo "printing live login link"
+#ddev drush @live uli
+
+#git stash pop
