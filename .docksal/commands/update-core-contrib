@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 
-fin up
+ddev up
 git stash clear
 git stash
 git checkout master
 git pull origin master
 
-fin drush sqlq "truncate table cache_update"
-fin drush cc drush
-fin drush up -y;
+ddev drush sqlq "truncate table cache_update"
+ddev drush cc drush
+ddev drush up -y;
 
 git add misc/*
 git add modules/*
@@ -18,5 +18,12 @@ git add sites/all/modules/*
 git add sites/all/themes/*
 git commit --allow-empty -m "updating core & contrib packages"
 git push origin master
+
+echo "printing dev login link"
+ddev drush @self uli
+#echo "printing stage login link"
+#ddev drush @stage uli
+echo "printing live login link"
+ddev drush @live uli
 
 git stash pop
