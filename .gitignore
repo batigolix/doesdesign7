@@ -7,3 +7,5 @@ sites/*/private
 
 db
 .idea
+/drush/a2h.aliases.drushrc.php
+/drush/aliases.drushrc.php
